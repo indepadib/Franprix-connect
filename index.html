@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Franprix Connect x Chari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 1. LANDING -->
+  <section id="global-landing" class="global-view active">
+    <div style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+      <h1 class="logo-main" style="font-size: 64px; margin-bottom: 16px;">franprix<span>.</span> <span style="font-weight:600; opacity:0.9;">connect</span></h1>
+      <p class="muted" style="margin-bottom: 40px; font-weight: 700; font-size: 18px;">Propulsé par Chari x Visa</p>
+      <button id="btn-goto-login" class="btn btn-brand" style="padding: 16px 32px; font-size: 18px; border-radius: 20px;">Accéder à mon espace</button>
+    </div>
+  </section>
+
+  <!-- 2. AUTH -->
+  <section id="global-auth" class="global-view">
+    <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <form id="login-form" style="background: white; padding: 48px; border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow);">
+        <div class="logo-main" style="text-align: center; margin-bottom: 40px;">franprix<span>.</span> <span style="font-weight:600; opacity:0.9;">connect</span></div>
+        <div class="input-group" style="margin-bottom: 20px;">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <input type="text" placeholder="Numéro de carte de fidélité" required>
+        </div>
+        <div class="input-group" style="margin-bottom: 32px;">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <input type="password" placeholder="Code secret" required>
+        </div>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Connexion</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 3. DASHBOARD -->
+  <section id="global-app" class="global-view">
+    <div class="app-layout">
+      
+      <!-- Sidebar -->
+      <aside class="sidebar-sober">
+        <div class="logo-main" style="font-size:24px;">franprix<span>.</span><br><span style="font-weight:600; opacity:0.9; font-size:18px;">connect</span></div>
+        <nav class="nav-links">
+          <a href="#" class="nav-item active" data-target="view-home">
+            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Tableau de bord
+          </a>
+          <a href="#" class="nav-item" data-target="view-promos">
+            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+            Offres & Boosters
+          </a>
+          <a href="#" class="nav-item" data-target="view-wallet">
+            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+            Ma Carte
+          </a>
+          <a href="#" class="nav-item" data-target="view-receipts">
+            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Tickets de caisse
+          </a>
+          <a href="#" class="nav-item" data-target="view-stores">
+            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Magasins
+          </a>
+        </nav>
+        <div class="sidebar-footer">
+          <button id="btn-logout-sidebar" class="btn btn-ghost" style="width: 100%; justify-content: flex-start;">Déconnexion</button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header class="header-sober">
+          <div>
+            <h1 id="current-title" style="font-size: 24px;">Tableau de bord</h1>
+            <p id="smart-greeting" class="muted">Bonjour, voici vos avantages en magasin.</p>
+          </div>
+          <div class="header-actions">
+            <button id="dev-toggle" class="btn btn-outline">Mode Admin</button>
+            <div class="avatar-square">A</div>
+          </div>
+        </header>
+
+        <div class="views-wrapper">
+          
+          <!-- Admin Panel -->
+          <div id="demo-controls" style="background: white; padding: 24px; border: 1px dashed var(--p-orange); border-radius: var(--radius); margin-bottom: 32px; display: none;">
+            <h4 style="margin-bottom: 16px;">Test des Cartes & Paliers</h4>
+            <div style="display: flex; gap: 12px;">
+              <button data-ltv="150" class="btn btn-outline">💳 Silver</button>
+              <button data-ltv="650" class="btn btn-outline">💳 Gold</button>
+              <button data-ltv="1500" class="btn btn-brand">💳 Titanium</button>
+            </div>
+          </div>
+
+          <!-- VIEW: HOME (DASHBOARD) -->
+          <div id="view-home" class="view-content active">
+            <div class="grid-strict">
+              
+              <!-- Premium Wallet Card -->
+              <div class="col-6">
+                <div class="wallet-cc tier-silver" id="wallet-card-home">
+                  <div class="wallet-header">
+                    <div class="logo-main" style="color: inherit; font-size: 20px;">franprix<span>.</span></div>
+                    <div class="card-logos">
+                      <span class="logo-chari">chari</span>
+                      <span class="logo-visa">VISA</span>
+                    </div>
+                  </div>
+                  <div class="wallet-amount" id="home-cagnotte">125,50 MAD</div>
+                  <div class="wallet-footer">
+                    <div class="barcode-box"><svg id="barcode-home"></svg></div>
+                    <div style="text-align: right;">
+                      <span class="text-xs" style="opacity:0.8;">MEMBRE</span>
+                      <div id="home-status-badge" style="font-weight: 900; font-size: 20px; text-transform: uppercase;">Silver</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gamification Push -->
+              <div class="card col-6 gamify-box">
+                <svg class="icon-lg" style="margin: 0 auto 16px auto; color: var(--p-yellow);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <h3>Passez au niveau supérieur !</h3>
+                <p id="ltv-hint">Dépensez encore 350 MAD ce mois-ci pour débloquer la prestigieuse carte <strong>Gold</strong>.</p>
+                <div class="progress-track"><div id="ltv-fill" class="progress-fill" style="width: 35%;"></div></div>
+                
+                <div class="tier-steps">
+                  <div class="t-step active" id="step-silver">
+                    <div class="t-dot">✓</div>
+                    <div class="t-label">0-500 MAD</div>
+                    <div class="t-desc">1% Cashback</div>
+                  </div>
+                  <div class="t-step locked" id="step-gold">
+                    <div class="t-dot">2</div>
+                    <div class="t-label">> 500 MAD</div>
+                    <div class="t-desc">3% Cashback</div>
+                  </div>
+                  <div class="t-step locked" id="step-titanium">
+                    <div class="t-dot">3</div>
+                    <div class="t-label">> 1500 MAD</div>
+                    <div class="t-desc">5% Cashback</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Digital Catalog Banner -->
+              <div class="col-12 catalog-banner interactive">
+                <div class="catalog-content">
+                  <h3>Catalogue Digital</h3>
+                  <p>Feuilletez les prospectus de la semaine et découvrez nos arrivages.</p>
+                </div>
+                <button class="btn btn-primary" style="border-radius: 100px; padding: 12px 32px;">Consulter le catalogue</button>
+              </div>
+
+              <!-- Marketed Boosters -->
+              <div class="col-8" style="display: flex; flex-direction: column; gap: 24px;">
+                <h3 style="font-size: 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px;">Vos Boosters Recommandés</h3>
+                
+                <div class="offer-card premium-booster interactive">
+                  <div class="offer-badge">HOT</div>
+                  <div class="offer-icon">🥤</div>
+                  <div class="offer-content">
+                    <div class="offer-title" style="color: white;">Mega Booster Coca-Cola</div>
+                    <div class="offer-desc">Achetez 2 packs de Coca-Cola Zero et recevez immédiatement 20 MAD sur votre cagnotte.</div>
+                  </div>
+                  <button class="btn btn-brand btn-act-booster">Activer le booster</button>
+                </div>
+                
+                <div class="offer-card interactive">
+                  <div class="offer-icon">🥐</div>
+                  <div class="offer-content">
+                    <div class="offer-title">Menu Petit Déjeuner express</div>
+                    <div class="offer-desc">Café + Croissant pur beurre (Marque Franprix).</div>
+                  </div>
+                  <div class="offer-price">15 MAD</div>
+                  <button class="btn btn-outline btn-act-booster">En profiter</button>
+                </div>
+              </div>
+
+              <!-- Coupons & Promos -->
+              <div class="col-4" style="display: flex; flex-direction: column; gap: 24px;">
+                <h3 style="font-size: 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px;">Promotions en magasin</h3>
+                <ul class="coupon-list">
+                  <li class="coupon-item interactive">
+                    <div>
+                      <div style="font-weight: 800; font-size: 15px;">Gamme Laitière Centrale</div>
+                      <div class="text-sm muted">Sur présentation de l'app</div>
+                    </div>
+                    <div class="coupon-value" style="background: #FEE2E2; color: #DC2626;">2+1 Gratuit</div>
+                  </li>
+                  <li class="coupon-item interactive">
+                    <div>
+                      <div style="font-weight: 800; font-size: 15px;">Rayon Nettoyage</div>
+                      <div class="text-sm muted">Jusqu'à dimanche</div>
+                    </div>
+                    <div class="coupon-value">-20%</div>
+                  </li>
+                  <li class="coupon-item interactive">
+                    <div>
+                      <div style="font-weight: 800; font-size: 15px;">Marque Repère</div>
+                      <div class="text-sm muted">Cashback immédiat</div>
+                    </div>
+                    <svg class="icon-md muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- VIEW: WALLET & CARTE -->
+          <div id="view-wallet" class="view-content">
+            <div class="grid-strict">
+              <div class="card col-12" style="display: flex; flex-direction: column; align-items: center; padding: 60px 20px; text-align: center;">
+                <h2 style="margin-bottom: 40px;">Votre Carte Franprix Connect</h2>
+                
+                <div class="wallet-cc tier-silver" id="wallet-card-full" style="width: 100%; max-width: 480px;">
+                  <div class="wallet-header">
+                    <div class="logo-main" style="color: inherit; font-size: 24px;">franprix<span>.</span></div>
+                    <div class="card-logos">
+                      <span class="logo-chari" style="font-size: 24px;">chari</span>
+                      <span class="logo-visa" style="font-size: 28px;">VISA</span>
+                    </div>
+                  </div>
+                  <div id="wallet-balance-full" class="wallet-amount" style="font-size: 64px;">125,50 MAD</div>
+                  <div class="wallet-footer">
+                    <div class="barcode-box" style="padding: 16px 24px;"><svg id="barcode-full"></svg></div>
+                    <div style="text-align: right;">
+                      <span class="text-xs" style="opacity:0.8;">MEMBRE</span>
+                      <div id="full-status-badge" style="font-weight: 900; font-size: 24px; text-transform: uppercase;">Silver</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 20px; margin-top: 48px;">
+                  <button class="btn btn-primary" style="padding: 16px 32px; border-radius: 100px;">Historique des points</button>
+                  <button class="btn btn-outline" style="padding: 16px 32px; border-radius: 100px;">Convertir en don</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW: PROMOS & BOOSTERS -->
+          <div id="view-promos" class="view-content">
+            <div class="grid-strict">
+              <div class="card col-12">
+                <h3 style="margin-bottom: 24px;">Vos Boosters & Offres Personnalisées</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px;">
+                  <div class="offer-card interactive">
+                    <div class="offer-icon">🍎</div>
+                    <div class="offer-content">
+                      <div class="offer-title">Le Plein de Vitamines</div>
+                      <div class="offer-desc">Atteignez 100 MAD sur le rayon Fruits pour 20 MAD de cashback.</div>
+                    </div>
+                    <button class="btn btn-outline btn-act-booster">Activer</button>
+                  </div>
+                  <div class="offer-card interactive">
+                    <div class="offer-icon">🧀</div>
+                    <div class="offer-content">
+                      <div class="offer-title">Fromagerie x2</div>
+                      <div class="offer-desc">Cashback doublé sur tous les fromages locaux.</div>
+                    </div>
+                    <button class="btn btn-outline btn-act-booster">Activer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW: RECEIPTS -->
+          <div id="view-receipts" class="view-content">
+            <div class="grid-strict">
+              <div class="card col-12">
+                <h3>Historique d'achats</h3>
+                <p class="muted" style="margin-top: 8px;">Vos tickets dématérialisés.</p>
+                <div style="margin-top: 32px; display: flex; flex-direction: column; gap: 16px;">
+                  <div style="display: flex; justify-content: space-between; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                    <div>
+                      <div style="font-weight: 800; font-size: 16px;">Franprix Casablanca Centre</div>
+                      <div class="text-sm muted">05 Mai 2026 - 18:42</div>
+                    </div>
+                    <div style="text-align: right;">
+                      <div style="font-weight: 800; font-size: 18px;">342,00 MAD</div>
+                      <div class="text-sm" style="color: var(--p-orange); font-weight: 700;">+10,50 MAD cashback</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW: STORES -->
+          <div id="view-stores" class="view-content">
+            <div class="grid-strict">
+              <div class="col-12 map-container">
+                <div class="map-overlay">
+                  <h3 style="margin-bottom: 8px; font-size: 20px;">Magasins proches</h3>
+                  <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+                    <div style="padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: white;">
+                      <div style="font-weight: 700;">Franprix Casa Maarif</div>
+                      <div class="text-sm muted" style="margin-top: 4px;">Ouvert jusqu'à 23h00</div>
+                      <button class="btn btn-outline btn-sm" style="margin-top: 12px; width: 100%;">Itinéraire</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Embed a real OSM Map (Casablanca) -->
+                <iframe class="map-iframe" src="https://www.openstreetmap.org/export/embed.html?bbox=-7.66%2C33.56%2C-7.58%2C33.62&amp;layer=mapnik&amp;marker=33.59%2C-7.62"></iframe>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+      <!-- Bottom Nav (Mobile) -->
+      <nav class="bottom-nav">
+        <a href="#" class="b-nav-item active" data-target="view-home">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </a>
+        <a href="#" class="b-nav-item" data-target="view-promos">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+        </a>
+        <a href="#" class="b-nav-item" data-target="view-wallet">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+        </a>
+        <a href="#" class="b-nav-item" data-target="view-stores">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        </a>
+      </nav>
+
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
