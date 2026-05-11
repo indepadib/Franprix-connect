@@ -30,66 +30,52 @@
   <section id="global-auth" class="global-view">
     <div style="height: 100vh; display: flex; align-items: center; justify-content: center; position: relative;">
       <!-- Step 1: Phone -->
-      <form id="auth-step-phone" class="auth-step active" style="background: white; padding: 48px; border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow);">
+      <form id="auth-step-phone" class="auth-step active liquid-glass" style="padding: 48px; border-radius: 40px; width: 100%; max-width: 440px;">
         <div class="logo-main" style="text-align: center; margin-bottom: 24px;">franprix<span>.</span> <span style="font-weight:600; opacity:0.9;">connect</span></div>
         <h2 style="text-align: center; margin-bottom: 8px;">Bienvenue</h2>
         <p class="muted" style="text-align: center; margin-bottom: 32px;">Entrez votre numéro pour continuer</p>
-        <div class="input-group" style="margin-bottom: 32px;">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-          <input type="tel" id="auth-phone-input" placeholder="+212 6 XX XX XX XX" required>
+        <div style="margin-bottom: 32px;">
+          <input type="tel" id="auth-phone-input" class="auth-input-minimal" placeholder="+212 6 XX XX XX XX" required>
         </div>
-        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Recevoir le code</button>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px; border-radius: 100px;">Suivant</button>
       </form>
 
-      <!-- Step 2: Password (For existing full users) -->
-      <form id="auth-step-password" class="auth-step" style="display: none; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(40px); padding: 48px; border: 1px solid rgba(255,255,255,0.8); border-radius: 32px; width: 100%; max-width: 440px; box-shadow: var(--shadow-glass);">
-        <button type="button" id="btn-back-phone-pw" class="btn-ghost" style="margin-bottom: 24px; border: none; font-weight: 700; padding: 0; display: inline-block;">&larr; Retour</button>
-        <div class="avatar-square" style="margin: 0 auto 24px auto; width: 64px; height: 64px; font-size: 24px; border-radius: 20px;" id="auth-avatar">A</div>
-        <h2 style="text-align: center; margin-bottom: 8px;">Rebonjour !</h2>
-        <p class="muted" style="text-align: center; margin-bottom: 32px;">Saisissez votre code secret</p>
-        <div class="input-group" style="margin-bottom: 32px;">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          <input type="password" id="auth-password-input" placeholder="Code secret" required>
+      <!-- Step 1.5: Password (for existing users) -->
+      <form id="auth-step-password" class="auth-step liquid-glass" style="display: none; padding: 48px; border-radius: 40px; width: 100%; max-width: 440px;">
+        <h2 style="text-align: center; margin-bottom: 32px;">Mot de passe</h2>
+        <div style="margin-bottom: 32px;">
+          <input type="password" id="auth-password-input" class="auth-input-minimal" placeholder="Votre mot de passe" required>
         </div>
-        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Connexion</button>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px; border-radius: 100px;">Connexion</button>
+        <button type="button" id="btn-back-phone-pw" class="btn btn-ghost" style="width: 100%; margin-top: 16px;">Retour</button>
       </form>
 
-      <!-- Step 3: OTP -->
-      <form id="auth-step-otp" class="auth-step" style="display: none; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(40px); padding: 48px; border: 1px solid rgba(255,255,255,0.8); border-radius: 32px; width: 100%; max-width: 440px; box-shadow: var(--shadow-glass);">
-        <button type="button" id="btn-back-phone" class="btn-ghost" style="margin-bottom: 24px; border: none; font-weight: 700; padding: 0; display: inline-block;">&larr; Retour</button>
-        <h2 style="margin-bottom: 8px;">Vérification</h2>
-        <p class="muted" style="margin-bottom: 32px;">Un code a été envoyé au <strong id="display-phone" style="color: var(--text-main);"></strong></p>
-        <div class="otp-inputs" style="display: flex; gap: 12px; margin-bottom: 32px;">
-          <input type="text" class="otp-digit glass-input" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border-radius: 16px; outline: none;">
-          <input type="text" class="otp-digit glass-input" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border-radius: 16px; outline: none;">
-          <input type="text" class="otp-digit glass-input" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border-radius: 16px; outline: none;">
-          <input type="text" class="otp-digit glass-input" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border-radius: 16px; outline: none;">
+      <!-- Step 2: OTP -->
+      <form id="auth-step-otp" class="auth-step liquid-glass" style="display: none; padding: 48px; border-radius: 40px; width: 100%; max-width: 440px;">
+        <h2 style="text-align: center; margin-bottom: 8px;">Vérification</h2>
+        <p class="muted" style="text-align: center; margin-bottom: 32px;">Code envoyé au <span id="display-phone" style="color: var(--text-main); font-weight: 800;">...</span></p>
+        <div style="display: flex; gap: 12px; margin-bottom: 32px; justify-content: center;">
+          <input type="text" maxlength="1" class="otp-digit auth-input-minimal" style="width: 60px; text-align: center;">
+          <input type="text" maxlength="1" class="otp-digit auth-input-minimal" style="width: 60px; text-align: center;">
+          <input type="text" maxlength="1" class="otp-digit auth-input-minimal" style="width: 60px; text-align: center;">
+          <input type="text" maxlength="1" class="otp-digit auth-input-minimal" style="width: 60px; text-align: center;">
         </div>
-        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Vérifier</button>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px; border-radius: 100px;">Vérifier</button>
+        <button type="button" id="btn-back-phone" class="btn btn-ghost" style="width: 100%; margin-top: 16px;">Modifier le numéro</button>
       </form>
 
-      <!-- Step 4: Registration / Info -->
-      <form id="auth-step-register" class="auth-step" style="display: none; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(40px); padding: 48px; border: 1px solid rgba(255,255,255,0.8); border-radius: 32px; width: 100%; max-width: 440px; box-shadow: var(--shadow-glass);">
-        <h2 style="margin-bottom: 8px;">Presque terminé !</h2>
-        <p class="muted" style="margin-bottom: 32px;">Complétez votre profil pour finaliser la création.</p>
-        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-          <div class="input-group">
-            <input type="text" id="reg-prenom" placeholder="Prénom" required>
-          </div>
-          <div class="input-group">
-            <input type="text" id="reg-nom" placeholder="Nom" required>
-          </div>
+      <!-- Step 3: Profile Registration -->
+      <form id="auth-step-register" class="auth-step liquid-glass" style="display: none; padding: 48px; border-radius: 40px; width: 100%; max-width: 500px;">
+        <h2 style="margin-bottom: 8px;">Finalisez votre profil</h2>
+        <p class="muted" style="margin-bottom: 32px;">Nous avons besoin de quelques infos pour activer vos avantages.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+          <input type="text" id="reg-prenom" class="auth-input-minimal" placeholder="Prénom" required>
+          <input type="text" id="reg-nom" class="auth-input-minimal" placeholder="Nom" required>
         </div>
-        <div class="input-group" style="margin-bottom: 16px;">
-          <input type="email" id="reg-email" placeholder="Adresse Email" required>
+        <div style="margin-bottom: 32px;">
+          <input type="email" id="reg-email" class="auth-input-minimal" placeholder="Email" required>
         </div>
-        <div class="input-group" style="margin-bottom: 16px;">
-          <input type="date" id="reg-birth" required style="color: var(--text-muted);">
-        </div>
-        <div class="input-group" style="margin-bottom: 32px;">
-          <input type="text" id="reg-address" placeholder="Ville ou Adresse" required>
-        </div>
-        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Créer mon compte</button>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px; border-radius: 100px;">Créer mon compte</button>
       </form>
     </div>
   </section>
@@ -106,23 +92,19 @@
             <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             Tableau de bord
           </a>
+          <a href="#" class="nav-item" data-target="view-wallet">
+            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Ma Carte & PIN
+          </a>
           <a href="#" class="nav-item" data-target="view-promos">
             <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-            Offres & Boosters
-          </a>
-          <a href="#" class="nav-item" data-target="view-wallet">
-            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-            Ma Carte
+            Boosters Gold
           </a>
           <a href="#" class="nav-item" data-target="view-receipts">
             <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            Tickets de caisse
+            Mes Tickets
           </a>
-          <a href="#" class="nav-item" data-target="view-stores">
-            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Magasins
-          </a>
-          <a href="#" class="nav-item" data-target="view-feedback">
+          <a href="#" class="nav-item" data-target="view-feedback" style="margin-top: 24px; border-top: 1px solid var(--border); padding-top: 24px;">
             <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
             Avis & Réclamations
           </a>
@@ -398,6 +380,74 @@
                       <div class="text-sm muted">05 Mai 2026 - 18:42</div>
                     </div>
                     <div style="text-align: right;">
+                      <div style="font-weight: 900;">245,00 MAD</div>
+                      <div class="text-xs" style="color: var(--p-green);">+2,45 MAD</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW: FEEDBACK (NEW) -->
+          <div id="view-feedback" class="view-content">
+            <div class="grid-strict">
+              <div class="card col-8">
+                <h3>Votre avis nous intéresse</h3>
+                <p class="muted" style="margin-top: 8px; margin-bottom: 32px;">Une suggestion ou une réclamation ? Dites-nous tout.</p>
+                
+                <form id="feedback-form">
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+                    <label id="lbl-avis" class="card interactive" style="padding: 20px; text-align: center; border-radius: 16px;">
+                      <input type="radio" name="fb_type" value="avis" checked style="display:none;">
+                      <div style="font-size: 24px; margin-bottom: 8px;">💬</div>
+                      <div style="font-weight: 800;">Avis Général</div>
+                    </label>
+                    <label id="lbl-reclamation" class="card interactive" style="padding: 20px; text-align: center; border-radius: 16px;">
+                      <input type="radio" name="fb_type" value="reclamation" style="display:none;">
+                      <div style="font-size: 24px; margin-bottom: 8px;">⚠️</div>
+                      <div style="font-weight: 800;">Réclamation</div>
+                    </label>
+                  </div>
+
+                  <div style="margin-bottom: 24px;">
+                    <h4 style="margin-bottom: 12px;">Note globale</h4>
+                    <div style="display: flex; gap: 8px;">
+                      <div class="fb-star interactive" data-val="1">★</div>
+                      <div class="fb-star interactive" data-val="2">★</div>
+                      <div class="fb-star interactive" data-val="3">★</div>
+                      <div class="fb-star interactive" data-val="4">★</div>
+                      <div class="fb-star interactive" data-val="5">★</div>
+                    </div>
+                  </div>
+
+                  <div style="margin-bottom: 24px;">
+                    <h4 style="margin-bottom: 12px;">Votre message</h4>
+                    <textarea class="auth-input-minimal" style="min-height: 150px; resize: vertical;" placeholder="Décrivez votre expérience..."></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-brand" style="padding: 16px 48px; border-radius: 100px;">Envoyer mon retour</button>
+                </form>
+              </div>
+
+              <div class="col-4">
+                <div class="card liquid-glass" style="height: 100%;">
+                  <h4>Support Client</h4>
+                  <p class="text-sm muted" style="margin-top: 12px;">Besoin d'une aide immédiate ?</p>
+                  <div style="margin-top: 32px; display: flex; flex-direction: column; gap: 16px;">
+                    <div class="soft-icon-wrapper soft-blue" style="width: 100%; justify-content: flex-start; padding: 0 16px; gap: 12px;">
+                      <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <span style="font-weight: 700;">+212 5 22 XX XX XX</span>
+                    </div>
+                    <div class="soft-icon-wrapper soft-green" style="width: 100%; justify-content: flex-start; padding: 0 16px; gap: 12px;">
+                      <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                      <span style="font-weight: 700;">WhatsApp Support</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
                       <div style="font-weight: 800; font-size: 18px;">342,00 MAD</div>
                       <div class="text-sm" style="color: var(--p-orange); font-weight: 700;">+10,50 MAD cashback</div>
                     </div>
@@ -476,14 +526,11 @@
         <a href="#" class="b-nav-item active" data-target="view-home">
           <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
         </a>
+        <a href="#" class="b-nav-item" data-target="view-wallet">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </a>
         <a href="#" class="b-nav-item" data-target="view-promos">
           <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-        </a>
-        <a href="#" class="b-nav-item" data-target="view-wallet">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-        </a>
-        <a href="#" class="b-nav-item" data-target="view-stores">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
         </a>
         <a href="#" class="b-nav-item" data-target="view-feedback">
           <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>

@@ -11,8 +11,15 @@
   --border: #F1F1F1;
   
   /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --liquid-glass-bg: rgba(255, 255, 255, 0.15);
+  
+  /* Colors */
+  --p-blue-soft: rgba(59, 130, 246, 0.1);
+  --p-blue: #3B82F6;
+  --p-green-soft: rgba(34, 197, 94, 0.1);
+  --p-green: #22C55E;
   
   /* Geometry */
   --radius: 32px; 
@@ -106,6 +113,24 @@ svg { display: block; max-width: 100%; flex-shrink: 0; }
   font-weight: 600;
 }
 
+.auth-input-minimal {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid transparent;
+  border-radius: 16px;
+  padding: 16px 20px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+.auth-input-minimal:focus {
+  background: white;
+  border-color: var(--p-orange);
+  box-shadow: 0 0 0 4px rgba(243, 146, 0, 0.1);
+}
+
 /* --- APP LAYOUT --- */
 .app-layout { display: flex; min-height: 100vh; }
 
@@ -152,12 +177,20 @@ svg { display: block; max-width: 100%; flex-shrink: 0; }
 }
 .card.interactive:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
 
-.glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(25px);
+.liquid-glass {
+  background: var(--liquid-glass-bg);
+  backdrop-filter: blur(20px) saturate(160%);
   border: 1px solid var(--glass-border);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
 }
+
+.soft-icon-wrapper {
+  display: flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; border-radius: 14px;
+}
+.soft-blue { background: var(--p-blue-soft); color: var(--p-blue); }
+.soft-green { background: var(--p-green-soft); color: var(--p-green); }
+.soft-orange { background: rgba(243, 146, 0, 0.1); color: var(--p-orange); }
 
 /* Spans */
 .col-12 { grid-column: span 12; }
@@ -186,12 +219,12 @@ svg { display: block; max-width: 100%; flex-shrink: 0; }
 .tier-gold {
   background: linear-gradient(135deg, #FFDF00 0%, #D4AF37 50%, #FFDF00 100%);
   color: #1a1a1a;
-  box-shadow: 0 20px 40px -10px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 30px 60px -15px rgba(212, 175, 55, 0.4);
 }
 .tier-titanium {
   background: linear-gradient(135deg, #2b2b2b 0%, #111111 50%, #2b2b2b 100%);
   color: #f1f1f1;
-  box-shadow: 0 20px 40px -10px rgba(17, 17, 17, 0.7);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(255,255,255,0.1);
 }
 
@@ -219,8 +252,13 @@ svg { display: block; max-width: 100%; flex-shrink: 0; }
 .offer-card.premium-booster .offer-desc { color: #94A3B8; }
 .offer-card.premium-booster .offer-price { color: var(--p-yellow); }
 
-.locked-booster { filter: grayscale(100%); opacity: 0.5; pointer-events: none; }
-.locked-booster::after { content: '🔒 Bloqué'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: white; padding: 8px 16px; border-radius: 100px; font-weight: 800; font-size: 14px; z-index: 10; }
+.locked-booster { filter: grayscale(100%); opacity: 0.4; pointer-events: none; }
+.locked-booster::before { 
+  content: '🔒 EXCLUSIF'; position: absolute; top: 12px; right: 12px; 
+  background: rgba(0,0,0,0.8); color: white; padding: 4px 12px; 
+  border-radius: 100px; font-weight: 800; font-size: 10px; z-index: 10; 
+  letter-spacing: 1px;
+}
 
 .offer-badge { position: absolute; top: 12px; right: -24px; background: var(--p-red); color: white; font-size: 10px; font-weight: 800; padding: 4px 24px; transform: rotate(45deg); text-transform: uppercase; letter-spacing: 1px; }
 
@@ -233,9 +271,19 @@ svg { display: block; max-width: 100%; flex-shrink: 0; }
 /* Coupons & Catalogue */
 .catalog-banner { background: linear-gradient(135deg, var(--p-orange), var(--p-yellow)); color: var(--text-main); padding: 32px; border-radius: var(--radius); display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; }
 .catalog-content h3 { font-size: 24px; margin-bottom: 8px; }
-.catalog-content p { font-size: 15px; font-weight: 600; opacity: 0.9; }
+.catalog-content  .t-desc { font-size: 11px; font-weight: 700; opacity: 0.8; }
+}
 
-.coupon-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+/* Feedback Stars */
+.fb-star { 
+  font-size: 40px; color: #E2E8F0; cursor: pointer; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+.fb-star.hovered, .fb-star.active { 
+  color: var(--p-orange); transform: scale(1.2); 
+  filter: drop-shadow(0 0 10px rgba(243, 146, 0, 0.3));
+}
+
+@media (max-width: 768px) { list-style: none; display: flex; flex-direction: column; gap: 16px; }
 .coupon-item { 
   display: flex; align-items: center; justify-content: space-between; 
   padding: 20px; border: 2px dashed var(--border); border-radius: var(--radius-sm); 

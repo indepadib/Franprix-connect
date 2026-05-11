@@ -181,10 +181,10 @@ function bindEvents() {
       
       const titles = {
         'view-home': 'Tableau de bord',
-        'view-promos': 'Offres & Boosters',
-        'view-wallet': 'Ma Carte Chari',
-        'view-receipts': 'Tickets de caisse',
-        'view-stores': 'Magasins'
+        'view-promos': 'Boosters Gold',
+        'view-wallet': 'Ma Carte & PIN',
+        'view-receipts': 'Mes Tickets',
+        'view-feedback': 'Avis & Réclamations'
       };
       if(document.getElementById('current-title')) {
         document.getElementById('current-title').textContent = titles[targetId];
@@ -311,28 +311,34 @@ function animateCards(viewId) {
 }
 
 function updateUI() {
-  const { ltv, cagnotte } = state.user;
+  const ltv = state.user.ltv;
+  const tier = getTier(ltv);
   
-  // Tier Calc
-  let tier = state.tiers.silver;
-  if(ltv >= 1500) tier = state.tiers.titanium;
-  else if(ltv >= 500) tier = state.tiers.gold;
-
-  // Update Text
-  const money = `${cagnotte.toFixed(2).replace('.', ',')} MAD`;
-  if(els.homeCagnotte) els.homeCagnotte.textContent = money;
-  if(els.walletFull) els.walletFull.textContent = money;
+  // Update UI Elements
+  if(els.homeCagnotte) els.homeCagnotte.textContent = `${state.user.cagnotte.toFixed(2).replace('.', ',')} MAD`;
+  if(els.walletFull) els.walletFull.textContent = `${state.user.cagnotte.toFixed(2).replace('.', ',')} MAD`;
   
   if(els.statusBadge) els.statusBadge.textContent = tier.label;
   if(els.walletFullBadge) els.walletFullBadge.textContent = tier.label;
+  
+  // Card Visuals
+  [els.cardHome, els.cardFull].forEach(c => {
+    if(c) {
+      c.classList.remove('tier-silver', 'tier-gold', 'tier-titanium');
+      c.classList.add(tier.class);
+    }
+  });
 
-  // Update Card Styles (Metallic)
-  if(els.cardHome) {
-    els.cardHome.className = `card col-6 wallet-cc ${tier.class}`;
+  // PIN Button Text
+  const pinBtn = document.getElementById('btn-pin-action');
+  if(pinBtn) {
+    pinBtn.innerHTML = state.user.hasPin 
+      ? `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Modifier mon code PIN`
+      : `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Créer mon code PIN`;
   }
-  if(els.cardFull) {
-    els.cardFull.className = `wallet-cc ${tier.class}`;
-  }
+
+  // Handle Booster Locks
+  lockBoosters(tier.label.toLowerCase());
 
   // Progress Bar Animation
   const nextVal = tier.next === Infinity ? ltv : tier.next;
@@ -455,6 +461,41 @@ function updateUI() {
       }
     } else {
       item.classList.remove('locked-booster');
+    }
+  });
+}
+
+function lockBoosters(userTier) {
+  const boosters = document.querySelectorAll('.booster-item');
+  const tiersOrder = ['silver', 'gold', 'titanium'];
+  const userTierIndex = tiersOrder.indexOf(userTier);
+
+  boosters.forEach(item => {
+    const requiredTier = item.dataset.tier;
+    const requiredTierIndex = tiersOrder.indexOf(requiredTier);
+    
+    if (requiredTierIndex > userTierIndex) {
+      item.classList.add('locked-booster');
+      item.style.opacity = '0.5';
+      item.style.filter = 'grayscale(1)';
+      item.style.pointerEvents = 'none';
+      
+      const btn = item.querySelector('.btn-act-booster');
+      if(btn) {
+        btn.textContent = `Réservé aux membres ${requiredTier.toUpperCase()}`;
+        btn.disabled = true;
+      }
+    } else {
+      item.classList.remove('locked-booster');
+      item.style.opacity = '1';
+      item.style.filter = 'none';
+      item.style.pointerEvents = 'auto';
+      
+      const btn = item.querySelector('.btn-act-booster');
+      if(btn && btn.textContent.startsWith("Réservé")) {
+        btn.textContent = "Activer";
+        btn.disabled = false;
+      }
     }
   });
 }
