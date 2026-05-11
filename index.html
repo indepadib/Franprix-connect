@@ -1,383 +1,120 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Franprix Connect x Chari</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Franprix Connect</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Ambient Background -->
-  <div class="ambient-bg">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
+<div class="ambient-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
 
-  <!-- 1. LANDING VIEW -->
-  <section id="global-landing" class="global-view active">
-    <div class="auth-container">
-      <div class="auth-box">
-        <h1 class="logo-main" style="font-size: 48px; justify-content: center; margin-bottom: 16px;">franprix<span>.</span><span>connect</span></h1>
-        <p class="muted" style="margin-bottom: 48px; font-weight: 700;">Votre compagnon retail premium.</p>
-        <button id="btn-goto-login" class="btn btn-orange" style="width: 100%; padding: 20px;">Accéder à mon espace</button>
+<!-- LANDING -->
+<section id="global-landing" class="global-view active">
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="logo-main" style="font-size:42px;justify-content:center;margin-bottom:12px">franprix<span>.</span><span>connect</span></div>
+      <p class="muted" style="margin-bottom:40px;font-weight:600">Votre programme de fidelite premium</p>
+      <button id="btn-goto-login" class="btn btn-orange" style="width:100%;padding:18px">Acceder a mon espace</button>
+    </div>
+  </div>
+</section>
+
+<!-- AUTH -->
+<section id="global-auth" class="global-view">
+  <div class="auth-container">
+    <form id="auth-step-phone" class="auth-box auth-step active">
+      <h2 style="margin-bottom:8px">Connexion</h2>
+      <p class="muted" style="margin-bottom:28px">Entrez votre numero de telephone</p>
+      <input type="tel" id="auth-phone-input" class="auth-input" placeholder="+212 6 XX XX XX XX" required style="margin-bottom:20px">
+      <button type="submit" class="btn btn-orange" style="width:100%">Continuer</button>
+    </form>
+    <form id="auth-step-otp" class="auth-box auth-step" style="display:none">
+      <h2 style="margin-bottom:8px">Verification</h2>
+      <p class="muted" style="margin-bottom:28px">Code envoye au <span id="display-phone" style="font-weight:800;color:var(--text-main)">...</span></p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:24px">
+        <input type="text" maxlength="1" class="otp-digit auth-input" style="width:56px;text-align:center">
+        <input type="text" maxlength="1" class="otp-digit auth-input" style="width:56px;text-align:center">
+        <input type="text" maxlength="1" class="otp-digit auth-input" style="width:56px;text-align:center">
+        <input type="text" maxlength="1" class="otp-digit auth-input" style="width:56px;text-align:center">
+      </div>
+      <button type="submit" class="btn btn-orange" style="width:100%">Verifier</button>
+      <button type="button" id="btn-back-phone" class="btn btn-ghost" style="width:100%;margin-top:10px">Retour</button>
+    </form>
+    <form id="auth-step-register" class="auth-box auth-step" style="display:none">
+      <h2 style="margin-bottom:8px">Completez votre profil</h2>
+      <p class="muted" style="margin-bottom:28px">Activez vos avantages fidelite</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <input type="text" id="reg-prenom" class="auth-input" placeholder="Prenom" required>
+        <input type="text" id="reg-nom" class="auth-input" placeholder="Nom" required>
+      </div>
+      <input type="email" id="reg-email" class="auth-input" placeholder="Email" required style="margin-bottom:20px">
+      <button type="submit" class="btn btn-orange" style="width:100%">Creer mon compte</button>
+    </form>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="global-app" class="global-view">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <a href="#" class="logo-main">franprix<span>.</span><span>connect</span></a>
+      <nav class="nav-links">
+        <a href="#" class="nav-item active" data-target="view-home"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Tableau de bord</span></a>
+        <a href="#" class="nav-item" data-target="view-wallet"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><span>Ma Carte</span></a>
+        <a href="#" class="nav-item" data-target="view-promos"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span>Boosters</span></a>
+        <a href="#" class="nav-item" data-target="view-receipts"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Tickets</span></a>
+        <a href="#" class="nav-item" data-target="view-profile" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Mon Profil</span></a>
+        <a href="#" class="nav-item" data-target="view-feedback"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg><span>Support</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <button id="btn-logout-sidebar" class="btn btn-ghost" style="width:100%;justify-content:flex-start;padding:10px 16px"><svg viewBox="0 0 24 24" style="width:18px;height:18px;margin-right:8px;stroke:currentColor;fill:none;stroke-width:2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Deconnexion</span></button>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="header">
+        <div><h1 id="current-title" style="font-size:22px;font-weight:900">Tableau de bord</h1><p id="smart-greeting" class="muted text-sm"></p></div>
+        <div class="header-actions">
+          <button id="dev-toggle" class="btn btn-ghost btn-sm">Admin</button>
+          <div class="user-badge"><div class="avatar" id="avatar-letter">A</div><span style="font-weight:700;font-size:13px" id="header-name">Adib</span></div>
+        </div>
+      </header>
+      <div class="view-container">
+        <div id="demo-controls" style="display:none;background:#18181B;color:white;padding:20px;border-radius:var(--r-lg);margin-bottom:24px">
+          <div style="display:flex;gap:10px">
+            <button data-ltv="150" class="btn btn-outline btn-sm" style="background:transparent;color:white">Silver</button>
+            <button data-ltv="650" class="btn btn-outline btn-sm" style="background:transparent;color:white">Gold</button>
+            <button data-ltv="1600" class="btn btn-outline btn-sm" style="background:transparent;color:white">Titanium</button>
+          </div>
+        </div>
+
+        <!-- HOME -->
+        <div id="view-home" class="view-content active"></div>
+        <!-- WALLET -->
+        <div id="view-wallet" class="view-content"></div>
+        <!-- PROMOS -->
+        <div id="view-promos" class="view-content"></div>
+        <!-- RECEIPTS -->
+        <div id="view-receipts" class="view-content"></div>
+        <!-- PROFILE -->
+        <div id="view-profile" class="view-content"></div>
+        <!-- FEEDBACK -->
+        <div id="view-feedback" class="view-content"></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 2. AUTH VIEW -->
-  <section id="global-auth" class="global-view">
-    <div class="auth-container">
-      <!-- Step: Phone -->
-      <form id="auth-step-phone" class="auth-box auth-step active">
-        <h2 style="margin-bottom: 8px;">Bienvenue</h2>
-        <p class="muted" style="margin-bottom: 32px;">Entrez votre numéro pour continuer</p>
-        <div style="margin-bottom: 24px;">
-          <input type="tel" id="auth-phone-input" class="auth-input" placeholder="+212 6 XX XX XX XX" required>
-        </div>
-        <button type="submit" class="btn btn-orange" style="width: 100%;">Continuer</button>
-      </form>
+<nav class="mobile-nav">
+  <a href="#" class="m-nav-item active" data-target="view-home"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span class="m-label">Home</span></a>
+  <a href="#" class="m-nav-item" data-target="view-wallet"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><span class="m-label">Carte</span></a>
+  <a href="#" class="m-nav-item" data-target="view-promos"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span class="m-label">Offres</span></a>
+  <a href="#" class="m-nav-item" data-target="view-profile"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="m-label">Profil</span></a>
+</nav>
 
-      <!-- Step: Password (Existing User) -->
-      <form id="auth-step-password" class="auth-box auth-step" style="display: none;">
-        <h2 style="margin-bottom: 8px;">Mot de passe</h2>
-        <p class="muted" style="margin-bottom: 32px;">Saisissez votre code secret</p>
-        <div style="margin-bottom: 24px;">
-          <input type="password" id="auth-password-input" class="auth-input" placeholder="••••••" required>
-        </div>
-        <button type="submit" class="btn btn-orange" style="width: 100%;">Se connecter</button>
-        <button type="button" id="btn-back-phone-pw" class="btn btn-outline" style="width: 100%; margin-top: 12px;">Retour</button>
-      </form>
-
-      <!-- Step: OTP -->
-      <form id="auth-step-otp" class="auth-box auth-step" style="display: none;">
-        <h2 style="margin-bottom: 8px;">Vérification</h2>
-        <p class="muted" style="margin-bottom: 32px;">Code envoyé au <span id="display-phone" style="font-weight: 800; color: var(--text-main);">...</span></p>
-        <div style="display: flex; gap: 12px; margin-bottom: 32px; justify-content: center;">
-          <input type="text" maxlength="1" class="otp-digit auth-input" style="width: 60px; text-align: center;">
-          <input type="text" maxlength="1" class="otp-digit auth-input" style="width: 60px; text-align: center;">
-          <input type="text" maxlength="1" class="otp-digit auth-input" style="width: 60px; text-align: center;">
-          <input type="text" maxlength="1" class="otp-digit auth-input" style="width: 60px; text-align: center;">
-        </div>
-        <button type="submit" class="btn btn-orange" style="width: 100%;">Vérifier</button>
-        <button type="button" id="btn-back-phone" class="btn btn-outline" style="width: 100%; margin-top: 12px;">Changer de numéro</button>
-      </form>
-
-      <!-- Step: Register -->
-      <form id="auth-step-register" class="auth-box auth-step" style="display: none;">
-        <h2 style="margin-bottom: 8px;">Presque fini</h2>
-        <p class="muted" style="margin-bottom: 32px;">Complétez votre profil premium.</p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-          <input type="text" id="reg-prenom" class="auth-input" placeholder="Prénom" required>
-          <input type="text" id="reg-nom" class="auth-input" placeholder="Nom" required>
-        </div>
-        <div style="margin-bottom: 24px;">
-          <input type="email" id="reg-email" class="auth-input" placeholder="Email" required>
-        </div>
-        <button type="submit" class="btn btn-orange" style="width: 100%;">Créer mon compte</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- 3. MAIN APP VIEW -->
-  <section id="global-app" class="global-view">
-    <div class="app-layout">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <a href="#" class="logo-main">franprix<span>.</span><span>connect</span></a>
-        <nav class="nav-links">
-          <a href="#" class="nav-item active" data-target="view-home">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <span>Tableau de bord</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-wallet">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span>Ma Carte & PIN</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-promos">
-            <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-            <span>Boosters & Offres</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-receipts">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-            <span>Mes Tickets</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-feedback" style="margin-top: 32px; border-top: 1px solid var(--border); padding-top: 32px;">
-            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            <span>Réclamations</span>
-          </a>
-        </nav>
-        <div class="sidebar-footer">
-          <button id="btn-logout-sidebar" class="btn btn-outline" style="width: 100%; justify-content: flex-start; border: none; padding: 12px;">
-            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-right: 12px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            <span>Déconnexion</span>
-          </button>
-        </div>
-      </aside>
-
-      <!-- Main Area -->
-      <div class="main-area">
-        <header class="header">
-          <div>
-            <h1 id="current-title" style="font-size: 24px; font-weight: 900;">Tableau de bord</h1>
-            <p id="smart-greeting" class="muted" style="font-size: 14px;">Bonjour, ravi de vous revoir.</p>
-          </div>
-          <div class="header-actions">
-            <button id="dev-toggle" class="btn btn-outline" style="padding: 8px 16px; font-size: 12px;">Admin</button>
-            <div class="user-badge">
-              <span style="font-weight: 700; font-size: 14px;">Adib</span>
-              <div class="avatar">A</div>
-            </div>
-          </div>
-        </header>
-
-        <div class="view-container">
-          
-          <!-- Admin Controls (Floating/Hidden) -->
-          <div id="demo-controls" style="display: none; background: #18181B; color: white; padding: 24px; border-radius: 20px; margin-bottom: 32px;">
-            <h4 style="margin-bottom: 16px;">Demo Controls</h4>
-            <div style="display: flex; gap: 12px;">
-              <button data-ltv="150" class="btn btn-outline" style="background: transparent; color: white;">Silver</button>
-              <button data-ltv="650" class="btn btn-outline" style="background: transparent; color: white;">Gold</button>
-              <button data-ltv="1600" class="btn btn-outline" style="background: transparent; color: white;">Titanium</button>
-            </div>
-          </div>
-
-          <!-- VIEW: HOME -->
-          <div id="view-home" class="view-content active">
-            <div class="bento-grid">
-              
-              <!-- Card Widget -->
-              <div class="span-6" style="display: flex; flex-direction: column; gap: 24px;">
-                <div class="wallet-card-wrapper">
-                  <div class="wallet-card tier-silver" id="wallet-card-home">
-                    <div class="card-top">
-                      <div class="card-brand">franprix<span>.</span></div>
-                      <div class="card-logos">
-                        <span style="font-weight: 900; letter-spacing: -1px;">chari</span>
-                        <span class="logo-v">VISA</span>
-                      </div>
-                    </div>
-                    <div class="card-amount" id="home-cagnotte">125,50 MAD</div>
-                    <div class="card-footer">
-                      <div class="barcode-box"><svg id="barcode-home"></svg></div>
-                      <div style="text-align: right;">
-                        <div class="status-pill bg-orange-soft" id="home-status-badge">Silver</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button class="btn btn-black" style="width: 100%;">
-                  <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: white; fill: none;"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                  Ajouter à Apple Wallet
-                </button>
-              </div>
-
-              <!-- Stats & Progress -->
-              <div class="span-6 bento-card">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <div>
-                    <h3 style="font-size: 20px;">Objectif Gold</h3>
-                    <p class="muted" style="margin-top: 4px;">Dépensez encore <strong style="color: var(--p-orange);" id="ltv-needed">350 MAD</strong> pour 3% de cashback.</p>
-                  </div>
-                  <div class="icon-box" style="background: #FFF7ED; color: var(--p-orange);">★</div>
-                </div>
-                <div class="progress-container">
-                  <div class="progress-bar"><div id="ltv-fill" class="progress-fill" style="width: 35%;"></div></div>
-                  <div style="display: flex; justify-content: space-between; margin-top: 12px; font-size: 13px; font-weight: 700;">
-                    <span>Silver (1%)</span>
-                    <span class="muted">Gold (3%)</span>
-                  </div>
-                </div>
-                <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="muted" style="font-size: 14px; font-weight: 600;">Dernier achat</span>
-                    <span style="font-weight: 800; color: var(--green);">+1,20 MAD</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Active Missions -->
-              <div class="span-8 bento-card">
-                <h3 style="margin-bottom: 24px;">Missions en cours</h3>
-                <div style="display: flex; flex-direction: column; gap: 16px;">
-                  <div class="action-item">
-                    <div class="icon-box">🥛</div>
-                    <div style="flex: 1;">
-                      <h4 style="font-size: 16px;">Le défi laitier</h4>
-                      <p class="muted" style="font-size: 13px;">Achetez 3 packs de lait Centrale pour 10 MAD offerts.</p>
-                    </div>
-                    <div class="status-pill" style="background: #DCFCE7; color: #166534;">En cours</div>
-                  </div>
-                  <div class="action-item">
-                    <div class="icon-box">🥗</div>
-                    <div style="flex: 1;">
-                      <h4 style="font-size: 16px;">Fraîcheur locale</h4>
-                      <p class="muted" style="font-size: 13px;">50 MAD de fruits & légumes = 5 MAD cashback.</p>
-                    </div>
-                    <button class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Activer</button>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Promo Banner -->
-              <div class="span-4 bento-card" style="background: var(--p-accent); color: white;">
-                <h3 style="margin-bottom: 12px; color: var(--p-yellow);">Catalogue de la semaine</h3>
-                <p style="font-size: 14px; opacity: 0.8; margin-bottom: 24px;">Découvrez nos 150 promos exclusives en magasin.</p>
-                <button class="btn btn-orange" style="width: 100%;">Consulter</button>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- VIEW: WALLET -->
-          <div id="view-wallet" class="view-content">
-            <div class="bento-grid">
-              <div class="span-12 bento-card" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                <h2 style="margin-bottom: 40px;">Ma Carte Franprix</h2>
-                <div class="wallet-card-wrapper" style="width: 100%; max-width: 500px;">
-                  <div class="wallet-card tier-silver" id="wallet-card-full" style="height: 300px;">
-                    <div class="card-top">
-                      <div class="card-brand" style="font-size: 28px;">franprix<span>.</span></div>
-                      <div class="card-logos"><span class="logo-v" style="font-size: 32px;">VISA</span></div>
-                    </div>
-                    <div class="card-amount" id="wallet-balance-full" style="font-size: 64px;">125,50 MAD</div>
-                    <div class="card-footer">
-                      <div class="barcode-box" style="padding: 12px 24px;"><svg id="barcode-full"></svg></div>
-                      <div id="full-status-badge" class="status-pill bg-orange-soft" style="font-size: 16px; padding: 10px 20px;">Silver</div>
-                    </div>
-                  </div>
-                </div>
-                <div style="margin-top: 48px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-                  <button id="btn-pin-action" class="btn btn-black">Modifier mon PIN</button>
-                  <button class="btn btn-outline">Historique détaillé</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- VIEW: PROMOS -->
-          <div id="view-promos" class="view-content">
-            <div class="bento-grid">
-              <div class="span-12">
-                <h2 style="margin-bottom: 24px;">Boosters de Fidélité</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
-                  <!-- Booster Silver -->
-                  <div class="bento-card booster-item" data-tier="silver">
-                    <div class="icon-box" style="margin-bottom: 16px;">☕</div>
-                    <h4>Pause Café</h4>
-                    <p class="muted" style="font-size: 14px; margin-top: 8px;">10% remboursés sur toutes les capsules café.</p>
-                    <button class="btn btn-orange btn-act-booster" style="width: 100%; margin-top: 24px;">Activer</button>
-                  </div>
-                  <!-- Booster Gold -->
-                  <div class="bento-card booster-item" data-tier="gold">
-                    <div class="icon-box" style="margin-bottom: 16px;">🍫</div>
-                    <h4>Gourmandise Gold</h4>
-                    <p class="muted" style="font-size: 14px; margin-top: 8px;">Doublez vos points sur le rayon chocolaterie.</p>
-                    <button class="btn btn-orange btn-act-booster" style="width: 100%; margin-top: 24px;">Activer</button>
-                  </div>
-                  <!-- Booster Titanium -->
-                  <div class="bento-card booster-item" data-tier="titanium">
-                    <div class="icon-box" style="margin-bottom: 16px;">🥩</div>
-                    <h4>Titanium Butcher</h4>
-                    <p class="muted" style="font-size: 14px; margin-top: 8px;">5% cashback immédiat sur la boucherie premium.</p>
-                    <button class="btn btn-orange btn-act-booster" style="width: 100%; margin-top: 24px;">Activer</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- VIEW: RECEIPTS -->
-          <div id="view-receipts" class="view-content">
-            <div class="bento-grid">
-              <div class="span-12 bento-card">
-                <h2 style="margin-bottom: 24px;">Mes Tickets Récents</h2>
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                  <div class="action-item">
-                    <div class="icon-box">🧾</div>
-                    <div style="flex: 1;">
-                      <h4 style="font-size: 16px;">Franprix Casa Maarif</h4>
-                      <p class="muted" style="font-size: 13px;">12 Mai 2026 • 14:30</p>
-                    </div>
-                    <div style="text-align: right;">
-                      <div style="font-weight: 800;">245,00 MAD</div>
-                      <div style="font-size: 12px; color: var(--green); font-weight: 700;">+2,45 MAD</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- VIEW: FEEDBACK -->
-          <div id="view-feedback" class="view-content">
-            <div class="grid-strict">
-              <div class="card col-12" style="max-width: 600px; margin: 0 auto; padding: 48px;">
-                <h3 style="margin-bottom: 8px;">Votre avis compte</h3>
-                <p class="muted" style="margin-bottom: 32px;">Partagez votre expérience ou signalez-nous un problème en magasin.</p>
-                
-                <form id="feedback-form">
-                  <div style="margin-bottom: 24px;">
-                    <label style="font-weight: 700; margin-bottom: 12px; display: block;">Comment évaluez-vous votre dernière visite ?</label>
-                    <div id="fb-stars" style="display: flex; gap: 8px; font-size: 36px; color: var(--border); cursor: pointer; transition: 0.2s;">
-                      <span class="fb-star" data-val="1">★</span>
-                      <span class="fb-star" data-val="2">★</span>
-                      <span class="fb-star" data-val="3">★</span>
-                      <span class="fb-star" data-val="4">★</span>
-                      <span class="fb-star" data-val="5">★</span>
-                    </div>
-                  </div>
-                  
-                  <div style="margin-bottom: 24px;">
-                    <label style="font-weight: 700; margin-bottom: 12px; display: block;">Type de message</label>
-                    <div style="display: flex; gap: 12px;">
-                      <label id="lbl-avis" style="flex: 1; border: 2px solid var(--p-orange); border-radius: var(--radius-sm); padding: 12px; text-align: center; font-weight: 700; color: var(--p-orange); cursor: pointer; background: #FFFBEB; transition: 0.2s;">
-                        <input type="radio" name="fb_type" value="avis" checked style="display: none;"> Avis
-                      </label>
-                      <label id="lbl-reclamation" style="flex: 1; border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; font-weight: 700; color: var(--text-muted); cursor: pointer; background: white; transition: 0.2s;">
-                        <input type="radio" name="fb_type" value="reclamation" style="display: none;"> Réclamation
-                      </label>
-                    </div>
-                  </div>
-
-                  <div style="margin-bottom: 32px;">
-                    <textarea placeholder="Dites-nous tout..." style="width: 100%; height: 120px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: inherit; font-size: 16px; outline: none; resize: none; transition: 0.3s;" required></textarea>
-                  </div>
-
-                  <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Envoyer mon message</button>
-                </form>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </main>
-
-      <!-- Bottom Nav (Mobile) -->
-      <nav class="bottom-nav">
-        <a href="#" class="b-nav-item active" data-target="view-home">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-        </a>
-        <a href="#" class="b-nav-item" data-target="view-wallet">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </a>
-        <a href="#" class="b-nav-item" data-target="view-promos">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-        </a>
-        <a href="#" class="b-nav-item" data-target="view-feedback">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-        </a>
-      </nav>
-
-    </div>
-  </section>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-  <script type="module" src="main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
