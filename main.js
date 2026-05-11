@@ -5,7 +5,8 @@
 const state = {
   user: {
     ltv: 150, // Starts at 150 MAD
-    cagnotte: 125.50
+    cagnotte: 125.50,
+    hasPin: false
   },
   tiers: {
     silver: { min: 0, next: 500, label: 'Silver', class: 'tier-silver' },
@@ -48,7 +49,44 @@ function bindEvents() {
     switchGlobal('global-auth');
   });
   
-  document.getElementById('login-form')?.addEventListener('submit', (e) => {
+  // --- AUTHENTICATION FLOW ---
+  const authPhone = document.getElementById('auth-step-phone');
+  const authOtp = document.getElementById('auth-step-otp');
+  const authRegister = document.getElementById('auth-step-register');
+  
+  authPhone?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const phone = document.getElementById('auth-phone-input').value;
+    document.getElementById('display-phone').textContent = phone;
+    
+    // Switch to OTP
+    authPhone.classList.remove('active');
+    setTimeout(() => { authPhone.style.display = 'none'; authOtp.style.display = 'block'; setTimeout(() => authOtp.classList.add('active'), 50); }, 300);
+  });
+
+  document.getElementById('btn-back-phone')?.addEventListener('click', () => {
+    authOtp.classList.remove('active');
+    setTimeout(() => { authOtp.style.display = 'none'; authPhone.style.display = 'block'; setTimeout(() => authPhone.classList.add('active'), 50); }, 300);
+  });
+
+  // OTP Auto-focus
+  const otpDigits = document.querySelectorAll('.otp-digit');
+  otpDigits.forEach((digit, i) => {
+    digit.addEventListener('input', function() {
+      if(this.value.length === 1 && i < otpDigits.length - 1) otpDigits[i+1].focus();
+    });
+    digit.addEventListener('keydown', function(e) {
+      if(e.key === 'Backspace' && this.value === '' && i > 0) otpDigits[i-1].focus();
+    });
+  });
+
+  authOtp?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    authOtp.classList.remove('active');
+    setTimeout(() => { authOtp.style.display = 'none'; authRegister.style.display = 'block'; setTimeout(() => authRegister.classList.add('active'), 50); }, 300);
+  });
+
+  authRegister?.addEventListener('submit', (e) => {
     e.preventDefault();
     switchGlobal('global-app');
     animateCards('view-home');
@@ -57,6 +95,15 @@ function bindEvents() {
   
   document.getElementById('btn-logout-sidebar')?.addEventListener('click', () => {
     switchGlobal('global-landing');
+    // Reset Auth View
+    authRegister.style.display = 'none';
+    authRegister.classList.remove('active');
+    authOtp.style.display = 'none';
+    authOtp.classList.remove('active');
+    authPhone.style.display = 'block';
+    authPhone.classList.add('active');
+    document.getElementById('auth-phone-input').value = '';
+    otpDigits.forEach(d => d.value = '');
   });
 
   els.navItems.forEach(item => {
@@ -103,7 +150,9 @@ function bindEvents() {
   });
 
   els.boosterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function(e) {
+      if(this.closest('.locked-booster')) return e.preventDefault();
+      
       gsap.to(this, { 
         scale: 0.95, 
         duration: 0.1, 
@@ -115,6 +164,49 @@ function bindEvents() {
         }
       });
     });
+  });
+
+  // --- PIN CREATION ---
+  document.getElementById('btn-pin-action')?.addEventListener('click', function() {
+    state.user.hasPin = !state.user.hasPin;
+    updateUI();
+  });
+
+  // --- FEEDBACK STARS ---
+  const fbStars = document.querySelectorAll('.fb-star');
+  fbStars.forEach(star => {
+    star.addEventListener('mouseover', function() {
+      const val = parseInt(this.dataset.val);
+      fbStars.forEach(s => parseInt(s.dataset.val) <= val ? s.classList.add('hovered') : s.classList.remove('hovered'));
+    });
+    star.addEventListener('mouseout', function() {
+      fbStars.forEach(s => s.classList.remove('hovered'));
+    });
+    star.addEventListener('click', function() {
+      const val = parseInt(this.dataset.val);
+      fbStars.forEach(s => parseInt(s.dataset.val) <= val ? s.classList.add('active') : s.classList.remove('active'));
+    });
+  });
+
+  // Feedback Radio Toggle
+  const fbRadios = document.querySelectorAll('input[name="fb_type"]');
+  fbRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      document.getElementById('lbl-avis').style.background = e.target.value === 'avis' ? '#FFFBEB' : 'white';
+      document.getElementById('lbl-avis').style.borderColor = e.target.value === 'avis' ? 'var(--p-orange)' : 'var(--border)';
+      document.getElementById('lbl-avis').style.color = e.target.value === 'avis' ? 'var(--p-orange)' : 'var(--text-muted)';
+      
+      document.getElementById('lbl-reclamation').style.background = e.target.value === 'reclamation' ? '#FFFBEB' : 'white';
+      document.getElementById('lbl-reclamation').style.borderColor = e.target.value === 'reclamation' ? 'var(--p-orange)' : 'var(--border)';
+      document.getElementById('lbl-reclamation').style.color = e.target.value === 'reclamation' ? 'var(--p-orange)' : 'var(--text-muted)';
+    });
+  });
+
+  document.getElementById('feedback-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Votre message a bien été envoyé ! Merci pour votre retour.');
+    e.target.reset();
+    fbStars.forEach(s => s.classList.remove('active'));
   });
 }
 
@@ -201,6 +293,38 @@ function updateUI() {
       stepTitanium.querySelector('.t-dot').textContent = '✓';
     }
   }
+
+  // Update PIN Button
+  const btnPin = document.getElementById('btn-pin-action');
+  if(btnPin) {
+    if(state.user.hasPin) {
+      btnPin.innerHTML = '<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Modifier mon code PIN';
+    } else {
+      btnPin.innerHTML = '<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Créer mon code PIN';
+    }
+  }
+
+  // Update Boosters (Lock/Unlock based on tier)
+  document.querySelectorAll('.booster-item').forEach(item => {
+    const reqTier = item.getAttribute('data-tier');
+    if(!reqTier) return;
+    
+    let isLocked = false;
+    if(reqTier === 'gold' && ltv < 500) isLocked = true;
+    if(reqTier === 'titanium' && ltv < 1500) isLocked = true;
+    
+    if(isLocked) {
+      item.classList.add('locked-booster');
+      // Reset button if it was activated
+      const btn = item.querySelector('.btn-act-booster');
+      if(btn && btn.textContent === "Activé ✓") {
+        btn.textContent = "Activer";
+        btn.className = item.classList.contains('premium-booster') ? "btn btn-brand btn-act-booster" : "btn btn-outline btn-act-booster";
+      }
+    } else {
+      item.classList.remove('locked-booster');
+    }
+  });
 }
 
 function renderBarcodes() {

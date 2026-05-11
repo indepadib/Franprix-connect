@@ -22,18 +22,55 @@
 
   <!-- 2. AUTH -->
   <section id="global-auth" class="global-view">
-    <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
-      <form id="login-form" style="background: white; padding: 48px; border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow);">
-        <div class="logo-main" style="text-align: center; margin-bottom: 40px;">franprix<span>.</span> <span style="font-weight:600; opacity:0.9;">connect</span></div>
-        <div class="input-group" style="margin-bottom: 20px;">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-          <input type="text" placeholder="Numéro de carte de fidélité" required>
+    <div style="height: 100vh; display: flex; align-items: center; justify-content: center; position: relative;">
+      <!-- Step 1: Phone -->
+      <form id="auth-step-phone" class="auth-step active" style="background: white; padding: 48px; border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow);">
+        <div class="logo-main" style="text-align: center; margin-bottom: 24px;">franprix<span>.</span> <span style="font-weight:600; opacity:0.9;">connect</span></div>
+        <h2 style="text-align: center; margin-bottom: 8px;">Bienvenue</h2>
+        <p class="muted" style="text-align: center; margin-bottom: 32px;">Entrez votre numéro pour continuer</p>
+        <div class="input-group" style="margin-bottom: 32px;">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <input type="tel" id="auth-phone-input" placeholder="+212 6 XX XX XX XX" required>
+        </div>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Recevoir le code</button>
+      </form>
+
+      <!-- Step 2: OTP -->
+      <form id="auth-step-otp" class="auth-step" style="display: none; background: white; padding: 48px; border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow);">
+        <button type="button" id="btn-back-phone" class="btn-ghost" style="margin-bottom: 24px; border: none; font-weight: 700; padding: 0; display: inline-block;">&larr; Retour</button>
+        <h2 style="margin-bottom: 8px;">Vérification</h2>
+        <p class="muted" style="margin-bottom: 32px;">Un code a été envoyé au <strong id="display-phone" style="color: var(--text-main);"></strong></p>
+        <div class="otp-inputs" style="display: flex; gap: 12px; margin-bottom: 32px;">
+          <input type="text" class="otp-digit" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border: 2px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+          <input type="text" class="otp-digit" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border: 2px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+          <input type="text" class="otp-digit" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border: 2px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+          <input type="text" class="otp-digit" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border: 2px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+        </div>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Vérifier</button>
+      </form>
+
+      <!-- Step 3: Registration / Info -->
+      <form id="auth-step-register" class="auth-step" style="display: none; background: white; padding: 48px; border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow);">
+        <h2 style="margin-bottom: 8px;">Presque terminé !</h2>
+        <p class="muted" style="margin-bottom: 32px;">Complétez votre profil pour finaliser la création.</p>
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+          <div class="input-group">
+            <input type="text" id="reg-prenom" placeholder="Prénom" required>
+          </div>
+          <div class="input-group">
+            <input type="text" id="reg-nom" placeholder="Nom" required>
+          </div>
+        </div>
+        <div class="input-group" style="margin-bottom: 16px;">
+          <input type="email" id="reg-email" placeholder="Adresse Email" required>
+        </div>
+        <div class="input-group" style="margin-bottom: 16px;">
+          <input type="date" id="reg-birth" required style="color: var(--text-muted);">
         </div>
         <div class="input-group" style="margin-bottom: 32px;">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          <input type="password" placeholder="Code secret" required>
+          <input type="text" id="reg-address" placeholder="Ville ou Adresse" required>
         </div>
-        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Connexion</button>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Créer mon compte</button>
       </form>
     </div>
   </section>
@@ -65,6 +102,10 @@
           <a href="#" class="nav-item" data-target="view-stores">
             <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             Magasins
+          </a>
+          <a href="#" class="nav-item" data-target="view-feedback">
+            <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            Avis & Réclamations
           </a>
         </nav>
         <div class="sidebar-footer">
@@ -101,8 +142,8 @@
           <div id="view-home" class="view-content active">
             <div class="grid-strict">
               
-              <!-- Premium Wallet Card -->
-              <div class="col-6">
+              <!-- Premium Wallet Card & Last Purchase -->
+              <div class="col-6" style="display: flex; flex-direction: column; gap: 24px;">
                 <div class="wallet-cc tier-silver" id="wallet-card-home">
                   <div class="wallet-header">
                     <div class="logo-main" style="color: inherit; font-size: 20px;">franprix<span>.</span></div>
@@ -118,6 +159,23 @@
                       <span class="text-xs" style="opacity:0.8;">MEMBRE</span>
                       <div id="home-status-badge" style="font-weight: 900; font-size: 20px; text-transform: uppercase;">Silver</div>
                     </div>
+                  </div>
+                </div>
+                
+                <!-- Last Purchase Cashback Widget -->
+                <div class="card interactive" style="padding: 24px; background: linear-gradient(135deg, #FFFBEB, #FFFFFF); border-color: var(--p-yellow);">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                    <div>
+                      <h4 style="font-size: 16px;">Dernier achat</h4>
+                      <p class="muted text-sm" style="margin-top: 4px;">Franprix Maarif</p>
+                    </div>
+                    <div style="text-align: right;">
+                      <div style="color: var(--p-orange); font-weight: 900; font-size: 20px;">+10,50 MAD</div>
+                      <div class="text-xs muted">Gagné</div>
+                    </div>
+                  </div>
+                  <div style="background: white; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 600; color: var(--text-main); display: flex; gap: 8px; align-items: center; line-height: 1.4;">
+                    <span>💡</span> Dépensez 80 MAD lors de votre prochain passage pour débloquer un booster mystère !
                   </div>
                 </div>
               </div>
@@ -161,17 +219,17 @@
               <div class="col-8" style="display: flex; flex-direction: column; gap: 24px;">
                 <h3 style="font-size: 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px;">Vos Boosters Recommandés</h3>
                 
-                <div class="offer-card premium-booster interactive">
+                <div class="offer-card premium-booster interactive booster-item" data-tier="gold">
                   <div class="offer-badge">HOT</div>
                   <div class="offer-icon">🥤</div>
                   <div class="offer-content">
                     <div class="offer-title" style="color: white;">Mega Booster Coca-Cola</div>
-                    <div class="offer-desc">Achetez 2 packs de Coca-Cola Zero et recevez immédiatement 20 MAD sur votre cagnotte.</div>
+                    <div class="offer-desc">Achetez 2 packs de Coca-Cola Zero et recevez immédiatement 20 MAD sur votre cagnotte. <strong style="color: var(--p-orange);">[GOLD]</strong></div>
                   </div>
                   <button class="btn btn-brand btn-act-booster">Activer le booster</button>
                 </div>
                 
-                <div class="offer-card interactive">
+                <div class="offer-card interactive booster-item" data-tier="silver">
                   <div class="offer-icon">🥐</div>
                   <div class="offer-content">
                     <div class="offer-title">Menu Petit Déjeuner express</div>
@@ -237,9 +295,13 @@
                   </div>
                 </div>
 
-                <div style="display: flex; gap: 20px; margin-top: 48px;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 48px;">
+                  <button id="btn-pin-action" class="btn btn-outline" style="padding: 16px 32px; border-radius: 100px;">
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Créer mon code PIN
+                  </button>
                   <button class="btn btn-primary" style="padding: 16px 32px; border-radius: 100px;">Historique des points</button>
-                  <button class="btn btn-outline" style="padding: 16px 32px; border-radius: 100px;">Convertir en don</button>
+                  <button class="btn btn-ghost" style="padding: 16px 32px; border-radius: 100px;">Convertir en don</button>
                 </div>
               </div>
             </div>
@@ -251,7 +313,7 @@
               <div class="card col-12">
                 <h3 style="margin-bottom: 24px;">Vos Boosters & Offres Personnalisées</h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px;">
-                  <div class="offer-card interactive">
+                  <div class="offer-card interactive booster-item" data-tier="silver">
                     <div class="offer-icon">🍎</div>
                     <div class="offer-content">
                       <div class="offer-title">Le Plein de Vitamines</div>
@@ -259,13 +321,21 @@
                     </div>
                     <button class="btn btn-outline btn-act-booster">Activer</button>
                   </div>
-                  <div class="offer-card interactive">
+                  <div class="offer-card interactive booster-item" data-tier="gold">
                     <div class="offer-icon">🧀</div>
                     <div class="offer-content">
                       <div class="offer-title">Fromagerie x2</div>
-                      <div class="offer-desc">Cashback doublé sur tous les fromages locaux.</div>
+                      <div class="offer-desc">Cashback doublé sur tous les fromages locaux. <strong style="color: var(--p-orange);">[GOLD]</strong></div>
                     </div>
                     <button class="btn btn-outline btn-act-booster">Activer</button>
+                  </div>
+                  <div class="offer-card premium-booster interactive booster-item" data-tier="titanium">
+                    <div class="offer-icon">🥩</div>
+                    <div class="offer-content">
+                      <div class="offer-title">Boucherie Premium</div>
+                      <div class="offer-desc">Cashback x3 sur les viandes nobles. <strong style="color: var(--p-yellow);">[TITANIUM]</strong></div>
+                    </div>
+                    <button class="btn btn-brand btn-act-booster">Activer</button>
                   </div>
                 </div>
               </div>
@@ -314,6 +384,47 @@
             </div>
           </div>
 
+          <!-- VIEW: FEEDBACK -->
+          <div id="view-feedback" class="view-content">
+            <div class="grid-strict">
+              <div class="card col-12" style="max-width: 600px; margin: 0 auto; padding: 48px;">
+                <h3 style="margin-bottom: 8px;">Votre avis compte</h3>
+                <p class="muted" style="margin-bottom: 32px;">Partagez votre expérience ou signalez-nous un problème en magasin.</p>
+                
+                <form id="feedback-form">
+                  <div style="margin-bottom: 24px;">
+                    <label style="font-weight: 700; margin-bottom: 12px; display: block;">Comment évaluez-vous votre dernière visite ?</label>
+                    <div id="fb-stars" style="display: flex; gap: 8px; font-size: 36px; color: var(--border); cursor: pointer; transition: 0.2s;">
+                      <span class="fb-star" data-val="1">★</span>
+                      <span class="fb-star" data-val="2">★</span>
+                      <span class="fb-star" data-val="3">★</span>
+                      <span class="fb-star" data-val="4">★</span>
+                      <span class="fb-star" data-val="5">★</span>
+                    </div>
+                  </div>
+                  
+                  <div style="margin-bottom: 24px;">
+                    <label style="font-weight: 700; margin-bottom: 12px; display: block;">Type de message</label>
+                    <div style="display: flex; gap: 12px;">
+                      <label id="lbl-avis" style="flex: 1; border: 2px solid var(--p-orange); border-radius: var(--radius-sm); padding: 12px; text-align: center; font-weight: 700; color: var(--p-orange); cursor: pointer; background: #FFFBEB; transition: 0.2s;">
+                        <input type="radio" name="fb_type" value="avis" checked style="display: none;"> Avis
+                      </label>
+                      <label id="lbl-reclamation" style="flex: 1; border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; font-weight: 700; color: var(--text-muted); cursor: pointer; background: white; transition: 0.2s;">
+                        <input type="radio" name="fb_type" value="reclamation" style="display: none;"> Réclamation
+                      </label>
+                    </div>
+                  </div>
+
+                  <div style="margin-bottom: 32px;">
+                    <textarea placeholder="Dites-nous tout..." style="width: 100%; height: 120px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: inherit; font-size: 16px; outline: none; resize: none; transition: 0.3s;" required></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Envoyer mon message</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
         </div>
       </main>
 
@@ -330,6 +441,9 @@
         </a>
         <a href="#" class="b-nav-item" data-target="view-stores">
           <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        </a>
+        <a href="#" class="b-nav-item" data-target="view-feedback">
+          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
         </a>
       </nav>
 
