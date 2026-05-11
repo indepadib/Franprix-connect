@@ -62,21 +62,23 @@ function init() {
   };
 
   bindEvents();
-  updateUI();
-  renderBarcodes();
 
-  // Greeting
-  const h = new Date().getHours();
-  const greeting = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
-  const greetEl = document.getElementById('smart-greeting');
-  if (greetEl) greetEl.textContent = `${greeting}, ${state.user.firstName}. Voici vos avantages.`;
-  const headerName = document.getElementById('header-name');
-  const avatarLetter = document.getElementById('avatar-letter');
-  if (headerName) headerName.textContent = state.user.firstName;
-  if (avatarLetter) avatarLetter.textContent = state.user.firstName[0];
+  try {
+    updateUI();
+    renderBarcodes();
 
-  // Profile view rendering
-  renderProfileView();
+    // Greeting
+    const h = new Date().getHours();
+    const greeting = h < 12 ? 'Bonjour' : h < 18 ? 'Bon apr\u00e8s-midi' : 'Bonsoir';
+    const greetEl = document.getElementById('smart-greeting');
+    if (greetEl) greetEl.textContent = `${greeting}, ${state.user.firstName}. Voici vos avantages.`;
+    const headerName = document.getElementById('header-name');
+    const avatarLetter = document.getElementById('avatar-letter');
+    if (headerName) headerName.textContent = state.user.firstName;
+    if (avatarLetter) avatarLetter.textContent = state.user.firstName[0];
+
+    renderProfileView();
+  } catch(e) { console.error('Init UI error:', e); }
 
   // Feedback stars
   const fbStars = document.querySelectorAll('.fb-star');
@@ -86,17 +88,16 @@ function init() {
     star.addEventListener('click', () => { const v = +star.dataset.val; fbStars.forEach(s => { if (+s.dataset.val <= v) { s.style.color = 'var(--p-orange)'; s.classList.add('selected'); } else { s.style.color = ''; s.classList.remove('selected'); } }); });
   });
 
-  // Feedback radio toggles
   document.querySelectorAll('input[name="fb_type"]').forEach(r => r.addEventListener('change', e => {
     const lblA = document.getElementById('lbl-avis'), lblR = document.getElementById('lbl-reclamation');
+    if (!lblA || !lblR) return;
     if (e.target.value === 'avis') { lblA.style.borderColor = 'var(--p-orange)'; lblA.style.background = '#FFFBEB'; lblA.style.color = 'var(--p-orange)'; lblR.style.borderColor = 'var(--border)'; lblR.style.background = 'white'; lblR.style.color = 'var(--text-muted)'; }
     else { lblR.style.borderColor = 'var(--p-orange)'; lblR.style.background = '#FFFBEB'; lblR.style.color = 'var(--p-orange)'; lblA.style.borderColor = 'var(--border)'; lblA.style.background = 'white'; lblA.style.color = 'var(--text-muted)'; }
   }));
 
   document.getElementById('feedback-form')?.addEventListener('submit', e => { e.preventDefault(); alert('Merci pour votre retour !'); e.target.reset(); fbStars.forEach(s => { s.style.color = ''; s.classList.remove('selected'); }); });
 
-  // Initial Animation
-  gsap.from(".logo-main", { opacity: 0, scale: 0.9, duration: 1, ease: "expo.out" });
+  try { gsap.from(".logo-main", { opacity: 0, scale: 0.9, duration: 1, ease: "expo.out" }); } catch(e) {}
 }
 
 function bindEvents() {
@@ -364,4 +365,4 @@ function renderProfileView() {
 }
 
 // Start
-init();
+document.addEventListener('DOMContentLoaded', init);
