@@ -70,8 +70,10 @@ function init() {
   const greeting = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
   const greetEl = document.getElementById('smart-greeting');
   if (greetEl) greetEl.textContent = `${greeting}, ${state.user.firstName}. Voici vos avantages.`;
-  document.getElementById('header-name').textContent = state.user.firstName;
-  document.getElementById('avatar-letter').textContent = state.user.firstName[0];
+  const headerName = document.getElementById('header-name');
+  const avatarLetter = document.getElementById('avatar-letter');
+  if (headerName) headerName.textContent = state.user.firstName;
+  if (avatarLetter) avatarLetter.textContent = state.user.firstName[0];
 
   // Profile view rendering
   renderProfileView();

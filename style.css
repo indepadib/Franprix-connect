@@ -129,7 +129,8 @@ body {
   font-size: 28px; font-weight: 900; letter-spacing: -1.5px;
   color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 4px;
 }
-.logo-main span { color: var(--p-orange); }
+.logo-main span:first-of-type { color: var(--p-orange); }
+.logo-main span:last-of-type { color: var(--text-main); font-weight: 700; }
 
 .nav-links { margin-top: 48px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .nav-item {
