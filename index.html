@@ -10,6 +10,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Ambient Background for Pro-Max Light Theme -->
+  <div class="ambient-bg">
+    <div class="ambient-blob blob-1"></div>
+    <div class="ambient-blob blob-2"></div>
+    <div class="ambient-blob blob-3"></div>
+  </div>
 
   <!-- 1. LANDING -->
   <section id="global-landing" class="global-view active">
@@ -35,22 +41,35 @@
         <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Recevoir le code</button>
       </form>
 
-      <!-- Step 2: OTP -->
-      <form id="auth-step-otp" class="auth-step" style="display: none; background: white; padding: 48px; border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow);">
+      <!-- Step 2: Password (For existing full users) -->
+      <form id="auth-step-password" class="auth-step" style="display: none; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(40px); padding: 48px; border: 1px solid rgba(255,255,255,0.8); border-radius: 32px; width: 100%; max-width: 440px; box-shadow: var(--shadow-glass);">
+        <button type="button" id="btn-back-phone-pw" class="btn-ghost" style="margin-bottom: 24px; border: none; font-weight: 700; padding: 0; display: inline-block;">&larr; Retour</button>
+        <div class="avatar-square" style="margin: 0 auto 24px auto; width: 64px; height: 64px; font-size: 24px; border-radius: 20px;" id="auth-avatar">A</div>
+        <h2 style="text-align: center; margin-bottom: 8px;">Rebonjour !</h2>
+        <p class="muted" style="text-align: center; margin-bottom: 32px;">Saisissez votre code secret</p>
+        <div class="input-group" style="margin-bottom: 32px;">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <input type="password" id="auth-password-input" placeholder="Code secret" required>
+        </div>
+        <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Connexion</button>
+      </form>
+
+      <!-- Step 3: OTP -->
+      <form id="auth-step-otp" class="auth-step" style="display: none; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(40px); padding: 48px; border: 1px solid rgba(255,255,255,0.8); border-radius: 32px; width: 100%; max-width: 440px; box-shadow: var(--shadow-glass);">
         <button type="button" id="btn-back-phone" class="btn-ghost" style="margin-bottom: 24px; border: none; font-weight: 700; padding: 0; display: inline-block;">&larr; Retour</button>
         <h2 style="margin-bottom: 8px;">Vérification</h2>
         <p class="muted" style="margin-bottom: 32px;">Un code a été envoyé au <strong id="display-phone" style="color: var(--text-main);"></strong></p>
         <div class="otp-inputs" style="display: flex; gap: 12px; margin-bottom: 32px;">
-          <input type="text" class="otp-digit" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border: 2px solid var(--border); border-radius: var(--radius-sm); outline: none;">
-          <input type="text" class="otp-digit" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border: 2px solid var(--border); border-radius: var(--radius-sm); outline: none;">
-          <input type="text" class="otp-digit" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border: 2px solid var(--border); border-radius: var(--radius-sm); outline: none;">
-          <input type="text" class="otp-digit" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border: 2px solid var(--border); border-radius: var(--radius-sm); outline: none;">
+          <input type="text" class="otp-digit glass-input" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border-radius: 16px; outline: none;">
+          <input type="text" class="otp-digit glass-input" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border-radius: 16px; outline: none;">
+          <input type="text" class="otp-digit glass-input" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border-radius: 16px; outline: none;">
+          <input type="text" class="otp-digit glass-input" maxlength="1" required style="width: 64px; height: 64px; text-align: center; font-size: 24px; font-weight: 800; border-radius: 16px; outline: none;">
         </div>
         <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Vérifier</button>
       </form>
 
-      <!-- Step 3: Registration / Info -->
-      <form id="auth-step-register" class="auth-step" style="display: none; background: white; padding: 48px; border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 440px; box-shadow: var(--shadow);">
+      <!-- Step 4: Registration / Info -->
+      <form id="auth-step-register" class="auth-step" style="display: none; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(40px); padding: 48px; border: 1px solid rgba(255,255,255,0.8); border-radius: 32px; width: 100%; max-width: 440px; box-shadow: var(--shadow-glass);">
         <h2 style="margin-bottom: 8px;">Presque terminé !</h2>
         <p class="muted" style="margin-bottom: 32px;">Complétez votre profil pour finaliser la création.</p>
         <div style="display: flex; gap: 12px; margin-bottom: 16px;">
@@ -144,38 +163,54 @@
               
               <!-- Premium Wallet Card & Last Purchase -->
               <div class="col-6" style="display: flex; flex-direction: column; gap: 24px;">
-                <div class="wallet-cc tier-silver" id="wallet-card-home">
-                  <div class="wallet-header">
-                    <div class="logo-main" style="color: inherit; font-size: 20px;">franprix<span>.</span></div>
-                    <div class="card-logos">
-                      <span class="logo-chari">chari</span>
-                      <span class="logo-visa">VISA</span>
+                <div class="card-3d-wrapper">
+                  <div class="wallet-cc tier-silver" id="wallet-card-home">
+                    <div class="wallet-glow"></div>
+                    <div class="wallet-header">
+                      <div class="logo-main" style="color: inherit; font-size: 20px;">franprix<span>.</span></div>
+                      <div class="card-logos">
+                        <span class="logo-chari">chari</span>
+                        <span class="logo-visa">VISA</span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="wallet-amount" id="home-cagnotte">125,50 MAD</div>
-                  <div class="wallet-footer">
-                    <div class="barcode-box"><svg id="barcode-home"></svg></div>
-                    <div style="text-align: right;">
-                      <span class="text-xs" style="opacity:0.8;">MEMBRE</span>
-                      <div id="home-status-badge" style="font-weight: 900; font-size: 20px; text-transform: uppercase;">Silver</div>
+                    <div class="wallet-amount" id="home-cagnotte">125,50 MAD</div>
+                    <div class="wallet-footer">
+                      <div class="barcode-box"><svg id="barcode-home"></svg></div>
+                      <div style="text-align: right;">
+                        <span class="text-xs" style="opacity:0.8;">MEMBRE</span>
+                        <div id="home-status-badge" style="font-weight: 900; font-size: 20px; text-transform: uppercase;">Silver</div>
+                      </div>
                     </div>
                   </div>
                 </div>
                 
+                <button class="btn btn-dark-wallet" style="width: 100%; margin-top: -8px;">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                  Ajouter au Wallet
+                </button>
+                
                 <!-- Last Purchase Cashback Widget -->
-                <div class="card interactive" style="padding: 24px; background: linear-gradient(135deg, #FFFBEB, #FFFFFF); border-color: var(--p-yellow);">
-                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                <div class="card glass-card interactive" style="padding: 24px;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px;">
                     <div>
                       <h4 style="font-size: 16px;">Dernier achat</h4>
                       <p class="muted text-sm" style="margin-top: 4px;">Franprix Maarif</p>
                     </div>
                     <div style="text-align: right;">
-                      <div style="color: var(--p-orange); font-weight: 900; font-size: 20px;">+10,50 MAD</div>
-                      <div class="text-xs muted">Gagné</div>
+                      <div style="color: var(--p-orange); font-weight: 900; font-size: 20px;" id="last-purchase-amount">120,00 MAD</div>
+                      <div class="text-xs muted">Gagné <span id="last-purchase-cashback" style="color: var(--text-main); font-weight: 900;">(1%)</span></div>
                     </div>
                   </div>
-                  <div style="background: white; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 600; color: var(--text-main); display: flex; gap: 8px; align-items: center; line-height: 1.4;">
-                    <span>💡</span> Dépensez 80 MAD lors de votre prochain passage pour débloquer un booster mystère !
+                  
+                  <div class="cashback-predictor" style="background: rgba(255,255,255,0.6); padding: 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.8);">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; margin-bottom: 8px;">
+                      <span>Palier Actuel</span>
+                      <span style="color: var(--p-orange);">Prochain Palier (3%)</span>
+                    </div>
+                    <div class="progress-track" style="background: rgba(0,0,0,0.05); height: 8px; margin-bottom: 12px;"><div id="cb-fill" class="progress-fill" style="width: 80%; background: linear-gradient(90deg, var(--p-orange), var(--p-yellow));"></div></div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--text-main); line-height: 1.4;" id="cb-hint-text">
+                      <span>💡</span> Encore <strong style="color: var(--p-orange);">30 MAD</strong> pour débloquer 3% de cashback sur votre ticket.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -277,23 +312,31 @@
               <div class="card col-12" style="display: flex; flex-direction: column; align-items: center; padding: 60px 20px; text-align: center;">
                 <h2 style="margin-bottom: 40px;">Votre Carte Franprix Connect</h2>
                 
-                <div class="wallet-cc tier-silver" id="wallet-card-full" style="width: 100%; max-width: 480px;">
-                  <div class="wallet-header">
-                    <div class="logo-main" style="color: inherit; font-size: 24px;">franprix<span>.</span></div>
-                    <div class="card-logos">
-                      <span class="logo-chari" style="font-size: 24px;">chari</span>
-                      <span class="logo-visa" style="font-size: 28px;">VISA</span>
+                <div class="card-3d-wrapper" style="width: 100%; max-width: 480px; margin: 0 auto;">
+                  <div class="wallet-cc tier-silver" id="wallet-card-full">
+                    <div class="wallet-glow"></div>
+                    <div class="wallet-header">
+                      <div class="logo-main" style="color: inherit; font-size: 24px;">franprix<span>.</span></div>
+                      <div class="card-logos">
+                        <span class="logo-chari" style="font-size: 24px;">chari</span>
+                        <span class="logo-visa" style="font-size: 28px;">VISA</span>
+                      </div>
                     </div>
-                  </div>
-                  <div id="wallet-balance-full" class="wallet-amount" style="font-size: 64px;">125,50 MAD</div>
-                  <div class="wallet-footer">
-                    <div class="barcode-box" style="padding: 16px 24px;"><svg id="barcode-full"></svg></div>
-                    <div style="text-align: right;">
-                      <span class="text-xs" style="opacity:0.8;">MEMBRE</span>
-                      <div id="full-status-badge" style="font-weight: 900; font-size: 24px; text-transform: uppercase;">Silver</div>
+                    <div id="wallet-balance-full" class="wallet-amount" style="font-size: 56px;">125,50 MAD</div>
+                    <div class="wallet-footer">
+                      <div class="barcode-box" style="padding: 12px 20px;"><svg id="barcode-full"></svg></div>
+                      <div style="text-align: right;">
+                        <span class="text-xs" style="opacity:0.8;">MEMBRE</span>
+                        <div id="full-status-badge" style="font-weight: 900; font-size: 24px; text-transform: uppercase;">Silver</div>
+                      </div>
                     </div>
                   </div>
                 </div>
+                
+                <button class="btn btn-dark-wallet" style="margin-top: 32px; padding: 16px 32px; font-size: 16px; border-radius: 100px;">
+                  <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                  Ajouter au Wallet
+                </button>
 
                 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 48px;">
                   <button id="btn-pin-action" class="btn btn-outline" style="padding: 16px 32px; border-radius: 100px;">

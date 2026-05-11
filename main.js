@@ -15,28 +15,30 @@ const state = {
   }
 };
 
-const els = {
-  views: document.querySelectorAll('.global-view'),
-  navItems: document.querySelectorAll('.nav-item, .b-nav-item'),
-  viewContents: document.querySelectorAll('.view-content'),
-  
-  // Dashboard
-  ltvFill: document.getElementById('ltv-fill'),
-  homeCagnotte: document.getElementById('home-cagnotte'),
-  statusBadge: document.getElementById('home-status-badge'),
-  walletFullBadge: document.getElementById('full-status-badge'),
-  ltvHint: document.getElementById('ltv-hint'),
-  walletFull: document.getElementById('wallet-balance-full'),
-  
-  // Cards
-  cardHome: document.getElementById('wallet-card-home'),
-  cardFull: document.getElementById('wallet-card-full'),
-  
-  // Interactions
-  boosterBtns: document.querySelectorAll('.btn-act-booster')
-};
+let els = {};
 
 function init() {
+  els = {
+    views: document.querySelectorAll('.global-view'),
+    navItems: document.querySelectorAll('.nav-item, .b-nav-item'),
+    viewContents: document.querySelectorAll('.view-content'),
+    
+    // Dashboard
+    ltvFill: document.getElementById('ltv-fill'),
+    homeCagnotte: document.getElementById('home-cagnotte'),
+    statusBadge: document.getElementById('home-status-badge'),
+    walletFullBadge: document.getElementById('full-status-badge'),
+    ltvHint: document.getElementById('ltv-hint'),
+    walletFull: document.getElementById('wallet-balance-full'),
+    
+    // Cards
+    cardHome: document.getElementById('wallet-card-home'),
+    cardFull: document.getElementById('wallet-card-full'),
+    
+    // Interactions
+    boosterBtns: document.querySelectorAll('.btn-act-booster')
+  };
+
   bindEvents();
   updateUI();
   
@@ -51,22 +53,50 @@ function bindEvents() {
   
   // --- AUTHENTICATION FLOW ---
   const authPhone = document.getElementById('auth-step-phone');
+  const authPassword = document.getElementById('auth-step-password');
   const authOtp = document.getElementById('auth-step-otp');
   const authRegister = document.getElementById('auth-step-register');
   
   authPhone?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const phone = document.getElementById('auth-phone-input').value;
+    const phone = document.getElementById('auth-phone-input').value.replace(/\s+/g, '');
     document.getElementById('display-phone').textContent = phone;
     
-    // Switch to OTP
     authPhone.classList.remove('active');
-    setTimeout(() => { authPhone.style.display = 'none'; authOtp.style.display = 'block'; setTimeout(() => authOtp.classList.add('active'), 50); }, 300);
+    
+    setTimeout(() => { 
+      authPhone.style.display = 'none';
+      
+      if (phone === '0611111111') {
+        // Full User -> Password
+        authPassword.style.display = 'block'; 
+        setTimeout(() => authPassword.classList.add('active'), 50);
+      } else {
+        // Partial or New -> OTP
+        authOtp.style.display = 'block'; 
+        setTimeout(() => authOtp.classList.add('active'), 50);
+        
+        // Store phone globally for next step logic
+        state.tempPhone = phone;
+      }
+    }, 300);
   });
 
   document.getElementById('btn-back-phone')?.addEventListener('click', () => {
     authOtp.classList.remove('active');
     setTimeout(() => { authOtp.style.display = 'none'; authPhone.style.display = 'block'; setTimeout(() => authPhone.classList.add('active'), 50); }, 300);
+  });
+  
+  document.getElementById('btn-back-phone-pw')?.addEventListener('click', () => {
+    authPassword.classList.remove('active');
+    setTimeout(() => { authPassword.style.display = 'none'; authPhone.style.display = 'block'; setTimeout(() => authPhone.classList.add('active'), 50); }, 300);
+  });
+
+  authPassword?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    switchGlobal('global-app');
+    animateCards('view-home');
+    renderBarcodes();
   });
 
   // OTP Auto-focus
@@ -83,7 +113,32 @@ function bindEvents() {
   authOtp?.addEventListener('submit', (e) => {
     e.preventDefault();
     authOtp.classList.remove('active');
-    setTimeout(() => { authOtp.style.display = 'none'; authRegister.style.display = 'block'; setTimeout(() => authRegister.classList.add('active'), 50); }, 300);
+    
+    setTimeout(() => { 
+      authOtp.style.display = 'none'; 
+      authRegister.style.display = 'block'; 
+      setTimeout(() => authRegister.classList.add('active'), 50);
+      
+      // Logic for pre-filled data
+      const prenomInput = document.getElementById('reg-prenom');
+      const nomInput = document.getElementById('reg-nom');
+      
+      if (state.tempPhone === '0622222222') {
+        prenomInput.value = 'Hassan';
+        nomInput.value = 'El Idrissi';
+        prenomInput.setAttribute('disabled', 'true');
+        nomInput.setAttribute('disabled', 'true');
+        prenomInput.style.background = 'rgba(0,0,0,0.05)';
+        nomInput.style.background = 'rgba(0,0,0,0.05)';
+      } else {
+        prenomInput.value = '';
+        nomInput.value = '';
+        prenomInput.removeAttribute('disabled');
+        nomInput.removeAttribute('disabled');
+        prenomInput.style.background = '';
+        nomInput.style.background = '';
+      }
+    }, 300);
   });
 
   authRegister?.addEventListener('submit', (e) => {
@@ -208,11 +263,43 @@ function bindEvents() {
     e.target.reset();
     fbStars.forEach(s => s.classList.remove('active'));
   });
+
+  // --- 3D TILT EFFECT ---
+  const cards3D = document.querySelectorAll('.wallet-cc');
+  cards3D.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -12;
+      const rotateY = ((x - centerX) / centerX) * 12;
+      
+      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      
+      const glow = card.querySelector('.wallet-glow');
+      if(glow) {
+        glow.style.opacity = '1';
+        glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.6), transparent 60%)`;
+      }
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      const glow = card.querySelector('.wallet-glow');
+      if(glow) glow.style.opacity = '0';
+    });
+  });
 }
 
 function switchGlobal(id) {
-  els.views.forEach(v => v.classList.remove('active'));
-  document.getElementById(id)?.classList.add('active');
+  const allViews = document.querySelectorAll('.global-view');
+  allViews.forEach(v => v.classList.remove('active'));
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
+  }
   window.scrollTo(0,0);
 }
 
@@ -253,6 +340,51 @@ function updateUI() {
   
   if(els.ltvFill) {
     gsap.to(els.ltvFill, { width: `${percent}%`, duration: 1, ease: "power2.out" });
+  }
+
+  // --- PREDICTIVE CASHBACK LOGIC ---
+  const lastPurchase = 120; // Simulated last purchase amount
+  let cbPercent = 0;
+  let nextTarget = 0;
+  let cbNextPercent = 0;
+
+  if (lastPurchase < 150) {
+    cbPercent = 1;
+    nextTarget = 150;
+    cbNextPercent = 3;
+  } else if (lastPurchase < 300) {
+    cbPercent = 3;
+    nextTarget = 300;
+    cbNextPercent = 5;
+  } else {
+    cbPercent = 5;
+    nextTarget = Infinity;
+  }
+
+  const amtEl = document.getElementById('last-purchase-amount');
+  const txtEl = document.getElementById('last-purchase-cashback');
+  const hintEl = document.getElementById('cb-hint-text');
+  const fillEl = document.getElementById('cb-fill');
+
+  if(amtEl) amtEl.textContent = `${lastPurchase.toFixed(2).replace('.', ',')} MAD`;
+  if(txtEl) txtEl.textContent = `(${cbPercent}%)`;
+  
+  if(hintEl && fillEl) {
+    if(lastPurchase < 150) {
+      const to3 = 150 - lastPurchase;
+      const to5 = 300 - lastPurchase;
+      const progress = (lastPurchase / 150) * 100;
+      hintEl.innerHTML = `<span>💡</span> Il vous manquait <strong style="color: var(--p-orange);">${to3.toFixed(0)} MAD</strong> pour 3% et <strong style="color: var(--p-orange);">${to5.toFixed(0)} MAD</strong> pour 5% de cashback.`;
+      gsap.to(fillEl, { width: `${progress}%`, duration: 1, ease: "power2.out" });
+    } else if(lastPurchase < 300) {
+      const to5 = 300 - lastPurchase;
+      const progress = (lastPurchase / 300) * 100;
+      hintEl.innerHTML = `<span>💡</span> Il vous manquait <strong style="color: var(--p-orange);">${to5.toFixed(0)} MAD</strong> pour débloquer le palier de 5% de cashback.`;
+      gsap.to(fillEl, { width: `${progress}%`, duration: 1, ease: "power2.out" });
+    } else {
+      hintEl.innerHTML = `<span>✨</span> Félicitations ! Vous avez atteint le palier maximum de 5% de cashback.`;
+      fillEl.style.width = '100%';
+    }
   }
 
   if(els.ltvHint) {
