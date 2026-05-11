@@ -371,15 +371,15 @@
 
           <!-- VIEW: FEEDBACK -->
           <div id="view-feedback" class="view-content">
-            <div class="grid-strict">
-              <div class="card col-12" style="max-width: 600px; margin: 0 auto; padding: 48px;">
+            <div class="bento-grid">
+              <div class="span-12 bento-card" style="max-width: 640px; margin: 0 auto; padding: 48px;">
                 <h3 style="margin-bottom: 8px;">Votre avis compte</h3>
                 <p class="muted" style="margin-bottom: 32px;">Partagez votre expérience ou signalez-nous un problème en magasin.</p>
                 
                 <form id="feedback-form">
                   <div style="margin-bottom: 24px;">
                     <label style="font-weight: 700; margin-bottom: 12px; display: block;">Comment évaluez-vous votre dernière visite ?</label>
-                    <div id="fb-stars" style="display: flex; gap: 8px; font-size: 36px; color: var(--border); cursor: pointer; transition: 0.2s;">
+                    <div id="fb-stars" style="display: flex; gap: 8px; font-size: 36px; color: var(--border); cursor: pointer;">
                       <span class="fb-star" data-val="1">★</span>
                       <span class="fb-star" data-val="2">★</span>
                       <span class="fb-star" data-val="3">★</span>
@@ -404,28 +404,27 @@
                     <textarea placeholder="Dites-nous tout..." style="width: 100%; height: 120px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: inherit; font-size: 16px; outline: none; resize: none; transition: 0.3s;" required></textarea>
                   </div>
 
-                  <button type="submit" class="btn btn-brand" style="width: 100%; padding: 18px;">Envoyer mon message</button>
+                  <button type="submit" class="btn btn-orange" style="width: 100%; padding: 18px;">Envoyer mon message</button>
                 </form>
               </div>
             </div>
           </div>
 
         </div>
-      </main>
+      </div>
 
-      <!-- Bottom Nav (Mobile) -->
-      <nav class="bottom-nav">
-        <a href="#" class="b-nav-item active" data-target="view-home">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <nav class="mobile-nav">
+        <a href="#" class="m-nav-item active" data-target="view-home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
         </a>
-        <a href="#" class="b-nav-item" data-target="view-wallet">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <a href="#" class="m-nav-item" data-target="view-wallet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
         </a>
-        <a href="#" class="b-nav-item" data-target="view-promos">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+        <a href="#" class="m-nav-item" data-target="view-promos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
         </a>
-        <a href="#" class="b-nav-item" data-target="view-feedback">
-          <svg class="icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        <a href="#" class="m-nav-item" data-target="view-profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
         </a>
       </nav>
 
@@ -434,6 +433,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-  <script type="module" src="main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

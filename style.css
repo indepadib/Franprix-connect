@@ -284,6 +284,15 @@ body {
 }
 .auth-input:focus { border-color: var(--p-orange); box-shadow: 0 0 0 4px rgba(243, 146, 0, 0.1); }
 
+/* Utility */
+.muted { color: var(--text-muted); }
+.header-actions { display: flex; align-items: center; gap: 12px; }
+.sidebar-footer { margin-top: auto; border-top: 1px solid var(--border); padding-top: 16px; }
+
+/* Feedback Stars */
+.fb-star { transition: transform 0.15s ease, color 0.15s ease; }
+.fb-star:hover { transform: scale(1.2); }
+
 /* --- RESPONSIVE --- */
 .mobile-nav { display: none; }
 
