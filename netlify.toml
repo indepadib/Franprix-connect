@@ -1,8 +1,7 @@
 [build]
-  command = "npm run build"
-  publish = "dist"
+  publish = "."
 
-[build.environment]
-  # Forcer le plugin Next.js à s'ignorer lui-même puisqu'il est installé dans l'UI
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
-  NEXT_PLUGIN_FORCE_RUN = "false"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache"
