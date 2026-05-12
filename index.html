@@ -3,433 +3,527 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Franprix Connect x Chari</title>
+  <title>Franprix Connect — Programme de fidélité</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Ambient Background -->
-  <div class="ambient-bg">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+<div class="ambient-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+
+<!-- MODALS -->
+<div id="modal-overlay" class="modal-overlay" style="display:none">
+  <div id="modal-box" class="modal-box"></div>
+</div>
+
+<!-- 1. LANDING -->
+<section id="global-landing" class="global-view active">
+  <div class="landing-layout">
+    <div class="landing-left">
+      <div class="landing-logo">franprix<span>.</span>connect</div>
+      <h1 class="landing-headline">Votre fidélité<br><span class="text-orange">récompensée</span> à chaque achat.</h1>
+      <p class="landing-sub">Cashback instantané, offres exclusives et avantages premium dans tous vos magasins Franprix & Monoprix au Maroc.</p>
+      <div class="landing-stats">
+        <div class="lstat"><div class="lstat-val">47K+</div><div class="lstat-lbl">membres actifs</div></div>
+        <div class="lstat-sep"></div>
+        <div class="lstat"><div class="lstat-val">2.4M</div><div class="lstat-lbl">MAD reversés</div></div>
+        <div class="lstat-sep"></div>
+        <div class="lstat"><div class="lstat-val">6</div><div class="lstat-lbl">magasins partenaires</div></div>
+      </div>
+      <div class="landing-badges">
+        <div class="lbadge">💳 Cashback 1% → 5%</div>
+        <div class="lbadge">🎁 Boosters fournisseurs</div>
+        <div class="lbadge">📱 Carte digitale</div>
+      </div>
+      <button id="btn-goto-login" class="btn btn-orange" style="width:100%;padding:20px;font-size:17px;margin-top:32px;">Accéder à mon espace</button>
+      <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--text-muted)">Vous n'avez pas de compte ? L'inscription est gratuite et prend 2 minutes.</p>
+    </div>
+    <div class="landing-right">
+      <div class="landing-card-stack">
+        <div class="wallet-card tier-titanium lc-back">
+          <div class="card-top"><div class="card-brand">franprix<span>.</span></div><div class="card-logos"><span style="font-weight:900;font-size:13px;letter-spacing:-0.5px;opacity:0.8">chari</span><span class="logo-v">VISA</span></div></div>
+          <div class="card-amount">328,00 MAD</div>
+          <div class="card-footer"><div class="barcode-box" style="height:36px;width:120px;background:rgba(255,255,255,0.15);border-radius:8px"></div><div style="font-weight:900;font-size:14px;opacity:0.8">TITANIUM</div></div>
+        </div>
+        <div class="wallet-card tier-gold lc-mid">
+          <div class="card-top"><div class="card-brand">franprix<span>.</span></div><div class="card-logos"><span style="font-weight:900;font-size:13px;letter-spacing:-0.5px">chari</span><span class="logo-v">VISA</span></div></div>
+          <div class="card-amount">89,50 MAD</div>
+          <div class="card-footer"><div class="barcode-box" style="height:36px;width:120px;background:rgba(255,255,255,0.3);border-radius:8px"></div><div style="font-weight:900;font-size:14px">GOLD</div></div>
+        </div>
+        <div class="wallet-card tier-silver lc-front">
+          <div class="card-top"><div class="card-brand">franprix<span>.</span></div><div class="card-logos"><span style="font-weight:900;font-size:13px;letter-spacing:-0.5px">chari</span><span class="logo-v">VISA</span></div></div>
+          <div class="card-amount">125,50 MAD</div>
+          <div class="card-footer"><div class="barcode-box" style="height:36px;width:120px;background:rgba(255,255,255,0.5);border-radius:8px"></div><div style="font-weight:900;font-size:14px">SILVER</div></div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <!-- 1. LANDING VIEW -->
-  <section id="global-landing" class="global-view active">
-    <div class="auth-container">
-      <div class="auth-box">
-        <h1 class="logo-main" style="font-size: 48px; justify-content: center; margin-bottom: 16px;">franprix<span>.</span><span>connect</span></h1>
-        <p class="muted" style="margin-bottom: 48px; font-weight: 700;">Votre compagnon retail premium.</p>
-        <button id="btn-goto-login" class="btn btn-orange" style="width: 100%; padding: 20px;">Accéder à mon espace</button>
+<!-- 2. AUTH -->
+<section id="global-auth" class="global-view">
+  <div class="auth-container">
+    <!-- Step 1: Phone -->
+    <form id="auth-step-phone" class="auth-box auth-step active">
+      <div class="auth-logo">franprix<span>.</span>connect</div>
+      <h2 style="margin-bottom:8px;font-size:24px">Bienvenue</h2>
+      <p class="muted" style="margin-bottom:32px">Entrez votre numéro pour continuer</p>
+      <input type="tel" id="auth-phone-input" class="auth-input" placeholder="+212 6 XX XX XX XX" required style="margin-bottom:20px">
+      <button type="submit" class="btn btn-orange" style="width:100%">Continuer</button>
+      <button type="button" onclick="switchGlobal('global-landing')" class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:13px">← Retour</button>
+    </form>
+    <!-- Step 2: OTP -->
+    <form id="auth-step-otp" class="auth-box auth-step" style="display:none">
+      <div class="auth-logo">franprix<span>.</span>connect</div>
+      <h2 style="margin-bottom:8px">Vérification</h2>
+      <p class="muted" style="margin-bottom:32px">Code envoyé au <strong id="display-phone" style="color:var(--text-main)">...</strong></p>
+      <div style="display:flex;gap:12px;justify-content:center;margin-bottom:28px">
+        <input type="text" maxlength="1" class="otp-digit auth-input" style="width:60px;text-align:center;font-size:24px;font-weight:900">
+        <input type="text" maxlength="1" class="otp-digit auth-input" style="width:60px;text-align:center;font-size:24px;font-weight:900">
+        <input type="text" maxlength="1" class="otp-digit auth-input" style="width:60px;text-align:center;font-size:24px;font-weight:900">
+        <input type="text" maxlength="1" class="otp-digit auth-input" style="width:60px;text-align:center;font-size:24px;font-weight:900">
       </div>
-    </div>
-  </section>
-
-  <!-- 2. AUTH VIEW -->
-  <section id="global-auth" class="global-view">
-    <div class="auth-container">
-      <!-- Step: Phone -->
-      <form id="auth-step-phone" class="auth-box auth-step active">
-        <h2 style="margin-bottom: 8px;">Bienvenue</h2>
-        <p class="muted" style="margin-bottom: 32px;">Entrez votre numéro pour continuer</p>
-        <div style="margin-bottom: 24px;">
-          <input type="tel" id="auth-phone-input" class="auth-input" placeholder="+212 6 XX XX XX XX" required>
-        </div>
-        <button type="submit" class="btn btn-orange" style="width: 100%;">Continuer</button>
-      </form>
-
-      <!-- Step: Password (Existing User) -->
-      <form id="auth-step-password" class="auth-box auth-step" style="display: none;">
-        <h2 style="margin-bottom: 8px;">Mot de passe</h2>
-        <p class="muted" style="margin-bottom: 32px;">Saisissez votre code secret</p>
-        <div style="margin-bottom: 24px;">
-          <input type="password" id="auth-password-input" class="auth-input" placeholder="••••••" required>
-        </div>
-        <button type="submit" class="btn btn-orange" style="width: 100%;">Se connecter</button>
-        <button type="button" id="btn-back-phone-pw" class="btn btn-outline" style="width: 100%; margin-top: 12px;">Retour</button>
-      </form>
-
-      <!-- Step: OTP -->
-      <form id="auth-step-otp" class="auth-box auth-step" style="display: none;">
-        <h2 style="margin-bottom: 8px;">Vérification</h2>
-        <p class="muted" style="margin-bottom: 32px;">Code envoyé au <span id="display-phone" style="font-weight: 800; color: var(--text-main);">...</span></p>
-        <div style="display: flex; gap: 12px; margin-bottom: 32px; justify-content: center;">
-          <input type="text" maxlength="1" class="otp-digit auth-input" style="width: 60px; text-align: center;">
-          <input type="text" maxlength="1" class="otp-digit auth-input" style="width: 60px; text-align: center;">
-          <input type="text" maxlength="1" class="otp-digit auth-input" style="width: 60px; text-align: center;">
-          <input type="text" maxlength="1" class="otp-digit auth-input" style="width: 60px; text-align: center;">
-        </div>
-        <button type="submit" class="btn btn-orange" style="width: 100%;">Vérifier</button>
-        <button type="button" id="btn-back-phone" class="btn btn-outline" style="width: 100%; margin-top: 12px;">Changer de numéro</button>
-      </form>
-
-      <!-- Step: Register -->
-      <form id="auth-step-register" class="auth-box auth-step" style="display: none;">
-        <h2 style="margin-bottom: 8px;">Presque fini</h2>
-        <p class="muted" style="margin-bottom: 32px;">Complétez votre profil premium.</p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-          <input type="text" id="reg-prenom" class="auth-input" placeholder="Prénom" required>
-          <input type="text" id="reg-nom" class="auth-input" placeholder="Nom" required>
-        </div>
-        <div style="margin-bottom: 24px;">
-          <input type="email" id="reg-email" class="auth-input" placeholder="Email" required>
-        </div>
-        <button type="submit" class="btn btn-orange" style="width: 100%;">Créer mon compte</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- 3. MAIN APP VIEW -->
-  <section id="global-app" class="global-view">
-    <div class="app-layout">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <a href="#" class="logo-main">franprix<span>.</span><span>connect</span></a>
-        <nav class="nav-links">
-          <a href="#" class="nav-item active" data-target="view-home">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <span>Tableau de bord</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-wallet">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span>Ma Carte & PIN</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-promos">
-            <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-            <span>Boosters & Offres</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-receipts">
-            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-            <span>Mes Tickets</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-profile" style="margin-top: 32px; border-top: 1px solid var(--border); padding-top: 32px;">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span>Mon Profil</span>
-          </a>
-          <a href="#" class="nav-item" data-target="view-feedback">
-            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            <span>Réclamations</span>
-          </a>
-        </nav>
-        <div class="sidebar-footer">
-          <button id="btn-logout-sidebar" class="btn btn-outline" style="width: 100%; justify-content: flex-start; border: none; padding: 12px;">
-            <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; margin-right: 12px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-            <span>Déconnexion</span>
-          </button>
-        </div>
-      </aside>
-
-      <!-- Main Area -->
-      <div class="main-area">
-        <header class="header">
-          <div>
-            <h1 id="current-title" style="font-size: 24px; font-weight: 900;">Tableau de bord</h1>
-            <p id="smart-greeting" class="muted" style="font-size: 14px;">Bonjour, ravi de vous revoir.</p>
-          </div>
-          <div class="header-actions">
-            <button id="dev-toggle" class="btn btn-outline" style="padding: 8px 16px; font-size: 12px;">Admin</button>
-            <div class="user-badge">
-              <span style="font-weight: 700; font-size: 14px;" id="header-name">Adib</span>
-              <div class="avatar" id="avatar-letter">A</div>
-            </div>
-          </div>
-        </header>
-
-        <div class="view-container">
-          
-          <!-- Admin Controls (Floating/Hidden) -->
-          <div id="demo-controls" style="display: none; background: #18181B; color: white; padding: 24px; border-radius: 20px; margin-bottom: 32px;">
-            <h4 style="margin-bottom: 16px;">Demo Controls</h4>
-            <div style="display: flex; gap: 12px;">
-              <button data-ltv="150" class="btn btn-outline" style="background: transparent; color: white;">Silver</button>
-              <button data-ltv="650" class="btn btn-outline" style="background: transparent; color: white;">Gold</button>
-              <button data-ltv="1600" class="btn btn-outline" style="background: transparent; color: white;">Titanium</button>
-            </div>
-          </div>
-
-          <!-- VIEW: HOME -->
-          <div id="view-home" class="view-content active">
-            <div class="bento-grid">
-              
-              <!-- Card Widget -->
-              <div class="span-6" style="display: flex; flex-direction: column; gap: 24px;">
-                <div class="wallet-card-wrapper">
-                  <div class="wallet-card tier-silver" id="wallet-card-home">
-                    <div class="card-top">
-                      <div class="card-brand">franprix<span>.</span></div>
-                      <div class="card-logos">
-                        <span style="font-weight: 900; letter-spacing: -1px;">chari</span>
-                        <span class="logo-v">VISA</span>
-                      </div>
-                    </div>
-                    <div class="card-amount" id="home-cagnotte">125,50 MAD</div>
-                    <div class="card-footer">
-                      <div class="barcode-box"><svg id="barcode-home"></svg></div>
-                      <div style="text-align: right;">
-                        <div class="status-pill bg-orange-soft" id="home-status-badge">Silver</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button class="btn btn-black" style="width: 100%;">
-                  <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: white; fill: none;"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                  Ajouter à Apple Wallet
-                </button>
-              </div>
-
-              <!-- Stats & Progress -->
-              <div class="span-6 bento-card">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                  <div>
-                    <h3 style="font-size: 20px;">Objectif Gold</h3>
-                    <p class="muted" style="margin-top: 4px;">Dépensez encore <strong style="color: var(--p-orange);" id="ltv-needed">350 MAD</strong> pour 3% de cashback.</p>
-                  </div>
-                  <div class="icon-box" style="background: #FFF7ED; color: var(--p-orange);">★</div>
-                </div>
-                <div class="progress-container">
-                  <div class="progress-bar"><div id="ltv-fill" class="progress-fill" style="width: 35%;"></div></div>
-                  <div style="display: flex; justify-content: space-between; margin-top: 12px; font-size: 13px; font-weight: 700;">
-                    <span>Silver (1%)</span>
-                    <span class="muted">Gold (3%)</span>
-                  </div>
-                </div>
-                <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border);">
-                  <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="muted" style="font-size: 14px; font-weight: 600;">Dernier achat</span>
-                    <span style="font-weight: 800; color: var(--green);">+1,20 MAD</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Stats Row -->
-              <div class="span-12" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-                <div class="bento-card" style="padding: 20px;">
-                  <div class="muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Visites totales</div>
-                  <div style="font-size: 28px; font-weight: 900; margin-top: 6px;" id="stat-visits">47</div>
-                  <div style="font-size: 12px; color: var(--green); font-weight: 700; margin-top: 4px;">Fidèle depuis 2024</div>
-                </div>
-                <div class="bento-card" style="padding: 20px;">
-                  <div class="muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Panier moyen</div>
-                  <div style="font-size: 28px; font-weight: 900; margin-top: 6px;" id="stat-basket">89 <span style="font-size: 14px;">MAD</span></div>
-                  <div style="font-size: 12px; color: var(--green); font-weight: 700; margin-top: 4px;">+12% vs mois dernier</div>
-                </div>
-                <div class="bento-card" style="padding: 20px;">
-                  <div class="muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Points ce mois</div>
-                  <div style="font-size: 28px; font-weight: 900; color: var(--p-orange); margin-top: 6px;" id="stat-points">+34</div>
-                  <div style="font-size: 12px; color: var(--text-muted); font-weight: 700; margin-top: 4px;">MAD de cashback</div>
-                </div>
-              </div>
-
-              <!-- Active Missions -->
-              <div class="span-8 bento-card">
-                <h3 style="margin-bottom: 24px;">Missions en cours</h3>
-                <div style="display: flex; flex-direction: column; gap: 16px;">
-                  <div class="action-item">
-                    <div class="icon-box">🥛</div>
-                    <div style="flex: 1;">
-                      <h4 style="font-size: 16px;">Le défi laitier</h4>
-                      <p class="muted" style="font-size: 13px;">Achetez 3 packs de lait Centrale pour 10 MAD offerts.</p>
-                    </div>
-                    <div class="status-pill" style="background: #DCFCE7; color: #166534;">2/3</div>
-                  </div>
-                  <div class="action-item">
-                    <div class="icon-box">🥗</div>
-                    <div style="flex: 1;">
-                      <h4 style="font-size: 16px;">Fraîcheur locale</h4>
-                      <p class="muted" style="font-size: 13px;">50 MAD de fruits & légumes = 5 MAD cashback.</p>
-                    </div>
-                    <button class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">Activer</button>
-                  </div>
-                  <div class="action-item">
-                    <div class="icon-box">☕</div>
-                    <div style="flex: 1;">
-                      <h4 style="font-size: 16px;">Pause café</h4>
-                      <p class="muted" style="font-size: 13px;">5 cafés achetés = le 6ème offert.</p>
-                    </div>
-                    <div class="status-pill" style="background: #FFF7ED; color: #9A3412;">4/5</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Promo Banner -->
-              <div class="span-4 bento-card" style="background: var(--p-accent); color: white;">
-                <h3 style="margin-bottom: 12px; color: var(--p-yellow);">Catalogue de la semaine</h3>
-                <p style="font-size: 14px; opacity: 0.8; margin-bottom: 24px;">Découvrez nos 150 promos exclusives en magasin.</p>
-                <button class="btn btn-orange" style="width: 100%;">Consulter</button>
-                <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
-                  <div style="font-size: 12px; opacity: 0.5;">Magasin favori</div>
-                  <div style="font-weight: 700; margin-top: 4px;">Franprix Casa Maarif</div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- VIEW: WALLET -->
-          <div id="view-wallet" class="view-content">
-            <div class="bento-grid">
-              <div class="span-12 bento-card" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-                <h2 style="margin-bottom: 40px;">Ma Carte Franprix</h2>
-                <div class="wallet-card-wrapper" style="width: 100%; max-width: 500px;">
-                  <div class="wallet-card tier-silver" id="wallet-card-full" style="height: 300px;">
-                    <div class="card-top">
-                      <div class="card-brand" style="font-size: 28px;">franprix<span>.</span></div>
-                      <div class="card-logos"><span class="logo-v" style="font-size: 32px;">VISA</span></div>
-                    </div>
-                    <div class="card-amount" id="wallet-balance-full" style="font-size: 64px;">125,50 MAD</div>
-                    <div class="card-footer">
-                      <div class="barcode-box" style="padding: 12px 24px;"><svg id="barcode-full"></svg></div>
-                      <div id="full-status-badge" class="status-pill bg-orange-soft" style="font-size: 16px; padding: 10px 20px;">Silver</div>
-                    </div>
-                  </div>
-                </div>
-                <div style="margin-top: 48px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-                  <button id="btn-pin-action" class="btn btn-black">Modifier mon PIN</button>
-                  <button class="btn btn-outline">Historique détaillé</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- VIEW: PROMOS -->
-          <div id="view-promos" class="view-content">
-            <div class="bento-grid">
-              <div class="span-12">
-                <h2 style="margin-bottom: 24px;">Boosters de Fidélité</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
-                  <!-- Booster Silver -->
-                  <div class="bento-card booster-item" data-tier="silver">
-                    <div class="icon-box" style="margin-bottom: 16px;">☕</div>
-                    <h4>Pause Café</h4>
-                    <p class="muted" style="font-size: 14px; margin-top: 8px;">10% remboursés sur toutes les capsules café.</p>
-                    <button class="btn btn-orange btn-act-booster" style="width: 100%; margin-top: 24px;">Activer</button>
-                  </div>
-                  <!-- Booster Gold -->
-                  <div class="bento-card booster-item" data-tier="gold">
-                    <div class="icon-box" style="margin-bottom: 16px;">🍫</div>
-                    <h4>Gourmandise Gold</h4>
-                    <p class="muted" style="font-size: 14px; margin-top: 8px;">Doublez vos points sur le rayon chocolaterie.</p>
-                    <button class="btn btn-orange btn-act-booster" style="width: 100%; margin-top: 24px;">Activer</button>
-                  </div>
-                  <!-- Booster Titanium -->
-                  <div class="bento-card booster-item" data-tier="titanium">
-                    <div class="icon-box" style="margin-bottom: 16px;">🥩</div>
-                    <h4>Titanium Butcher</h4>
-                    <p class="muted" style="font-size: 14px; margin-top: 8px;">5% cashback immédiat sur la boucherie premium.</p>
-                    <button class="btn btn-orange btn-act-booster" style="width: 100%; margin-top: 24px;">Activer</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- VIEW: RECEIPTS -->
-          <div id="view-receipts" class="view-content">
-            <div class="bento-grid">
-              <div class="span-12 bento-card">
-                <h2 style="margin-bottom: 24px;">Mes Tickets Récents</h2>
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                  <div class="action-item">
-                    <div class="icon-box">🧾</div>
-                    <div style="flex: 1;"><h4 style="font-size: 16px;">Franprix Casa Maarif</h4><p class="muted" style="font-size: 13px;">10 Mai 2026 • 18:42 · 12 articles</p></div>
-                    <div style="text-align: right;"><div style="font-weight: 800;">245,00 MAD</div><div style="font-size: 12px; color: var(--green); font-weight: 700;">+2,45 MAD</div></div>
-                  </div>
-                  <div class="action-item">
-                    <div class="icon-box">🧾</div>
-                    <div style="flex: 1;"><h4 style="font-size: 16px;">Franprix Ain Diab</h4><p class="muted" style="font-size: 13px;">07 Mai 2026 • 14:15 · 8 articles</p></div>
-                    <div style="text-align: right;"><div style="font-weight: 800;">178,00 MAD</div><div style="font-size: 12px; color: var(--green); font-weight: 700;">+1,78 MAD</div></div>
-                  </div>
-                  <div class="action-item">
-                    <div class="icon-box">🧾</div>
-                    <div style="flex: 1;"><h4 style="font-size: 16px;">Franprix Casa Maarif</h4><p class="muted" style="font-size: 13px;">03 Mai 2026 • 11:30 · 5 articles</p></div>
-                    <div style="text-align: right;"><div style="font-weight: 800;">92,00 MAD</div><div style="font-size: 12px; color: var(--green); font-weight: 700;">+0,92 MAD</div></div>
-                  </div>
-                  <div class="action-item">
-                    <div class="icon-box">🧾</div>
-                    <div style="flex: 1;"><h4 style="font-size: 16px;">Franprix Rabat Agdal</h4><p class="muted" style="font-size: 13px;">28 Avr 2026 • 16:20 · 18 articles</p></div>
-                    <div style="text-align: right;"><div style="font-weight: 800;">312,00 MAD</div><div style="font-size: 12px; color: var(--green); font-weight: 700;">+9,36 MAD</div></div>
-                  </div>
-                  <div class="action-item">
-                    <div class="icon-box">🧾</div>
-                    <div style="flex: 1;"><h4 style="font-size: 16px;">Franprix Casa Maarif</h4><p class="muted" style="font-size: 13px;">22 Avr 2026 • 19:05 · 9 articles</p></div>
-                    <div style="text-align: right;"><div style="font-weight: 800;">156,00 MAD</div><div style="font-size: 12px; color: var(--green); font-weight: 700;">+1,56 MAD</div></div>
-                  </div>
-                </div>
-                <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between;">
-                  <div><span class="muted" style="font-size: 13px;">Total dépensé</span><div style="font-weight: 900; font-size: 20px;">983,00 MAD</div></div>
-                  <div style="text-align: right;"><span class="muted" style="font-size: 13px;">Total cashback</span><div style="font-weight: 900; font-size: 20px; color: var(--green);">+16,07 MAD</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- VIEW: PROFILE -->
-          <div id="view-profile" class="view-content"></div>
-
-          <!-- VIEW: FEEDBACK -->
-          <div id="view-feedback" class="view-content">
-            <div class="bento-grid">
-              <div class="span-12 bento-card" style="max-width: 640px; margin: 0 auto; padding: 48px;">
-                <h3 style="margin-bottom: 8px;">Votre avis compte</h3>
-                <p class="muted" style="margin-bottom: 32px;">Partagez votre expérience ou signalez-nous un problème en magasin.</p>
-                
-                <form id="feedback-form">
-                  <div style="margin-bottom: 24px;">
-                    <label style="font-weight: 700; margin-bottom: 12px; display: block;">Comment évaluez-vous votre dernière visite ?</label>
-                    <div id="fb-stars" style="display: flex; gap: 8px; font-size: 36px; color: var(--border); cursor: pointer;">
-                      <span class="fb-star" data-val="1">★</span>
-                      <span class="fb-star" data-val="2">★</span>
-                      <span class="fb-star" data-val="3">★</span>
-                      <span class="fb-star" data-val="4">★</span>
-                      <span class="fb-star" data-val="5">★</span>
-                    </div>
-                  </div>
-                  
-                  <div style="margin-bottom: 24px;">
-                    <label style="font-weight: 700; margin-bottom: 12px; display: block;">Type de message</label>
-                    <div style="display: flex; gap: 12px;">
-                      <label id="lbl-avis" style="flex: 1; border: 2px solid var(--p-orange); border-radius: var(--radius-sm); padding: 12px; text-align: center; font-weight: 700; color: var(--p-orange); cursor: pointer; background: #FFFBEB; transition: 0.2s;">
-                        <input type="radio" name="fb_type" value="avis" checked style="display: none;"> Avis
-                      </label>
-                      <label id="lbl-reclamation" style="flex: 1; border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; font-weight: 700; color: var(--text-muted); cursor: pointer; background: white; transition: 0.2s;">
-                        <input type="radio" name="fb_type" value="reclamation" style="display: none;"> Réclamation
-                      </label>
-                    </div>
-                  </div>
-
-                  <div style="margin-bottom: 32px;">
-                    <textarea placeholder="Dites-nous tout..." style="width: 100%; height: 120px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: inherit; font-size: 16px; outline: none; resize: none; transition: 0.3s;" required></textarea>
-                  </div>
-
-                  <button type="submit" class="btn btn-orange" style="width: 100%; padding: 18px;">Envoyer mon message</button>
-                </form>
-              </div>
-            </div>
-          </div>
-
-        </div>
+      <button type="submit" class="btn btn-orange" style="width:100%">Vérifier</button>
+      <button type="button" id="btn-back-phone" class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:13px">← Retour</button>
+    </form>
+    <!-- Step 3: Identité -->
+    <form id="auth-step-register" class="auth-box auth-step" style="display:none">
+      <div class="auth-logo">franprix<span>.</span>connect</div>
+      <div style="display:flex;justify-content:center;gap:6px;margin-bottom:28px">
+        <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div>
       </div>
-
-      <nav class="mobile-nav">
-        <a href="#" class="m-nav-item active" data-target="view-home">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-        </a>
-        <a href="#" class="m-nav-item" data-target="view-wallet">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-        </a>
-        <a href="#" class="m-nav-item" data-target="view-promos">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-        </a>
-        <a href="#" class="m-nav-item" data-target="view-profile">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </a>
+      <h2 style="margin-bottom:8px">Votre identité</h2>
+      <p class="muted" style="margin-bottom:24px">Étape 1/3 — Informations personnelles</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <input type="text" id="reg-prenom" class="auth-input" placeholder="Prénom" required>
+        <input type="text" id="reg-nom" class="auth-input" placeholder="Nom" required>
+      </div>
+      <label style="font-size:12px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px;text-align:left">Date de naissance</label>
+      <input type="date" id="reg-dob" class="auth-input" required style="margin-bottom:20px">
+      <button type="submit" class="btn btn-orange" style="width:100%">Continuer →</button>
+    </form>
+    <!-- Step 4: Contact -->
+    <form id="auth-step-contact" class="auth-box auth-step" style="display:none">
+      <div class="auth-logo">franprix<span>.</span>connect</div>
+      <div style="display:flex;justify-content:center;gap:6px;margin-bottom:28px">
+        <div class="step-dot reached"></div><div class="step-dot active"></div><div class="step-dot"></div>
+      </div>
+      <h2 style="margin-bottom:8px">Vos coordonnées</h2>
+      <p class="muted" style="margin-bottom:24px">Étape 2/3 — Contact & adresse</p>
+      <input type="email" id="reg-email" class="auth-input" placeholder="Email" required style="margin-bottom:12px">
+      <input type="text" id="reg-adresse" class="auth-input" placeholder="Adresse (rue, numéro)" required style="margin-bottom:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <input type="text" id="reg-ville" class="auth-input" placeholder="Ville" required>
+        <input type="text" id="reg-cp" class="auth-input" placeholder="Code postal">
+      </div>
+      <button type="submit" class="btn btn-orange" style="width:100%">Continuer →</button>
+    </form>
+    <!-- Step 5: Magasin favori -->
+    <form id="auth-step-store" class="auth-box auth-step" style="display:none">
+      <div class="auth-logo">franprix<span>.</span>connect</div>
+      <div style="display:flex;justify-content:center;gap:6px;margin-bottom:28px">
+        <div class="step-dot reached"></div><div class="step-dot reached"></div><div class="step-dot active"></div>
+      </div>
+      <h2 style="margin-bottom:8px">Votre magasin</h2>
+      <p class="muted" style="margin-bottom:24px">Étape 3/3 — Choisissez votre magasin favori</p>
+      <div class="store-grid">
+        <label class="store-card"><input type="radio" name="fav-store" value="Franprix Val-Fleuri" style="display:none"><div class="store-icon">🏪</div><div class="store-name">Franprix Val-Fleuri</div></label>
+        <label class="store-card"><input type="radio" name="fav-store" value="Franprix Trêfle" style="display:none"><div class="store-icon">🏪</div><div class="store-name">Franprix Trêfle</div></label>
+        <label class="store-card"><input type="radio" name="fav-store" value="Monoprix Beverly Walks" style="display:none"><div class="store-icon">🏬</div><div class="store-name">Monoprix Beverly Walks</div></label>
+        <label class="store-card"><input type="radio" name="fav-store" value="Franprix Roudani" style="display:none"><div class="store-icon">🏪</div><div class="store-name">Franprix Roudani</div></label>
+        <label class="store-card"><input type="radio" name="fav-store" value="Franprix Maarif" style="display:none"><div class="store-icon">🏪</div><div class="store-name">Franprix Maarif</div></label>
+        <label class="store-card"><input type="radio" name="fav-store" value="Monoprix Onomo" style="display:none"><div class="store-icon">🏬</div><div class="store-name">Monoprix Onomo</div></label>
+      </div>
+      <button type="submit" class="btn btn-orange" style="width:100%;margin-top:20px">Créer mon compte 🎉</button>
+    </form>
+  </div>
+</section>
+<!-- 3. APP -->
+<section id="global-app" class="global-view">
+  <div class="app-layout">
+    <aside class="sidebar">
+      <a href="#" class="logo-main">franprix<span>.</span><span>connect</span></a>
+      <nav class="nav-links">
+        <a href="#" class="nav-item active" data-target="view-home"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><span>Tableau de bord</span></a>
+        <a href="#" class="nav-item" data-target="view-wallet"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg><span>Ma Carte &amp; PIN</span></a>
+        <a href="#" class="nav-item" data-target="view-promos"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg><span>Boosters &amp; Offres</span></a>
+        <a href="#" class="nav-item" data-target="view-receipts"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Mes Tickets</span></a>
+        <a href="#" class="nav-item" data-target="view-profile" style="margin-top:32px;border-top:1px solid var(--border);padding-top:32px"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><span>Mon Profil</span></a>
+        <a href="#" class="nav-item" data-target="view-feedback"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><span>Réclamations</span></a>
       </nav>
+      <div class="sidebar-footer">
+        <button id="btn-logout-sidebar" class="btn btn-ghost" style="width:100%;justify-content:flex-start;gap:12px;padding:14px 18px;border-radius:var(--radius-md)">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span>Déconnexion</span>
+        </button>
+      </div>
+    </aside>
+    <div class="main-area">
+      <header class="header">
+        <div>
+          <h1 id="current-title" style="font-size:24px;font-weight:900">Tableau de bord</h1>
+          <p id="smart-greeting" class="muted" style="font-size:14px">Bonjour, ravi de vous revoir.</p>
+        </div>
+        <div class="header-actions">
+          <button id="dev-toggle" class="btn btn-outline" style="padding:8px 16px;font-size:12px">Admin</button>
+          <div class="user-badge">
+            <span style="font-weight:700;font-size:14px" id="header-name">Adib</span>
+            <div class="avatar" id="avatar-letter">A</div>
+          </div>
+        </div>
+      </header>
+      <div class="view-container">
+        <div id="demo-controls" style="display:none;background:#18181B;color:white;padding:24px;border-radius:20px;margin-bottom:32px">
+          <h4 style="margin-bottom:16px">Demo Controls — Niveau de fidélité</h4>
+          <div style="display:flex;gap:12px">
+            <button data-ltv="150" class="btn btn-outline" style="background:transparent;color:white">Silver</button>
+            <button data-ltv="650" class="btn btn-outline" style="background:transparent;color:white">Gold</button>
+            <button data-ltv="2000" class="btn btn-outline" style="background:transparent;color:white">Titanium</button>
+          </div>
+        </div>
 
-    </div>
-  </section>
+        <!-- VIEW: HOME -->
+        <div id="view-home" class="view-content active">
+          <div class="bento-grid">
+            <!-- Carte fidélité -->
+            <div class="span-6" style="display:flex;flex-direction:column;gap:20px">
+              <div class="wallet-card-wrapper">
+                <div class="wallet-card tier-silver" id="wallet-card-home">
+                  <div class="card-top">
+                    <div class="card-brand">franprix<span>.</span></div>
+                    <div class="card-logos">
+                      <span style="font-weight:900;letter-spacing:-1px;font-size:13px">chari</span>
+                      <span class="logo-v">VISA</span>
+                    </div>
+                  </div>
+                  <div class="card-amount" id="home-cagnotte">125,50 MAD</div>
+                  <div class="card-footer">
+                    <div class="barcode-box"><svg id="barcode-home"></svg></div>
+                    <div style="text-align:right"><div class="status-pill bg-orange-soft" id="home-status-badge">Silver</div></div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-black" style="width:100%">
+                <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:white;fill:none"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                Ajouter à Apple Wallet
+              </button>
+            </div>
+
+            <!-- Objectif tier -->
+            <div class="span-6 bento-card">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+                <div>
+                  <h3 style="font-size:20px">Objectif Gold</h3>
+                  <p class="muted" style="margin-top:4px">Dépensez encore <strong style="color:var(--p-orange)" id="ltv-needed">350 MAD</strong> pour 3% de cashback.</p>
+                </div>
+                <div class="icon-box" style="background:#FFF7ED;color:var(--p-orange)">★</div>
+              </div>
+              <div class="progress-container">
+                <div class="progress-bar"><div id="ltv-fill" class="progress-fill" style="width:30%"></div></div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:13px;font-weight:700">
+                  <span>Silver (1%)</span><span class="muted">Gold (3%)</span>
+                </div>
+              </div>
+              <div id="cashback-boost-tip" class="cashback-tip" style="margin-top:20px">
+                <div class="tip-icon">💡</div>
+                <div>
+                  <div style="font-weight:700;font-size:14px">Boostez votre prochain achat</div>
+                  <div class="muted" style="font-size:13px;margin-top:2px">Dernier achat : <strong>80 MAD → 0,80 MAD</strong> cashback. Dépassez <strong style="color:var(--p-orange)">150 MAD</strong> et triplez vos gains à <strong style="color:var(--green)">4,50 MAD</strong> avec Gold.</div>
+                </div>
+              </div>
+              <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+                <span class="muted" style="font-size:13px">Dernier achat cashbacké</span>
+                <span style="font-weight:800;color:var(--green)">+0,80 MAD</span>
+              </div>
+            </div>
+
+            <!-- Stats row -->
+            <div class="span-12" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+              <div class="bento-card" style="padding:24px">
+                <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Visites totales</div>
+                <div style="font-size:32px;font-weight:900;margin-top:6px" id="stat-visits">47</div>
+                <div style="font-size:12px;color:var(--green);font-weight:700;margin-top:4px">Fidèle depuis 2024</div>
+              </div>
+              <div class="bento-card" style="padding:24px">
+                <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Panier moyen</div>
+                <div style="font-size:32px;font-weight:900;margin-top:6px" id="stat-basket">89 <span style="font-size:16px">MAD</span></div>
+                <div style="font-size:12px;color:var(--green);font-weight:700;margin-top:4px">+12% vs mois dernier</div>
+              </div>
+              <div class="bento-card" style="padding:24px">
+                <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Cashback ce mois</div>
+                <div style="font-size:32px;font-weight:900;color:var(--p-orange);margin-top:6px" id="stat-cashback">+1,25 <span style="font-size:16px">MAD</span></div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:700;margin-top:4px">avec Gold → +3,75 MAD</div>
+              </div>
+            </div>
+
+            <!-- Missions -->
+            <div class="span-8 bento-card">
+              <h3 style="margin-bottom:20px">Missions en cours</h3>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div class="action-item mission-item" data-tier="silver">
+                  <div class="icon-box">🥛</div>
+                  <div style="flex:1"><h4>Le défi laitier</h4><p class="muted" style="font-size:13px">Achetez 3 packs de lait Centrale pour 10 MAD offerts.</p></div>
+                  <div class="status-pill" style="background:#DCFCE7;color:#166534">2/3</div>
+                </div>
+                <div class="action-item mission-item" data-tier="silver">
+                  <div class="icon-box">🥗</div>
+                  <div style="flex:1"><h4>Fraîcheur locale</h4><p class="muted" style="font-size:13px">50 MAD de fruits &amp; légumes = 5 MAD cashback.</p></div>
+                  <button class="btn btn-outline" style="padding:8px 16px;font-size:13px">Activer</button>
+                </div>
+                <div class="action-item mission-item" data-tier="gold">
+                  <div class="icon-box">☕</div>
+                  <div style="flex:1"><h4>Pause café Gold</h4><p class="muted" style="font-size:13px">5 cafés achetés = le 6ème offert.</p></div>
+                  <div class="status-pill" style="background:#FFF7ED;color:#9A3412">Gold</div>
+                </div>
+                <div class="action-item mission-item" data-tier="titanium">
+                  <div class="icon-box">🥩</div>
+                  <div style="flex:1"><h4>Boucherie Premium</h4><p class="muted" style="font-size:13px">200 MAD en boucherie = livraison offerte.</p></div>
+                  <div class="status-pill" style="background:#111;color:white">Titanium</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Promo banner -->
+            <div class="span-4 bento-card" style="background:var(--p-accent);color:white;display:flex;flex-direction:column">
+              <h3 style="margin-bottom:8px;color:var(--p-yellow)">Catalogue semaine</h3>
+              <p style="font-size:14px;opacity:0.75;margin-bottom:20px">150 promos exclusives en magasin cette semaine.</p>
+              <div style="background:rgba(255,255,255,0.08);border-radius:16px;padding:16px;margin-bottom:16px">
+                <div style="font-size:12px;opacity:0.5;margin-bottom:4px">Offre flash 24h</div>
+                <div style="font-weight:800;font-size:16px;color:var(--p-yellow)">Coca-Cola 1.5L</div>
+                <div style="font-size:13px;opacity:0.8">2+1 offert · jusqu'à ce soir</div>
+              </div>
+              <button class="btn btn-orange" style="width:100%;margin-top:auto" data-target="view-promos">Voir les offres</button>
+              <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.1)">
+                <div style="font-size:11px;opacity:0.4">Magasin favori</div>
+                <div style="font-weight:700;margin-top:2px" id="dash-fav-store">Franprix Maarif</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW: WALLET -->
+        <div id="view-wallet" class="view-content">
+          <div class="bento-grid">
+            <div class="span-6">
+              <div class="wallet-card-wrapper">
+                <div class="wallet-card tier-silver" id="wallet-card-full">
+                  <div class="card-top">
+                    <div class="card-brand">franprix<span>.</span></div>
+                    <div class="card-logos"><span style="font-weight:900;letter-spacing:-1px;font-size:13px">chari</span><span class="logo-v">VISA</span></div>
+                  </div>
+                  <div class="card-amount" id="wallet-balance-full">125,50 MAD</div>
+                  <div class="card-footer">
+                    <div class="barcode-box"><svg id="barcode-full"></svg></div>
+                    <div style="text-align:right">
+                      <div class="status-pill bg-orange-soft" id="full-status-badge">Silver</div>
+                      <div style="font-size:11px;margin-top:6px;opacity:0.6">FR-2024-9988-4421</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="span-6 bento-card">
+              <h3 style="margin-bottom:20px">Sécurité &amp; PIN</h3>
+              <div class="action-item" style="margin-bottom:16px">
+                <div class="icon-box">🔐</div>
+                <div style="flex:1"><h4>Code PIN carte</h4><p class="muted" style="font-size:13px">Protégez votre compte avec un code à 4 chiffres.</p></div>
+                <button id="btn-pin-action" class="btn btn-outline" style="padding:10px 18px;font-size:13px">Créer mon PIN</button>
+              </div>
+              <div class="action-item">
+                <div class="icon-box">📲</div>
+                <div style="flex:1"><h4>Notification achat</h4><p class="muted" style="font-size:13px">Recevez un SMS à chaque transaction.</p></div>
+                <div class="toggle-switch active" id="toggle-sms"></div>
+              </div>
+            </div>
+            <div class="span-12 bento-card">
+              <h3 style="margin-bottom:20px">Historique des points</h3>
+              <div style="display:flex;flex-direction:column;gap:0">
+                <div class="points-row"><div class="icon-box">🛒</div><div style="flex:1"><div style="font-weight:700">Achat Franprix Maarif</div><div class="muted" style="font-size:13px">10 Mai 2026 · 18:42</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+2,45 MAD</div><div class="muted" style="font-size:12px">245,00 MAD dépensés</div></div></div>
+                <div class="points-row"><div class="icon-box">🛒</div><div style="flex:1"><div style="font-weight:700">Achat Franprix Ain Diab</div><div class="muted" style="font-size:13px">7 Mai 2026 · 14:15</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+1,78 MAD</div><div class="muted" style="font-size:12px">178,00 MAD dépensés</div></div></div>
+                <div class="points-row"><div class="icon-box">🎁</div><div style="flex:1"><div style="font-weight:700">Booster Centrale Laitière activé</div><div class="muted" style="font-size:13px">5 Mai 2026</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+10,00 MAD</div><div class="muted" style="font-size:12px">Bonus fournisseur</div></div></div>
+                <div class="points-row"><div class="icon-box">🛒</div><div style="flex:1"><div style="font-weight:700">Achat Franprix Maarif</div><div class="muted" style="font-size:13px">3 Mai 2026 · 11:30</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+0,92 MAD</div><div class="muted" style="font-size:12px">92,00 MAD dépensés</div></div></div>
+                <div class="points-row"><div class="icon-box">🛒</div><div style="flex:1"><div style="font-weight:700">Achat Monoprix Beverly</div><div class="muted" style="font-size:13px">28 Avr 2026 · 16:20</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+3,12 MAD</div><div class="muted" style="font-size:12px">312,00 MAD dépensés</div></div></div>
+                <div class="points-row" style="border:none"><div class="icon-box">🎁</div><div style="flex:1"><div style="font-weight:700">Bienvenue chez Franprix Connect</div><div class="muted" style="font-size:13px">15 Sept 2024</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+5,00 MAD</div><div class="muted" style="font-size:12px">Bonus inscription</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW: PROMOS & CATALOGUE -->
+        <div id="view-promos" class="view-content">
+          <div class="bento-grid">
+            <!-- Boosters fournisseurs -->
+            <div class="span-12">
+              <h2 style="margin-bottom:4px">Boosters Fournisseurs</h2>
+              <p class="muted" style="margin-bottom:24px;font-size:14px">Offres activables selon votre niveau de fidélité.</p>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+                <div class="bento-card booster-item" data-tier="silver">
+                  <div style="font-size:32px;margin-bottom:12px">☕</div>
+                  <h4 style="margin-bottom:6px">Pause Café</h4>
+                  <p class="muted" style="font-size:13px;margin-bottom:16px">10% remboursés sur toutes les capsules café Nespresso.</p>
+                  <div class="status-pill bg-orange-soft" style="margin-bottom:16px">Silver requis</div>
+                  <button class="btn btn-orange btn-act-booster" style="width:100%">Activer</button>
+                </div>
+                <div class="bento-card booster-item" data-tier="gold">
+                  <div style="font-size:32px;margin-bottom:12px">🍫</div>
+                  <h4 style="margin-bottom:6px">Gourmandise Gold</h4>
+                  <p class="muted" style="font-size:13px;margin-bottom:16px">Doublez vos points sur le rayon chocolaterie.</p>
+                  <div class="status-pill" style="background:#FEF3C7;color:#92400E;margin-bottom:16px">Gold requis</div>
+                  <button class="btn btn-orange btn-act-booster" style="width:100%">Activer</button>
+                </div>
+                <div class="bento-card booster-item" data-tier="titanium">
+                  <div style="font-size:32px;margin-bottom:12px">🥩</div>
+                  <h4 style="margin-bottom:6px">Titanium Butcher</h4>
+                  <p class="muted" style="font-size:13px;margin-bottom:16px">5% cashback immédiat sur la boucherie premium.</p>
+                  <div class="status-pill" style="background:#111;color:white;margin-bottom:16px">Titanium requis</div>
+                  <button class="btn btn-orange btn-act-booster" style="width:100%">Activer</button>
+                </div>
+              </div>
+            </div>
+            <!-- Promos en magasin -->
+            <div class="span-12">
+              <h2 style="margin-bottom:4px">Promotions en magasin</h2>
+              <p class="muted" style="margin-bottom:24px;font-size:14px">Valables cette semaine dans tous les magasins partenaires.</p>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+                <div class="promo-card"><div class="promo-badge">2+1</div><div class="promo-emoji">🥛</div><div class="promo-name">Lait Centrale 1L</div><div class="promo-price">7,50 MAD</div><div class="promo-detail">le pack de 3 · valeur 22,50</div></div>
+                <div class="promo-card"><div class="promo-badge" style="background:#EF4444">-30%</div><div class="promo-emoji">🍕</div><div class="promo-name">Pizza surgelée</div><div class="promo-price">24,90 MAD</div><div class="promo-detail">au lieu de 35,50 MAD</div></div>
+                <div class="promo-card"><div class="promo-badge" style="background:#8B5CF6">-20%</div><div class="promo-emoji">🧃</div><div class="promo-name">Jus Rani 1L</div><div class="promo-price">9,90 MAD</div><div class="promo-detail">au lieu de 12,50 MAD</div></div>
+                <div class="promo-card"><div class="promo-badge">2+1</div><div class="promo-emoji">🧴</div><div class="promo-name">Shampooing Pantene</div><div class="promo-price">32,00 MAD</div><div class="promo-detail">le pack de 3 · valeur 96 MAD</div></div>
+                <div class="promo-card"><div class="promo-badge" style="background:#EF4444">-40%</div><div class="promo-emoji">🍪</div><div class="promo-name">Biscuits Oreo 154g</div><div class="promo-price">8,50 MAD</div><div class="promo-detail">au lieu de 14,20 MAD</div></div>
+                <div class="promo-card"><div class="promo-badge" style="background:#10B981">Offre flash</div><div class="promo-emoji">🥤</div><div class="promo-name">Coca-Cola 1.5L</div><div class="promo-price">9,90 MAD</div><div class="promo-detail">2+1 offert · ce soir seulement</div></div>
+                <div class="promo-card"><div class="promo-badge" style="background:#EF4444">-25%</div><div class="promo-emoji">🫙</div><div class="promo-name">Nutella 750g</div><div class="promo-price">67,50 MAD</div><div class="promo-detail">au lieu de 89,90 MAD</div></div>
+                <div class="promo-card"><div class="promo-badge">3 pour 2</div><div class="promo-emoji">🧹</div><div class="promo-name">Ajax nettoyant</div><div class="promo-price">14,90 MAD</div><div class="promo-detail">le lot de 3 · valeur 44,70 MAD</div></div>
+              </div>
+            </div>
+            <!-- Featured Promo -->
+            <div class="span-12 bento-card" style="padding:0; height:240px; background:url('catalogue.png') center/cover; position:relative; overflow:hidden;">
+              <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,0.8) 0%, transparent 60%); display:flex; flex-direction:column; justify-content:center; padding:40px; color:white;">
+                <div class="status-pill" style="background:var(--p-orange); margin-bottom:12px; width:fit-content;">EXCLUSIVITÉ APP</div>
+                <h2 style="font-size:32px; margin-bottom:8px;">Le Marché Franprix</h2>
+                <p style="opacity:0.8; max-width:400px; margin-bottom:20px;">Découvrez toutes nos offres sur les produits frais et l'épicerie jusqu'au 18 Mai.</p>
+                <button class="btn btn-orange" style="width:fit-content;">Voir le catalogue</button>
+              </div>
+            </div>
+
+            <!-- Catalogue digital -->
+            <div class="span-12">
+              <h2 style="margin-bottom:4px">Catalogues digitaux</h2>
+              <p class="muted" style="margin-bottom:24px;font-size:14px">Feuilletez nos catalogues de la semaine.</p>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+                <div class="catalogue-card">
+                  <div class="catalogue-img" style="background:url('promo2.png') center/cover">
+                    <div class="catalogue-tag">Frais &amp; Bio</div>
+                  </div>
+                  <div class="catalogue-info"><div class="catalogue-title">Fruits &amp; Légumes</div><div class="muted" style="font-size:12px">12 pages · valable jusqu'au 18 Mai</div><button class="btn btn-outline" style="width:100%;margin-top:12px;padding:10px">Feuilleter →</button></div>
+                </div>
+                <div class="catalogue-card">
+                  <div class="catalogue-img" style="background:url('promo1.png') center/cover">
+                    <div class="catalogue-tag">Promotions</div>
+                  </div>
+                  <div class="catalogue-info"><div class="catalogue-title">2+1 Offerts</div><div class="muted" style="font-size:12px">8 pages · valable jusqu'au 22 Mai</div><button class="btn btn-outline" style="width:100%;margin-top:12px;padding:10px">Feuilleter →</button></div>
+                </div>
+                <div class="catalogue-card">
+                  <div class="catalogue-img" style="background:url('catalogue.png') center/cover">
+                    <div class="catalogue-tag">Maison</div>
+                  </div>
+                  <div class="catalogue-info"><div class="catalogue-title">Maison &amp; Entretien</div><div class="muted" style="font-size:12px">10 pages · valable jusqu'au 20 Mai</div><button class="btn btn-outline" style="width:100%;margin-top:12px;padding:10px">Feuilleter →</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW: TICKETS -->
+        <div id="view-receipts" class="view-content">
+          <div class="bento-grid">
+            <div class="span-12 bento-card">
+              <h2 style="margin-bottom:6px">Mes Tickets Récents</h2>
+              <p class="muted" style="margin-bottom:24px;font-size:14px">Cliquez sur un ticket pour voir le détail.</p>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div class="action-item ticket-item" data-ticket="0" style="cursor:pointer">
+                  <div class="icon-box">🧾</div>
+                  <div style="flex:1"><h4>Franprix Maarif</h4><p class="muted" style="font-size:13px">10 Mai 2026 · 18:42 · 12 articles</p></div>
+                  <div style="text-align:right"><div style="font-weight:800">245,00 MAD</div><div style="font-size:12px;color:var(--green);font-weight:700">+2,45 MAD cashback</div></div>
+                  <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--text-muted);fill:none;stroke-width:2;margin-left:8px"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <div class="action-item ticket-item" data-ticket="1" style="cursor:pointer">
+                  <div class="icon-box">🧾</div>
+                  <div style="flex:1"><h4>Franprix Ain Diab</h4><p class="muted" style="font-size:13px">7 Mai 2026 · 14:15 · 8 articles</p></div>
+                  <div style="text-align:right"><div style="font-weight:800">178,00 MAD</div><div style="font-size:12px;color:var(--green);font-weight:700">+1,78 MAD cashback</div></div>
+                  <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--text-muted);fill:none;stroke-width:2;margin-left:8px"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <div class="action-item ticket-item" data-ticket="2" style="cursor:pointer">
+                  <div class="icon-box">🧾</div>
+                  <div style="flex:1"><h4>Franprix Maarif</h4><p class="muted" style="font-size:13px">3 Mai 2026 · 11:30 · 5 articles</p></div>
+                  <div style="text-align:right"><div style="font-weight:800">92,00 MAD</div><div style="font-size:12px;color:var(--green);font-weight:700">+0,92 MAD cashback</div></div>
+                  <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--text-muted);fill:none;stroke-width:2;margin-left:8px"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <div class="action-item ticket-item" data-ticket="3" style="cursor:pointer">
+                  <div class="icon-box">🧾</div>
+                  <div style="flex:1"><h4>Monoprix Beverly Walks</h4><p class="muted" style="font-size:13px">28 Avr 2026 · 16:20 · 18 articles</p></div>
+                  <div style="text-align:right"><div style="font-weight:800">312,00 MAD</div><div style="font-size:12px;color:var(--green);font-weight:700">+3,12 MAD cashback</div></div>
+                  <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--text-muted);fill:none;stroke-width:2;margin-left:8px"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+                <div class="action-item ticket-item" data-ticket="4" style="cursor:pointer">
+                  <div class="icon-box">🧾</div>
+                  <div style="flex:1"><h4>Franprix Maarif</h4><p class="muted" style="font-size:13px">22 Avr 2026 · 19:05 · 9 articles</p></div>
+                  <div style="text-align:right"><div style="font-weight:800">156,00 MAD</div><div style="font-size:12px;color:var(--green);font-weight:700">+1,56 MAD cashback</div></div>
+                  <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--text-muted);fill:none;stroke-width:2;margin-left:8px"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+              </div>
+              <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between">
+                <div><div class="muted" style="font-size:13px">Total dépensé</div><div style="font-weight:900;font-size:22px">983,00 MAD</div></div>
+                <div style="text-align:right"><div class="muted" style="font-size:13px">Total cashback reçu</div><div style="font-weight:900;font-size:22px;color:var(--green)">+9,83 MAD</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW: PROFILE -->
+        <div id="view-profile" class="view-content"></div>
+
+        <!-- VIEW: FEEDBACK -->
+        <div id="view-feedback" class="view-content">
+          <div class="bento-grid">
+            <div class="span-12 bento-card" style="max-width:640px;margin:0 auto;padding:48px">
+              <h3 style="margin-bottom:8px">Votre avis compte</h3>
+              <p class="muted" style="margin-bottom:32px">Partagez votre expérience ou signalez-nous un problème en magasin.</p>
+              <form id="feedback-form">
+                <div style="margin-bottom:24px">
+                  <label style="font-weight:700;margin-bottom:12px;display:block">Comment évaluez-vous votre dernière visite ?</label>
+                  <div id="fb-stars" style="display:flex;gap:8px;font-size:36px;color:var(--border);cursor:pointer">
+                    <span class="fb-star" data-val="1">★</span><span class="fb-star" data-val="2">★</span><span class="fb-star" data-val="3">★</span><span class="fb-star" data-val="4">★</span><span class="fb-star" data-val="5">★</span>
+                  </div>
+                </div>
+                <div style="margin-bottom:24px">
+                  <label style="font-weight:700;margin-bottom:12px;display:block">Type de message</label>
+                  <div style="display:flex;gap:12px">
+                    <label id="lbl-avis" style="flex:1;border:2px solid var(--p-orange);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--p-orange);cursor:pointer;background:#FFFBEB"><input type="radio" name="fb_type" value="avis" checked style="display:none"> Avis</label>
+                    <label id="lbl-reclamation" style="flex:1;border:2px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--text-muted);cursor:pointer;background:white"><input type="radio" name="fb_type" value="reclamation" style="display:none"> Réclamation</label>
+                  </div>
+                </div>
+                <div style="margin-bottom:32px">
+                  <textarea placeholder="Dites-nous tout..." style="width:100%;height:120px;padding:16px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:16px;outline:none;resize:none;transition:0.3s" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-orange" style="width:100%;padding:18px">Envoyer mon message</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end view-container -->
+    </div><!-- end main-area -->
+
+    <!-- Mobile Nav -->
+    <nav class="mobile-nav">
+      <a href="#" class="m-nav-item active" data-target="view-home"><svg viewBox="0 0 24 24" style="width:24px;height:24px" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></a>
+      <a href="#" class="m-nav-item" data-target="view-wallet"><svg viewBox="0 0 24 24" style="width:24px;height:24px" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></a>
+      <a href="#" class="m-nav-item" data-target="view-promos"><svg viewBox="0 0 24 24" style="width:24px;height:24px" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg></a>
+      <a href="#" class="m-nav-item" data-target="view-receipts"><svg viewBox="0 0 24 24" style="width:24px;height:24px" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></a>
+      <a href="#" class="m-nav-item" data-target="view-profile"><svg viewBox="0 0 24 24" style="width:24px;height:24px" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></a>
+    </nav>
+  </div><!-- end app-layout -->
+</section>
 
   <script type="module" src="main.js"></script>
 </body>

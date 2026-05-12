@@ -1,116 +1,70 @@
-import { gsap } from 'gsap';
+﻿import { gsap } from 'gsap';
 import JsBarcode from 'jsbarcode';
 
+const TICKETS = [
+  { store:'Franprix Maarif', date:'10 Mai 2026', time:'18:42', items:[['Lait Centrale 1L x2','15,00'],['Yaourt Danone x4','28,00'],['Pain de mie','8,50'],['Coca-Cola 1.5L','10,50'],['Fromage Kiri x8','22,00'],['Huile Lesieur 1L','35,00'],['Biscuits LU','14,50'],['Cafe Nescafe','38,00'],['Dentifrice','18,00'],['Savon Dove','19,00'],['Sac caisse','1,00'],['Remise fidélité','-4,50']], total:'245,00', cashback:'2,45', caissier:'N°12 - Fatima' },
+  { store:'Franprix Ain Diab', date:'7 Mai 2026', time:'14:15', items:[['Eau Sidi Ali 1.5L x6','24,00'],['Chips Lay\'s 150g','12,90'],['Chocolat Milka','19,50'],['Jus Rani 1L x2','25,00'],['Café Don Nespresso x10','42,00'],['Serviettes','22,00'],['Gâteau','14,90'],['Pâtes Barilla','17,70']], total:'178,00', cashback:'1,78', caissier:'N°3 - Karim' },
+  { store:'Franprix Maarif', date:'3 Mai 2026', time:'11:30', items:[['Beurre Président','24,00'],['Oeufs x12','28,50'],['Lait Centrale 1L','7,50'],['Farine 1kg','14,00'],['Sucre 1kg','12,00'],['Remise fidélité','-4,00']], total:'92,00', cashback:'0,92', caissier:'N°7 - Yasmine' },
+  { store:'Monoprix Beverly Walks', date:'28 Avr 2026', time:'16:20', items:[['Viande hachée 500g','65,00'],['Poulet entier 1.2kg','58,00'],['Légumes frais','34,00'],['Fromage râpé','22,50'],['Pâtes x3','27,00'],['Sauce tomate x2','18,00'],['Vin de cuisine','28,00'],['Épices','15,50'],['Papier toilette x6','32,00'],['Lessive Ariel','48,00'],['Eau x6 pack','19,00'],['Dessert','21,00'],['Serviettes','17,00'],['Sac','4,00'],['Remise fidélité','-16,00']], total:'312,00', cashback:'3,12', caissier:'N°1 - Mohammed' },
+  { store:'Franprix Maarif', date:'22 Avr 2026', time:'19:05', items:[['Shampoing Pantene','34,00'],['Gel douche','22,00'],['Dentifrice Colgate x2','28,00'],['Déodorant Rexona','32,00'],['Crème hydratante','48,00'],['Cotons-tiges','8,50'],['Rasoirs','16,00'],['Sac','1,00'],['Remise fidélité','-33,50']], total:'156,00', cashback:'1,56', caissier:'N°9 - Sara' }
+];
+
 const state = {
-  user: {
-    firstName: 'Adib',
-    lastName: 'El Modafar',
-    phone: '+212 6 12 34 56 78',
-    email: 'adib.elmodafar@gmail.com',
-    address: '45 Rue Zerktouni, Maarif, Casablanca',
-    memberSince: '15 Sept 2024',
-    cardNumber: 'FR-2024-9988-4421',
-    ltv: 150,
-    cagnotte: 125.50,
-    totalVisits: 47,
-    avgBasket: 89.20,
-    pointsThisMonth: 34,
-    favStore: 'Franprix Casa Maarif',
-    lastVisit: '10 Mai 2026',
-    hasPin: false
-  },
+  user: { firstName:'Adib', lastName:'El Modafar', phone:'+212 6 12 34 56 78', email:'adib.elmodafar@gmail.com', address:'45 Rue Zerktouni, Maarif, Casablanca', memberSince:'15 Sept 2024', cardNumber:'FR-2024-9988-4421', ltv:150, cagnotte:125.50, totalVisits:47, avgBasket:89.20, favStore:'Franprix Maarif', lastVisit:'10 Mai 2026', hasPin:false },
   tiers: {
-    silver:   { min: 0,    next: 500,      label: 'Silver',   class: 'tier-silver',   cb: 1 },
-    gold:     { min: 500,  next: 1500,     label: 'Gold',     class: 'tier-gold',     cb: 3 },
-    titanium: { min: 1500, next: Infinity, label: 'Titanium', class: 'tier-titanium', cb: 5 }
-  }
+    silver:   { min:0,    next:500,      label:'Silver',   class:'tier-silver',   cb:1 },
+    gold:     { min:500,  next:1500,     label:'Gold',     class:'tier-gold',     cb:3 },
+    titanium: { min:1500, next:Infinity, label:'Titanium', class:'tier-titanium', cb:5 }
+  },
+  pinBuffer: []
 };
 
 let els = {};
 
 function init() {
   els = {
-    navItems:         document.querySelectorAll('.nav-item, .m-nav-item'),
-    viewContents:     document.querySelectorAll('.view-content'),
-    currentTitle:     document.getElementById('current-title'),
-    btnGotoLogin:     document.getElementById('btn-goto-login'),
-    authPhone:        document.getElementById('auth-step-phone'),
-    authOtp:          document.getElementById('auth-step-otp'),
-    authRegister:     document.getElementById('auth-step-register'),
-    ltvFill:          document.getElementById('ltv-fill'),
-    ltvNeeded:        document.getElementById('ltv-needed'),
-    homeCagnotte:     document.getElementById('home-cagnotte'),
-    statusBadge:      document.getElementById('home-status-badge'),
-    cardHome:         document.getElementById('wallet-card-home'),
-    cardFull:         document.getElementById('wallet-card-full'),
-    walletFullBadge:  document.getElementById('full-status-badge'),
-    walletFullBalance:document.getElementById('wallet-balance-full'),
-    btnPinAction:     document.getElementById('btn-pin-action'),
-    boosterBtns:      document.querySelectorAll('.btn-act-booster')
+    navItems:          document.querySelectorAll('.nav-item, .m-nav-item'),
+    viewContents:      document.querySelectorAll('.view-content'),
+    currentTitle:      document.getElementById('current-title'),
+    btnGotoLogin:      document.getElementById('btn-goto-login'),
+    authPhone:         document.getElementById('auth-step-phone'),
+    authOtp:           document.getElementById('auth-step-otp'),
+    authRegister:      document.getElementById('auth-step-register'),
+    authContact:       document.getElementById('auth-step-contact'),
+    authStore:         document.getElementById('auth-step-store'),
+    ltvFill:           document.getElementById('ltv-fill'),
+    ltvNeeded:         document.getElementById('ltv-needed'),
+    homeCagnotte:      document.getElementById('home-cagnotte'),
+    statusBadge:       document.getElementById('home-status-badge'),
+    cardHome:          document.getElementById('wallet-card-home'),
+    cardFull:          document.getElementById('wallet-card-full'),
+    walletFullBadge:   document.getElementById('full-status-badge'),
+    walletFullBalance: document.getElementById('wallet-balance-full'),
+    btnPinAction:      document.getElementById('btn-pin-action'),
+    boosterBtns:       document.querySelectorAll('.btn-act-booster'),
+    toggleSms:         document.getElementById('toggle-sms')
   };
-
   bindEvents();
-
   try {
     updateUI();
     renderBarcodes();
-
-    const h = new Date().getHours();
-    const greeting = h < 12 ? 'Bonjour' : h < 18 ? 'Bon après-midi' : 'Bonsoir';
-    const greetEl = document.getElementById('smart-greeting');
-    if (greetEl) greetEl.textContent = `${greeting}, ${state.user.firstName}. Voici vos avantages.`;
-    const headerName = document.getElementById('header-name');
-    const avatarLetter = document.getElementById('avatar-letter');
-    if (headerName) headerName.textContent = state.user.firstName;
-    if (avatarLetter) avatarLetter.textContent = state.user.firstName[0];
-
     renderProfileView();
-  } catch (e) {
-    console.error('Init UI error:', e);
-  }
-
-  // Feedback stars
-  const fbStars = document.querySelectorAll('.fb-star');
-  fbStars.forEach(star => {
-    star.addEventListener('mouseover', () => {
-      const v = +star.dataset.val;
-      fbStars.forEach(s => s.style.color = +s.dataset.val <= v ? 'var(--p-orange)' : '');
-    });
-    star.addEventListener('mouseout', () => {
-      fbStars.forEach(s => { if (!s.classList.contains('selected')) s.style.color = ''; });
-    });
-    star.addEventListener('click', () => {
-      const v = +star.dataset.val;
-      fbStars.forEach(s => {
-        if (+s.dataset.val <= v) { s.style.color = 'var(--p-orange)'; s.classList.add('selected'); }
-        else { s.style.color = ''; s.classList.remove('selected'); }
-      });
-    });
-  });
-
-  document.querySelectorAll('input[name="fb_type"]').forEach(r => r.addEventListener('change', e => {
-    const lblA = document.getElementById('lbl-avis');
-    const lblR = document.getElementById('lbl-reclamation');
-    if (!lblA || !lblR) return;
-    if (e.target.value === 'avis') {
-      lblA.style.cssText = 'flex:1;border:2px solid var(--p-orange);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--p-orange);cursor:pointer;background:#FFFBEB;transition:0.2s;';
-      lblR.style.cssText = 'flex:1;border:2px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--text-muted);cursor:pointer;background:white;transition:0.2s;';
-    } else {
-      lblR.style.cssText = 'flex:1;border:2px solid var(--p-orange);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--p-orange);cursor:pointer;background:#FFFBEB;transition:0.2s;';
-      lblA.style.cssText = 'flex:1;border:2px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--text-muted);cursor:pointer;background:white;transition:0.2s;';
-    }
-  }));
-
-  document.getElementById('feedback-form')?.addEventListener('submit', e => {
-    e.preventDefault();
-    alert('Merci pour votre retour !');
-    e.target.reset();
-    fbStars.forEach(s => { s.style.color = ''; s.classList.remove('selected'); });
-  });
-
-  try { gsap.from('.logo-main', { opacity: 0, scale: 0.9, duration: 1, ease: 'expo.out' }); } catch (e) {}
+    const h = new Date().getHours();
+    const g = h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
+    const ge = document.getElementById('smart-greeting');
+    if(ge) ge.textContent = `${g}, ${state.user.firstName}. Voici vos avantages.`;
+    const hn = document.getElementById('header-name');
+    const al = document.getElementById('avatar-letter');
+    const df = document.getElementById('dash-fav-store');
+    if(hn) hn.textContent = state.user.firstName;
+    if(al) al.textContent = state.user.firstName[0];
+    if(df) df.textContent = state.user.favStore;
+  } catch(e){ console.error('Init UI:', e); }
+  initFeedback();
+  initOtpInputs();
+  initStorePicker();
+  try{ gsap.from('.landing-headline',{opacity:0,y:30,duration:1,ease:'expo.out'}); }catch(e){}
 }
-
 function bindEvents() {
   els.btnGotoLogin?.addEventListener('click', () => switchGlobal('global-auth'));
 
@@ -133,7 +87,24 @@ function bindEvents() {
 
   els.authRegister?.addEventListener('submit', e => {
     e.preventDefault();
+    state.user.firstName = document.getElementById('reg-prenom').value;
+    state.user.lastName = document.getElementById('reg-nom').value;
+    transitionAuthStep(els.authRegister, els.authContact);
+  });
+
+  els.authContact?.addEventListener('submit', e => {
+    e.preventDefault();
+    state.user.email = document.getElementById('reg-email').value;
+    state.user.address = document.getElementById('reg-adresse').value;
+    transitionAuthStep(els.authContact, els.authStore);
+  });
+
+  els.authStore?.addEventListener('submit', e => {
+    e.preventDefault();
+    const selectedStore = document.querySelector('input[name="fav-store"]:checked');
+    if (selectedStore) state.user.favStore = selectedStore.value;
     switchGlobal('global-app');
+    init(); // Re-init to update names/stores
   });
 
   document.getElementById('btn-logout-sidebar')?.addEventListener('click', () => {
@@ -147,10 +118,8 @@ function bindEvents() {
       e.preventDefault();
       const target = item.getAttribute('data-target');
       if (!target) return;
-
       els.navItems.forEach(n => n.classList.remove('active'));
       document.querySelectorAll(`[data-target="${target}"]`).forEach(n => n.classList.add('active'));
-
       els.viewContents.forEach(v => v.classList.remove('active'));
       const targetView = document.getElementById(target);
       if (targetView) {
@@ -162,13 +131,12 @@ function bindEvents() {
           );
         } catch (e) {}
       }
-
       const titles = {
-        'view-home':     'Tableau de bord',
-        'view-wallet':   'Ma Carte & PIN',
-        'view-promos':   'Boosters & Offres',
+        'view-home': 'Tableau de bord',
+        'view-wallet': 'Ma Carte & PIN',
+        'view-promos': 'Boosters & Offres',
         'view-receipts': 'Mes Tickets',
-        'view-profile':  'Mon Profil',
+        'view-profile': 'Mon Profil',
         'view-feedback': 'Réclamations'
       };
       if (els.currentTitle) els.currentTitle.textContent = titles[target] || 'Franprix Connect';
@@ -200,24 +168,19 @@ function bindEvents() {
     });
   });
 
-  els.btnPinAction?.addEventListener('click', () => {
-    state.user.hasPin = !state.user.hasPin;
-    updateUI();
+  els.btnPinAction?.addEventListener('click', showPinModal);
+
+  els.toggleSms?.addEventListener('click', function() {
+    this.classList.toggle('active');
   });
 
-  document.querySelectorAll('.wallet-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const rotateX = (((e.clientY - rect.top) / rect.height) - 0.5) * -20;
-      const rotateY = (((e.clientX - rect.left) / rect.width) - 0.5) * 20;
-      card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02,1.02,1.02)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+  document.querySelectorAll('.ticket-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const idx = item.getAttribute('data-ticket');
+      showReceipt(TICKETS[idx]);
     });
   });
 }
-
 function transitionAuthStep(from, to) {
   from.classList.remove('active');
   setTimeout(() => {
@@ -241,14 +204,14 @@ function getTier(ltv) {
 }
 
 function updateUI() {
-  const ltv  = state.user.ltv;
+  const ltv = state.user.ltv;
   const tier = getTier(ltv);
+  const nextTier = tier.label === 'Silver' ? state.tiers.gold : (tier.label === 'Gold' ? state.tiers.titanium : {min:1500, next:Infinity, label:'Titanium'});
 
   if (els.homeCagnotte) els.homeCagnotte.textContent = `${state.user.cagnotte.toFixed(2).replace('.', ',')} MAD`;
-
   if (els.statusBadge) {
     els.statusBadge.textContent = tier.label;
-    els.statusBadge.style.background = tier.label === 'Silver' ? '#F3F4F6' : tier.label === 'Gold' ? '#FEF3C7' : '#111';
+    els.statusBadge.style.background = tier.label === 'Silver' ? '#F3F4F6' : (tier.label === 'Gold' ? '#FEF3C7' : '#111');
     els.statusBadge.style.color = tier.label === 'Titanium' ? 'white' : '#111';
   }
 
@@ -256,44 +219,56 @@ function updateUI() {
   if (els.walletFullBadge)   els.walletFullBadge.textContent = tier.label;
 
   [els.cardHome, els.cardFull].forEach(c => {
-    if (c) { c.classList.remove('tier-silver', 'tier-gold', 'tier-titanium'); c.classList.add(tier.class); }
+    if (c) {
+      c.classList.remove('tier-silver', 'tier-gold', 'tier-titanium');
+      c.classList.add(tier.class);
+    }
   });
 
   if (els.ltvFill) {
-    const progress = Math.min(100, (ltv / (tier.next === Infinity ? ltv : tier.next)) * 100);
+    const progress = Math.min(100, (ltv / nextTier.min) * 100);
     try { gsap.to(els.ltvFill, { width: `${progress}%`, duration: 1, ease: 'power2.out' }); } catch (e) { els.ltvFill.style.width = `${progress}%`; }
   }
 
   if (els.ltvNeeded) {
-    els.ltvNeeded.textContent = tier.next === Infinity ? '0 MAD' : `${tier.next - ltv} MAD`;
+    const needed = nextTier.min - ltv;
+    els.ltvNeeded.textContent = needed <= 0 ? '0 MAD' : `${needed} MAD`;
   }
 
-  if (els.btnPinAction) {
-    els.btnPinAction.textContent = state.user.hasPin ? 'Modifier mon PIN' : 'Créer mon PIN';
+  const tip = document.getElementById('cashback-boost-tip');
+  if(tip) {
+     if(tier.label === 'Titanium') tip.style.display = 'none';
+     else tip.style.display = 'flex';
   }
 
-  document.querySelectorAll('.booster-item').forEach(item => {
-    const req     = item.getAttribute('data-tier');
-    const tiers   = ['silver', 'gold', 'titanium'];
+  document.querySelectorAll('.mission-item, .booster-item').forEach(item => {
+    const req = item.getAttribute('data-tier');
+    const tiers = ['silver', 'gold', 'titanium'];
     const userIdx = tiers.indexOf(tier.label.toLowerCase());
-    const reqIdx  = tiers.indexOf(req);
-    const btn     = item.querySelector('.btn-act-booster');
+    const reqIdx = tiers.indexOf(req);
+    const btn = item.querySelector('.btn-act-booster, .btn-outline');
+    
     if (reqIdx > userIdx) {
       item.classList.add('locked');
-      if (btn) { btn.textContent = `Niveau ${req.toUpperCase()} requis`; btn.disabled = true; }
+      if (btn && !btn.classList.contains('status-pill')) {
+         btn.disabled = true;
+         if(btn.tagName === 'BUTTON') btn.textContent = 'Verrouillé';
+      }
     } else {
       item.classList.remove('locked');
-      if (btn && btn.textContent.includes('requis')) { btn.textContent = 'Activer'; btn.disabled = false; }
+      if (btn && btn.disabled) {
+        btn.disabled = false;
+        if(btn.tagName === 'BUTTON' && btn.textContent === 'Verrouillé') btn.textContent = 'Activer';
+      }
     }
   });
 }
 
 function renderBarcodes() {
   const opts = { format: 'CODE128', lineColor: '#111', width: 2, height: 40, displayValue: false, background: 'transparent' };
-  if (document.getElementById('barcode-home')) JsBarcode('#barcode-home', 'FR99884421', opts);
-  if (document.getElementById('barcode-full')) JsBarcode('#barcode-full', 'FR99884421', { ...opts, height: 60 });
+  if (document.getElementById('barcode-home')) JsBarcode('#barcode-home', state.user.cardNumber.replace(/-/g,''), opts);
+  if (document.getElementById('barcode-full')) JsBarcode('#barcode-full', state.user.cardNumber.replace(/-/g,''), { ...opts, height: 60 });
 }
-
 function renderProfileView() {
   const el = document.getElementById('view-profile');
   if (!el) return;
@@ -301,38 +276,191 @@ function renderProfileView() {
   const t = getTier(u.ltv);
   el.innerHTML = `
     <div class="bento-grid">
-      <div class="span-4 bento-card" style="text-align:center;padding:40px 28px;">
-        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--p-orange),#F59E0B);color:white;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">${u.firstName[0]}${u.lastName[0]}</div>
-        <h2 style="font-size:22px;">${u.firstName} ${u.lastName}</h2>
-        <div class="status-pill bg-orange-soft" style="margin-top:12px;display:inline-block;">${t.label} · ${t.cb}% cashback</div>
-        <p class="muted" style="font-size:13px;margin-top:12px;">Membre depuis ${u.memberSince}</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;">
-          <div style="padding:16px;border-radius:16px;background:#FAFAFA;border:1px solid var(--border);">
-            <div style="font-size:12px;color:var(--text-muted);font-weight:600;">Cagnotte</div>
-            <div style="font-size:22px;font-weight:900;color:var(--p-orange);margin-top:4px;">${u.cagnotte.toFixed(0)}</div>
+      <div class="span-4 bento-card" style="text-align:center;padding:40px 28px">
+        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--p-orange),#F59E0B);color:white;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">${u.firstName[0]}${u.lastName[0]}</div>
+        <h2 style="font-size:22px">${u.firstName} ${u.lastName}</h2>
+        <div class="status-pill bg-orange-soft" style="margin-top:12px;display:inline-block">${t.label} · ${t.cb}% cashback</div>
+        <p class="muted" style="font-size:13px;margin-top:12px">Membre depuis ${u.memberSince}</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px">
+          <div style="padding:16px;border-radius:16px;background:#FAFAFA;border:1px solid var(--border)">
+            <div style="font-size:12px;color:var(--text-muted);font-weight:600">Cagnotte</div>
+            <div style="font-size:22px;font-weight:900;color:var(--p-orange);margin-top:4px">${u.cagnotte.toFixed(0)}</div>
           </div>
-          <div style="padding:16px;border-radius:16px;background:#FAFAFA;border:1px solid var(--border);">
-            <div style="font-size:12px;color:var(--text-muted);font-weight:600;">Visites</div>
-            <div style="font-size:22px;font-weight:900;margin-top:4px;">${u.totalVisits}</div>
+          <div style="padding:16px;border-radius:16px;background:#FAFAFA;border:1px solid var(--border)">
+            <div style="font-size:12px;color:var(--text-muted);font-weight:600">Visites</div>
+            <div style="font-size:22px;font-weight:900;margin-top:4px">${u.totalVisits}</div>
           </div>
         </div>
       </div>
       <div class="span-8 bento-card">
-        <h3 style="margin-bottom:24px;">Informations personnelles</h3>
-        <div style="display:flex;flex-direction:column;">
-          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border);"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">Prénom</span><span style="font-weight:700;font-size:14px;">${u.firstName}</span></div>
-          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border);"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">Nom</span><span style="font-weight:700;font-size:14px;">${u.lastName}</span></div>
-          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border);"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">Téléphone</span><span style="font-weight:700;font-size:14px;">${u.phone}</span></div>
-          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border);"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">Email</span><span style="font-weight:700;font-size:14px;">${u.email}</span></div>
-          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border);"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">Adresse</span><span style="font-weight:700;font-size:14px;">${u.address}</span></div>
-          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border);"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">N° de carte</span><span style="font-weight:700;font-size:14px;font-family:monospace;">${u.cardNumber}</span></div>
-          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border);"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">Magasin favori</span><span style="font-weight:700;font-size:14px;">${u.favStore}</span></div>
-          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border);"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">Dernière visite</span><span style="font-weight:700;font-size:14px;">${u.lastVisit}</span></div>
-          <div style="display:flex;padding:14px 0;"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500;">Panier moyen</span><span style="font-weight:700;font-size:14px;">${u.avgBasket.toFixed(2)} MAD</span></div>
+        <h3 style="margin-bottom:24px">Informations personnelles</h3>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border)"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500">Prénom</span><span style="font-weight:700;font-size:14px">${u.firstName}</span></div>
+          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border)"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500">Nom</span><span style="font-weight:700;font-size:14px">${u.lastName}</span></div>
+          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border)"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500">Téléphone</span><span style="font-weight:700;font-size:14px">${u.phone}</span></div>
+          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border)"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500">Email</span><span style="font-weight:700;font-size:14px">${u.email}</span></div>
+          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border)"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500">Adresse</span><span style="font-weight:700;font-size:14px">${u.address}</span></div>
+          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border)"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500">N° de carte</span><span style="font-weight:700;font-size:14px;font-family:monospace">${u.cardNumber}</span></div>
+          <div style="display:flex;padding:14px 0;border-bottom:1px solid var(--border)"><span style="min-width:160px;font-size:13px;color:var(--text-muted);font-weight:500">Magasin favori</span><span style="font-weight:700;font-size:14px">${u.favStore}</span></div>
         </div>
-        <button class="btn btn-outline" style="margin-top:20px;">Modifier mes informations</button>
+        <button class="btn btn-outline" style="margin-top:20px">Modifier mes informations</button>
       </div>
     </div>`;
+}
+
+function initFeedback() {
+  const stars = document.querySelectorAll('.fb-star');
+  stars.forEach(star => {
+    star.addEventListener('mouseover', () => {
+      const v = +star.dataset.val;
+      stars.forEach(s => s.style.color = +s.dataset.val <= v ? 'var(--p-orange)' : '');
+    });
+    star.addEventListener('mouseout', () => {
+      stars.forEach(s => { if (!s.classList.contains('selected')) s.style.color = ''; });
+    });
+    star.addEventListener('click', () => {
+      const v = +star.dataset.val;
+      stars.forEach(s => {
+        if (+s.dataset.val <= v) { s.style.color = 'var(--p-orange)'; s.classList.add('selected'); }
+        else { s.style.color = ''; s.classList.remove('selected'); }
+      });
+    });
+  });
+
+  document.querySelectorAll('input[name="fb_type"]').forEach(r => r.addEventListener('change', e => {
+    const lblA = document.getElementById('lbl-avis');
+    const lblR = document.getElementById('lbl-reclamation');
+    if (!lblA || !lblR) return;
+    if (e.target.value === 'avis') {
+      lblA.style.cssText = 'flex:1;border:2px solid var(--p-orange);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--p-orange);cursor:pointer;background:#FFFBEB';
+      lblR.style.cssText = 'flex:1;border:2px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--text-muted);cursor:pointer;background:white';
+    } else {
+      lblR.style.cssText = 'flex:1;border:2px solid var(--p-orange);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--p-orange);cursor:pointer;background:#FFFBEB';
+      lblA.style.cssText = 'flex:1;border:2px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;font-weight:700;color:var(--text-muted);cursor:pointer;background:white';
+    }
+  }));
+
+  document.getElementById('feedback-form')?.addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Merci pour votre retour !');
+    e.target.reset();
+    stars.forEach(s => { s.style.color = ''; s.classList.remove('selected'); });
+  });
+}
+function initOtpInputs() {
+  const inputs = document.querySelectorAll('.otp-digit');
+  inputs.forEach((input, idx) => {
+    input.addEventListener('input', (e) => {
+      if (e.target.value.length === 1 && idx < inputs.length - 1) inputs[idx + 1].focus();
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !e.target.value && idx > 0) inputs[idx - 1].focus();
+    });
+  });
+}
+
+function initStorePicker() {
+  document.querySelectorAll('.store-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.store-card').forEach(c => c.style.borderColor = 'var(--border)');
+      card.style.borderColor = 'var(--p-orange)';
+    });
+  });
+}
+
+function openModal(content) {
+  const overlay = document.getElementById('modal-overlay');
+  const box = document.getElementById('modal-box');
+  if (!overlay || !box) return;
+  box.innerHTML = content;
+  overlay.style.display = 'flex';
+}
+
+function closeModal() {
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+document.getElementById('modal-overlay')?.addEventListener('click', (e) => {
+  if (e.target.id === 'modal-overlay') closeModal();
+});
+
+function showReceipt(t) {
+  let itemsHtml = t.items.map(it => `
+    <div class="receipt-row"><span>${it[0]}</span><span>${it[1]} MAD</span></div>
+  `).join('');
+
+  const content = `
+    <div class="receipt">
+      <div class="receipt-header">
+        <h2 style="font-size:18px;margin-bottom:4px">FRANPRIX MAROC</h2>
+        <p class="muted" style="font-size:12px">${t.store}<br>${t.date} à ${t.time}<br>Caissier: ${t.caissier}</p>
+      </div>
+      ${itemsHtml}
+      <div class="receipt-row receipt-total" style="font-weight:900;font-size:16px">
+        <span>TOTAL</span><span>${t.total} MAD</span>
+      </div>
+      <div class="receipt-cashback">
+        CASHBACK GAGNÉ: +${t.cashback} MAD
+      </div>
+      <div style="text-align:center;margin-top:20px;opacity:0.3">
+        <div style="font-size:24px;letter-spacing:2px">|||| ||| || |||||</div>
+        <div style="font-size:10px">TICKET N°${Math.floor(Math.random()*1000000)}</div>
+      </div>
+    </div>
+    <button class="btn btn-black" onclick="closeModal()" style="width:100%;margin-top:24px">Fermer</button>
+  `;
+  openModal(content);
+}
+
+window.closeModal = closeModal; // Expose to global for onclick
+
+function showPinModal() {
+  state.pinBuffer = [];
+  const renderPinDisplay = () => {
+    const dots = document.querySelectorAll('.pin-dot');
+    dots.forEach((dot, i) => {
+      if (i < state.pinBuffer.length) dot.classList.add('filled');
+      else dot.classList.remove('filled');
+    });
+  };
+
+  const content = `
+    <div style="text-align:center">
+      <h3 style="margin-bottom:8px">${state.user.hasPin ? 'Modifier mon PIN' : 'Créer mon PIN'}</h3>
+      <p class="muted" style="font-size:14px">Saisissez un code à 4 chiffres</p>
+      <div class="pin-display">
+        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      </div>
+      <div class="pin-pad">
+        ${[1,2,3,4,5,6,7,8,9].map(n => `<button class="pin-key" data-val="${n}">${n}</button>`).join('')}
+        <button class="pin-key" data-val="clear">C</button>
+        <button class="pin-key" data-val="0">0</button>
+        <button class="pin-key" data-val="del">←</button>
+      </div>
+    </div>
+  `;
+  openModal(content);
+
+  setTimeout(() => {
+    document.querySelectorAll('.pin-key').forEach(key => {
+      key.addEventListener('click', () => {
+        const val = key.dataset.val;
+        if (val === 'clear') state.pinBuffer = [];
+        else if (val === 'del') state.pinBuffer.pop();
+        else if (state.pinBuffer.length < 4) state.pinBuffer.push(val);
+        renderPinDisplay();
+        if (state.pinBuffer.length === 4) {
+          setTimeout(() => {
+            state.user.hasPin = true;
+            updateUI();
+            closeModal();
+            alert('Code PIN mis à jour avec succès !');
+          }, 200);
+        }
+      });
+    });
+  }, 100);
 }
 
 document.addEventListener('DOMContentLoaded', init);
