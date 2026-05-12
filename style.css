@@ -114,7 +114,7 @@ body { background:var(--bg); color:var(--text-main); font-family:var(--font); -w
 .wallet-card::before { content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at center,rgba(255,255,255,0.15) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;pointer-events:none; }
 .wallet-card:hover::before { opacity:1; }
 .card-top { display:flex;justify-content:space-between;align-items:flex-start;z-index:2; }
-.wallet-card.tier-silver .card-logos { visibility: hidden; opacity: 0; pointer-events: none; }
+.wallet-card.tier-silver .card-logos { display: none !important; }
 .card-brand { font-size:18px;font-weight:900; }
 .card-brand span { color:var(--p-orange); }
 .card-logos { display:flex;align-items:center;gap:10px; }
