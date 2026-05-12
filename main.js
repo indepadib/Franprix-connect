@@ -21,6 +21,55 @@ const state = {
 
 let els = {};
 
+// API LAYER
+const API = {
+  async call(action, data = {}) {
+    showLoader();
+    try {
+      const response = await fetch('/.netlify/functions/d365-proxy', {
+        method: 'POST',
+        body: JSON.stringify({ action, data })
+      });
+      const res = await response.json();
+      if (res.error) throw new Error(res.error);
+      return res;
+    } catch (e) {
+      showToast(e.message, 'error');
+      console.error('API Error:', e);
+      return null;
+    } finally {
+      hideLoader();
+    }
+  },
+  async getProfile(phone) { return this.call('getProfile', { phone }); },
+  async updateProfile(id, body) { return this.call('updateProfile', { id, body }); },
+  async generatePass(userData) {
+    showLoader();
+    try {
+      const response = await fetch('/.netlify/functions/apple-wallet', {
+        method: 'POST',
+        body: JSON.stringify({ userData })
+      });
+      return await response.json();
+    } finally {
+      hideLoader();
+    }
+  }
+};
+
+// UI HELPERS
+function showLoader() { const l = document.getElementById('global-loader'); if(l) l.style.display = 'flex'; }
+function hideLoader() { const l = document.getElementById('global-loader'); if(l) l.style.display = 'none'; }
+function showToast(msg, type = 'success') {
+  const container = document.getElementById('toast-container');
+  if(!container) return;
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${type === 'success' ? '✓' : '✕'}</span> ${msg}`;
+  container.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3000);
+}
+
 function init() {
   els = {
     navItems:          document.querySelectorAll('.nav-item, .m-nav-item'),
@@ -68,9 +117,17 @@ function init() {
 function bindEvents() {
   els.btnGotoLogin?.addEventListener('click', () => switchGlobal('global-auth'));
 
-  els.authPhone?.addEventListener('submit', e => {
+  els.authPhone?.addEventListener('submit', async e => {
     e.preventDefault();
     const phone = document.getElementById('auth-phone-input')?.value || '';
+    // Simuler recherche Dynamics
+    const res = await API.getProfile(phone);
+    if (res) {
+      showToast('Compte trouvé sur Dynamics 365');
+      // Ici on mapperait res vers state.user
+    } else {
+      showToast('Nouveau compte (Simulation)', 'success');
+    }
     const display = document.getElementById('display-phone');
     if (display) display.textContent = phone;
     transitionAuthStep(els.authPhone, els.authOtp);
@@ -285,11 +342,15 @@ function updateUI() {
     }
   });
 
-  document.getElementById('apple-wallet-btn')?.addEventListener('click', function() {
+  document.getElementById('apple-wallet-btn')?.addEventListener('click', async function() {
     const originalText = this.innerHTML;
     this.innerHTML = "Génération du pass...";
     this.disabled = true;
-    setTimeout(() => {
+    
+    const res = await API.generatePass(state.user);
+    
+    if (res && res.message) {
+      showToast(res.message);
       this.innerHTML = "Ajouté ! ✓";
       this.style.background = "var(--green)";
       setTimeout(() => {
@@ -297,7 +358,10 @@ function updateUI() {
         this.style.background = "";
         this.disabled = false;
       }, 2000);
-    }, 1500);
+    } else {
+      this.innerHTML = originalText;
+      this.disabled = false;
+    }
   });
 }
 

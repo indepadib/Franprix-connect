@@ -1,0 +1,59 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "pass.com.franprix.connect",
+  "serialNumber": "123456789",
+  "teamIdentifier": "YOUR_TEAM_ID",
+  "webServiceURL": "https://your-api.netlify.app/.netlify/functions/pass-updates",
+  "authenticationToken": "secure_token_here",
+  "barcode": {
+    "message": "FR-2024-9988-4421",
+    "format": "PKBarcodeFormatQR",
+    "messageEncoding": "iso-8859-1"
+  },
+  "organizationName": "Franprix Maroc",
+  "description": "Carte de fidélité Franprix Connect",
+  "logoText": "franprix.connect",
+  "foregroundColor": "rgb(243, 146, 0)",
+  "backgroundColor": "rgb(255, 255, 255)",
+  "labelColor": "rgb(113, 113, 122)",
+  "storeCard": {
+    "primaryFields": [
+      {
+        "key": "balance",
+        "label": "CAGNOTTE",
+        "value": "125,50 MAD"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key": "tier",
+        "label": "NIVEAU",
+        "value": "SILVER"
+      }
+    ],
+    "auxiliaryFields": [
+      {
+        "key": "customer-name",
+        "label": "CLIENT",
+        "value": "Adib El Modafar"
+      },
+      {
+        "key": "member-since",
+        "label": "MEMBRE DEPUIS",
+        "value": "2024"
+      }
+    ],
+    "backFields": [
+      {
+        "key": "terms",
+        "label": "Conditions",
+        "value": "Cette carte est valable dans tous les magasins Franprix et Monoprix au Maroc. Le cashback est crédité instantanément."
+      },
+      {
+        "key": "website",
+        "label": "Site Web",
+        "value": "https://franprix-maroc.com"
+      }
+    ]
+  }
+}
