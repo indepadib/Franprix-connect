@@ -114,6 +114,7 @@ body { background:var(--bg); color:var(--text-main); font-family:var(--font); -w
 .wallet-card::before { content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at center,rgba(255,255,255,0.15) 0%,transparent 60%);opacity:0;transition:opacity 0.3s;pointer-events:none; }
 .wallet-card:hover::before { opacity:1; }
 .card-top { display:flex;justify-content:space-between;align-items:flex-start;z-index:2; }
+.wallet-card.tier-silver .card-logos { display: none; }
 .card-brand { font-size:18px;font-weight:900; }
 .card-brand span { color:var(--p-orange); }
 .card-logos { display:flex;align-items:center;gap:10px; }
@@ -132,7 +133,8 @@ body { background:var(--bg); color:var(--text-main); font-family:var(--font); -w
 
 .action-item { display:flex;align-items:center;gap:14px;padding:18px;border-radius:var(--radius-md);background:#FAFAFA;border:1px solid var(--border);transition:var(--transition); }
 .action-item:hover { background:white;border-color:var(--p-orange);transform:translateX(3px); }
-.icon-box { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#F4F4F5;flex-shrink:0; }
+.icon-box { width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#F4F4F5;color:var(--text-muted);flex-shrink:0; }
+.icon-box svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; }
 
 /* Cashback tip */
 .cashback-tip { display:flex;gap:12px;align-items:flex-start;background:#FFFBEB;border:1px solid #FDE68A;border-radius:var(--radius-md);padding:16px; }
@@ -192,8 +194,9 @@ body { background:var(--bg); color:var(--text-main); font-family:var(--font); -w
 @keyframes modal-in { from{opacity:0;transform:scale(0.92) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
 
 /* Receipt ticket */
-.receipt { font-family:'Courier New',monospace;font-size:13px;background:#FAFAFA;border-radius:16px;padding:24px; }
-.receipt-header { text-align:center;border-bottom:2px dashed #ccc;padding-bottom:16px;margin-bottom:16px; }
+.receipt { font-family:'Outfit', sans-serif;font-size:13px;background:#fff;border-radius:16px;padding:24px;border: 1px solid var(--border); }
+.receipt-header { text-align:center;border-bottom:2px dashed var(--border);padding-bottom:16px;margin-bottom:16px; }
+.receipt-header img { height: 30px; margin-bottom: 10px; }
 .receipt-row { display:flex;justify-content:space-between;margin-bottom:6px; }
 .receipt-total { border-top:2px dashed #ccc;margin-top:12px;padding-top:12px; }
 .receipt-cashback { background:#DCFCE7;border-radius:8px;padding:10px;text-align:center;margin-top:12px;font-weight:700;color:#166534; }

@@ -1,4 +1,4 @@
-﻿import { gsap } from 'gsap';
+import { gsap } from 'gsap';
 import JsBarcode from 'jsbarcode';
 
 const TICKETS = [
@@ -143,9 +143,13 @@ function bindEvents() {
     });
   });
 
-  document.getElementById('dev-toggle')?.addEventListener('click', () => {
+  document.getElementById('dev-toggle')?.addEventListener('click', (e) => {
+    e.preventDefault();
     const ctrl = document.getElementById('demo-controls');
-    if (ctrl) ctrl.style.display = ctrl.style.display === 'none' ? 'block' : 'none';
+    if (ctrl) {
+      const isHidden = window.getComputedStyle(ctrl).display === 'none';
+      ctrl.style.display = isHidden ? 'block' : 'none';
+    }
   });
 
   document.querySelectorAll('#demo-controls button').forEach(btn => {
@@ -237,8 +241,26 @@ function updateUI() {
 
   const tip = document.getElementById('cashback-boost-tip');
   if(tip) {
-     if(tier.label === 'Titanium') tip.style.display = 'none';
-     else tip.style.display = 'flex';
+     const lastBasket = 80; // Example
+     let currentCb = 0;
+     let nextTarget = 0;
+     let nextCb = 0;
+     
+     if (lastBasket < 150) { currentCb = 1; nextTarget = 150; nextCb = 3; }
+     else if (lastBasket < 300) { currentCb = 3; nextTarget = 300; nextCb = 5; }
+     else { currentCb = 5; nextTarget = null; }
+
+     const tipTitle = tip.querySelector('div div:first-child');
+     const tipDesc = tip.querySelector('div .muted');
+     
+     if (tipTitle) tipTitle.textContent = `Palier de cashback : ${currentCb}%`;
+     if (tipDesc) {
+       if (nextTarget) {
+         tipDesc.innerHTML = `Votre panier actuel : <strong>${lastBasket} MAD</strong> → <strong>${currentCb}%</strong> cashback.<br>Dépensez <strong>${nextTarget} MAD</strong> pour passer à <strong style="color:var(--p-orange)">${nextCb}%</strong> !`;
+       } else {
+         tipDesc.innerHTML = `Félicitations ! Vous bénéficiez du cashback maximum de <strong>5%</strong> sur ce panier.`;
+       }
+     }
   }
 
   document.querySelectorAll('.mission-item, .booster-item').forEach(item => {
@@ -261,6 +283,21 @@ function updateUI() {
         if(btn.tagName === 'BUTTON' && btn.textContent === 'Verrouillé') btn.textContent = 'Activer';
       }
     }
+  });
+
+  document.getElementById('apple-wallet-btn')?.addEventListener('click', function() {
+    const originalText = this.innerHTML;
+    this.innerHTML = "Génération du pass...";
+    this.disabled = true;
+    setTimeout(() => {
+      this.innerHTML = "Ajouté ! ✓";
+      this.style.background = "var(--green)";
+      setTimeout(() => {
+        this.innerHTML = originalText;
+        this.style.background = "";
+        this.disabled = false;
+      }, 2000);
+    }, 1500);
   });
 }
 
@@ -393,10 +430,10 @@ function showReceipt(t) {
   const content = `
     <div class="receipt">
       <div class="receipt-header">
-        <h2 style="font-size:18px;margin-bottom:4px">FRANPRIX MAROC</h2>
+        <img src="logo_original.png" alt="Franprix" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/e/e0/Franprix_logo.svg'; this.onerror=null;">
         <p class="muted" style="font-size:12px">${t.store}<br>${t.date} à ${t.time}<br>Caissier: ${t.caissier}</p>
       </div>
-      ${itemsHtml}
+      <div style="margin-bottom:16px">${itemsHtml}</div>
       <div class="receipt-row receipt-total" style="font-weight:900;font-size:16px">
         <span>TOTAL</span><span>${t.total} MAD</span>
       </div>
