@@ -346,26 +346,29 @@ function updateUI() {
     }
   });
 
-  document.getElementById('apple-wallet-btn')?.addEventListener('click', async function() {
-    const originalText = this.innerHTML;
-    this.innerHTML = "Génération du pass...";
-    this.disabled = true;
-    
-    const res = await API.generatePass(state.user);
-    
-    if (res && res.message) {
-      showToast(res.message);
-      this.innerHTML = "Ajouté ! ✓";
-      this.style.background = "var(--green)";
-      setTimeout(() => {
+  document.querySelectorAll('#apple-wallet-btn, #apple-wallet-btn-2').forEach(btn => {
+    btn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      const originalText = this.innerHTML;
+      this.innerHTML = "Génération du pass...";
+      this.disabled = true;
+      
+      const res = await API.generatePass(state.user);
+      
+      if (res && res.message) {
+        showToast(res.message);
+        this.innerHTML = "Ajouté ! ✓";
+        this.style.background = "var(--green)";
+        setTimeout(() => {
+          this.innerHTML = originalText;
+          this.style.background = "";
+          this.disabled = false;
+        }, 2000);
+      } else {
         this.innerHTML = originalText;
-        this.style.background = "";
         this.disabled = false;
-      }, 2000);
-    } else {
-      this.innerHTML = originalText;
-      this.disabled = false;
-    }
+      }
+    });
   });
 }
 

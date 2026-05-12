@@ -174,22 +174,25 @@
           <p id="smart-greeting" class="muted" style="font-size:14px">Bonjour, ravi de vous revoir.</p>
         </div>
         <div class="header-actions">
-          <button id="dev-toggle" class="btn btn-outline" style="padding:8px 16px;font-size:12px">Admin</button>
+          <button id="dev-toggle" class="btn btn-outline" style="padding:8px 16px;font-size:12px;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.3);color:white">ADMIN</button>
           <div class="user-badge">
             <span style="font-weight:700;font-size:14px" id="header-name">Adib</span>
             <div class="avatar" id="avatar-letter">A</div>
           </div>
         </div>
       </header>
-      <div class="view-container">
-        <div id="demo-controls" style="display:none;background:#18181B;color:white;padding:24px;border-radius:20px;margin-bottom:32px">
-          <h4 style="margin-bottom:16px">Demo Controls — Niveau de fidélité</h4>
-          <div style="display:flex;gap:12px">
-            <button data-ltv="150" class="btn btn-outline" style="background:transparent;color:white">Silver</button>
-            <button data-ltv="650" class="btn btn-outline" style="background:transparent;color:white">Gold</button>
-            <button data-ltv="2000" class="btn btn-outline" style="background:transparent;color:white">Titanium</button>
-          </div>
+      
+      <!-- DEMO CONTROLS (Moved to global level for better visibility) -->
+      <div id="demo-controls" style="display:none;position:fixed;top:80px;right:20px;background:#18181B;color:white;padding:24px;border-radius:20px;z-index:9999;box-shadow:var(--shadow-premium);border:1px solid rgba(255,255,255,0.1);width:220px">
+        <h4 style="margin-bottom:16px;font-size:12px;color:var(--p-orange);letter-spacing:1px;text-transform:uppercase">Simulateur Palier</h4>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <button data-ltv="150" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Silver (1% cb)</button>
+          <button data-ltv="650" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Gold (3% cb)</button>
+          <button data-ltv="2000" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Titanium (5% cb)</button>
         </div>
+      </div>
+
+      <div class="view-container">
 
         <!-- VIEW: HOME -->
         <div id="view-home" class="view-content active">
@@ -334,25 +337,29 @@
             <div class="span-6 bento-card">
               <h3 style="margin-bottom:20px">Sécurité &amp; PIN</h3>
               <div class="action-item" style="margin-bottom:16px">
-                <div class="icon-box">🔐</div>
+                <div class="icon-box"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
                 <div style="flex:1"><h4>Code PIN carte</h4><p class="muted" style="font-size:13px">Protégez votre compte avec un code à 4 chiffres.</p></div>
                 <button id="btn-pin-action" class="btn btn-outline" style="padding:10px 18px;font-size:13px">Créer mon PIN</button>
               </div>
-              <div class="action-item">
-                <div class="icon-box">📲</div>
+              <div class="action-item" style="margin-bottom:20px">
+                <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div>
                 <div style="flex:1"><h4>Notification achat</h4><p class="muted" style="font-size:13px">Recevez un SMS à chaque transaction.</p></div>
                 <div class="toggle-switch active" id="toggle-sms"></div>
               </div>
+              <button id="apple-wallet-btn-2" class="btn btn-black" style="width:100%">
+                <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:white;fill:none"><path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                Ajouter à Apple Wallet
+              </button>
             </div>
             <div class="span-12 bento-card">
               <h3 style="margin-bottom:20px">Historique des points</h3>
               <div style="display:flex;flex-direction:column;gap:0">
-                <div class="points-row"><div class="icon-box">🛒</div><div style="flex:1"><div style="font-weight:700">Achat Franprix Maarif</div><div class="muted" style="font-size:13px">10 Mai 2026 · 18:42</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+2,45 MAD</div><div class="muted" style="font-size:12px">245,00 MAD dépensés</div></div></div>
-                <div class="points-row"><div class="icon-box">🛒</div><div style="flex:1"><div style="font-weight:700">Achat Franprix Ain Diab</div><div class="muted" style="font-size:13px">7 Mai 2026 · 14:15</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+1,78 MAD</div><div class="muted" style="font-size:12px">178,00 MAD dépensés</div></div></div>
-                <div class="points-row"><div class="icon-box">🎁</div><div style="flex:1"><div style="font-weight:700">Booster Centrale Laitière activé</div><div class="muted" style="font-size:13px">5 Mai 2026</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+10,00 MAD</div><div class="muted" style="font-size:12px">Bonus fournisseur</div></div></div>
-                <div class="points-row"><div class="icon-box">🛒</div><div style="flex:1"><div style="font-weight:700">Achat Franprix Maarif</div><div class="muted" style="font-size:13px">3 Mai 2026 · 11:30</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+0,92 MAD</div><div class="muted" style="font-size:12px">92,00 MAD dépensés</div></div></div>
-                <div class="points-row"><div class="icon-box">🛒</div><div style="flex:1"><div style="font-weight:700">Achat Monoprix Beverly</div><div class="muted" style="font-size:13px">28 Avr 2026 · 16:20</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+3,12 MAD</div><div class="muted" style="font-size:12px">312,00 MAD dépensés</div></div></div>
-                <div class="points-row" style="border:none"><div class="icon-box">🎁</div><div style="flex:1"><div style="font-weight:700">Bienvenue chez Franprix Connect</div><div class="muted" style="font-size:13px">15 Sept 2024</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+5,00 MAD</div><div class="muted" style="font-size:12px">Bonus inscription</div></div></div>
+                <div class="points-row"><div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></div><div style="flex:1"><div style="font-weight:700">Achat Franprix Maarif</div><div class="muted" style="font-size:13px">10 Mai 2026 · 18:42</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+2,45 MAD</div><div class="muted" style="font-size:12px">245,00 MAD dépensés</div></div></div>
+                <div class="points-row"><div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></div><div style="flex:1"><div style="font-weight:700">Achat Franprix Ain Diab</div><div class="muted" style="font-size:13px">7 Mai 2026 · 14:15</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+1,78 MAD</div><div class="muted" style="font-size:12px">178,00 MAD dépensés</div></div></div>
+                <div class="points-row"><div class="icon-box"><svg viewBox="0 0 24 24"><path d="M20 12v10H4V12"></path><path d="M2 7h20v5H2z"></path><path d="M12 22V7"></path><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></div><div style="flex:1"><div style="font-weight:700">Booster Centrale Laitière activé</div><div class="muted" style="font-size:13px">5 Mai 2026</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+10,00 MAD</div><div class="muted" style="font-size:12px">Bonus fournisseur</div></div></div>
+                <div class="points-row"><div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></div><div style="flex:1"><div style="font-weight:700">Achat Franprix Maarif</div><div class="muted" style="font-size:13px">3 Mai 2026 · 11:30</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+0,92 MAD</div><div class="muted" style="font-size:12px">92,00 MAD dépensés</div></div></div>
+                <div class="points-row"><div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></div><div style="flex:1"><div style="font-weight:700">Achat Monoprix Beverly</div><div class="muted" style="font-size:13px">28 Avr 2026 · 16:20</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+3,12 MAD</div><div class="muted" style="font-size:12px">312,00 MAD dépensés</div></div></div>
+                <div class="points-row" style="border:none"><div class="icon-box"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg></div><div style="flex:1"><div style="font-weight:700">Bienvenue chez Franprix Connect</div><div class="muted" style="font-size:13px">15 Sept 2024</div></div><div style="text-align:right"><div style="font-weight:800;color:var(--green)">+5,00 MAD</div><div class="muted" style="font-size:12px">Bonus inscription</div></div></div>
               </div>
             </div>
           </div>
