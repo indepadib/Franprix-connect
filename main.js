@@ -219,14 +219,17 @@ function bindEvents() {
     });
   });
 
-  document.getElementById('dev-toggle')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    const ctrl = document.getElementById('demo-controls');
-    if (ctrl) {
-      const isHidden = window.getComputedStyle(ctrl).display === 'none';
-      ctrl.style.display = isHidden ? 'block' : 'none';
-    }
-  });
+  // Admin Toggle - Robust Binding
+  const devBtn = document.getElementById('dev-toggle');
+  const demoCtrl = document.getElementById('demo-controls');
+  if (devBtn && demoCtrl) {
+    devBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isHidden = demoCtrl.style.display === 'none';
+      demoCtrl.style.display = isHidden ? 'block' : 'none';
+    });
+  }
 
   document.querySelectorAll('#demo-controls button').forEach(btn => {
     btn.addEventListener('click', () => {
