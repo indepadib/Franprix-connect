@@ -35,9 +35,8 @@ const API = {
       if (res.error) throw new Error(res.error);
       return res;
     } catch (e) {
-      console.warn('API Mode Démo actif:', e.message);
-      // Fallback démo : on simule un succès après 800ms
-      return new Promise(resolve => setTimeout(() => resolve({ demo: true }), 800));
+      // Fallback démo
+      return new Promise(resolve => setTimeout(() => resolve({ demo: true }), 500));
     } finally {
       hideLoader();
     }
@@ -124,14 +123,21 @@ function bindEvents() {
   els.authPhone?.addEventListener('submit', async e => {
     e.preventDefault();
     const phone = document.getElementById('auth-phone-input')?.value || '';
-    // Simuler recherche Dynamics
+    
+    // SIMULATION RETURNING USER
+    // Si le numéro commence par '06', on simule un utilisateur connu
     const res = await API.getProfile(phone);
-    if (res) {
-      showToast('Compte trouvé sur Dynamics 365');
-      // Ici on mapperait res vers state.user
+    const isReturning = phone.startsWith('06') || (res && !res.demo);
+
+    if (isReturning) {
+      showToast('Heureux de vous revoir !');
+      // On saute les étapes d'inscription
+      els.authOtp.dataset.mode = 'login'; 
     } else {
-      showToast('Nouveau compte (Simulation)', 'success');
+      showToast('Bienvenue chez Franprix Connect !');
+      els.authOtp.dataset.mode = 'register';
     }
+
     const display = document.getElementById('display-phone');
     if (display) display.textContent = phone;
     transitionAuthStep(els.authPhone, els.authOtp);
@@ -143,7 +149,13 @@ function bindEvents() {
 
   els.authOtp?.addEventListener('submit', e => {
     e.preventDefault();
-    transitionAuthStep(els.authOtp, els.authRegister);
+    const mode = els.authOtp.dataset.mode;
+    if (mode === 'login') {
+      switchGlobal('global-app');
+      init(); // Re-init to update UI
+    } else {
+      transitionAuthStep(els.authOtp, els.authRegister);
+    }
   });
 
   els.authRegister?.addEventListener('submit', e => {
@@ -174,13 +186,16 @@ function bindEvents() {
     if (els.authPhone) { els.authPhone.style.display = 'block'; els.authPhone.classList.add('active'); }
   });
 
-  els.navItems.forEach(item => {
+  document.querySelectorAll('.nav-item, .m-nav-item').forEach(item => {
     item.addEventListener('click', e => {
       e.preventDefault();
       const target = item.getAttribute('data-target');
       if (!target) return;
-      els.navItems.forEach(n => n.classList.remove('active'));
+      
+      // Update ALL nav items (mobile + desktop)
+      document.querySelectorAll('.nav-item, .m-nav-item').forEach(n => n.classList.remove('active'));
       document.querySelectorAll(`[data-target="${target}"]`).forEach(n => n.classList.add('active'));
+      
       els.viewContents.forEach(v => v.classList.remove('active'));
       const targetView = document.getElementById(target);
       if (targetView) {

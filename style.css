@@ -205,10 +205,24 @@ body { background:var(--bg); color:var(--text-main); font-family:var(--font); -w
 .toast.success { border-left:4px solid var(--green); }
 .toast.error { border-left:4px solid var(--red); }
 
+/* MOBILE OPTIMIZATIONS */
+@media (max-width: 850px) {
+  .app-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .mobile-nav { display: flex !important; position: fixed; bottom: 0; left: 0; right: 0; height: 70px; background: white; border-top: 1px solid var(--border); z-index: 1000; justify-content: space-around; align-items: center; padding: 0 10px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
+  .m-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 10px; font-weight: 700; transition: 0.2s; }
+  .m-nav-item svg { width: 22px; height: 22px; stroke-width: 2; }
+  .m-nav-item.active { color: var(--p-orange); }
+  .header { padding: 0 20px; }
+  .view-container { padding: 20px 20px 100px 20px; }
+  .span-12, .span-8, .span-6, .span-4 { grid-column: span 12 !important; }
+  #demo-controls { left: 20px !important; right: 20px !important; width: auto !important; top: 100px !important; }
+}
+
 /* Receipt ticket */
 .receipt { font-family:'Outfit', sans-serif;font-size:13px;background:#fff;border-radius:16px;padding:24px;border: 1px solid var(--border); }
 .receipt-header { text-align:center;border-bottom:2px dashed var(--border);padding-bottom:16px;margin-bottom:16px; }
-.receipt-header img { height: 30px; margin-bottom: 10px; }
+.receipt-header img { max-height: 40px; width: auto; margin-bottom: 10px; }
 .receipt-row { display:flex;justify-content:space-between;margin-bottom:6px; }
 .receipt-total { border-top:2px dashed #ccc;margin-top:12px;padding-top:12px; }
 .receipt-cashback { background:#DCFCE7;border-radius:8px;padding:10px;text-align:center;margin-top:12px;font-weight:700;color:#166534; }
