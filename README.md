@@ -6,8 +6,8 @@ Ce projet est une application de fidélité haute fidélité connectée à **Mic
 
 ## 🏗️ Architecture Technique
 - **Frontend** : Vite.js, Vanilla JS, GSAP (animations), JsBarcode.
-- **Backend** : Netlify Functions (Serverless Node.js).
-- **APIs** : Proxy sécurisé pour Dynamics 365 et Générateur de Pass Apple Wallet.
+- **Backend** : [EN ATTENTE] Netlify Functions (Désactivées pour la démo).
+- **APIs** : Intégrations Dynamics 365 et Apple Wallet préparées dans le dossier `/netlify/integrations_hold`.
 
 ---
 
