@@ -213,10 +213,38 @@ body { background:var(--bg); color:var(--text-main); font-family:var(--font); -w
   .m-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); text-decoration: none; font-size: 10px; font-weight: 700; transition: 0.2s; }
   .m-nav-item svg { width: 22px; height: 22px; stroke-width: 2; }
   .m-nav-item.active { color: var(--p-orange); }
-  .header { padding: 0 20px; }
-  .view-container { padding: 20px 20px 100px 20px; }
+  
+  .header { padding: 0 20px; height: 70px; }
+  .header h1 { font-size: 18px !important; }
+  .header p { display: none; }
+  
+  .view-container { padding: 16px 16px 100px 16px; }
   .span-12, .span-8, .span-6, .span-4 { grid-column: span 12 !important; }
-  #demo-controls { left: 20px !important; right: 20px !important; width: auto !important; top: 100px !important; }
+  
+  .bento-grid { gap: 12px; }
+  .bento-card { padding: 20px; }
+  
+  .wallet-card-wrapper { margin-bottom: 8px; }
+  .wallet-card { padding: 18px; border-radius: 20px; }
+  .card-amount { font-size: 24px; margin-bottom: 8px; }
+  
+  .progress-container { margin-top: 12px; }
+  .cashback-tip { padding: 12px; font-size: 12px; }
+  .cashback-tip strong { font-size: 12px; }
+  
+  .stats-row-mobile { grid-template-columns: 1fr 1fr !important; }
+  .stats-row-mobile .bento-card { padding: 16px !important; }
+  .stats-row-mobile .bento-card div:nth-child(2) { font-size: 24px !important; }
+
+  .booster-grid-mobile { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .booster-grid-mobile .bento-card { display: flex; align-items: center; gap: 16px; padding: 16px !important; }
+  .booster-grid-mobile .bento-card div:first-child { font-size: 24px !important; margin-bottom: 0 !important; }
+  .booster-grid-mobile .bento-card h4 { margin-bottom: 2px !important; font-size: 14px !important; }
+  .booster-grid-mobile .bento-card p { display: none; }
+  .booster-grid-mobile .bento-card .status-pill { margin-bottom: 0 !important; font-size: 10px !important; padding: 4px 8px !important; }
+  .booster-grid-mobile .bento-card .btn { width: auto !important; margin-left: auto !important; padding: 6px 12px !important; font-size: 12px !important; }
+
+  #demo-controls { left: 16px !important; right: 16px !important; width: auto !important; top: 80px !important; padding: 16px !important; }
 }
 
 /* Receipt ticket */

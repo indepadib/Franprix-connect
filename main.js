@@ -41,7 +41,12 @@ const API = {
       hideLoader();
     }
   },
-  async getProfile(phone) { return this.call('getProfile', { phone }); },
+  async getProfile(phone) { 
+    // Simulate D365 logic for demo
+    if (phone.startsWith('06')) return { status: 'REGISTERED', firstName: 'Adib' };
+    if (phone.startsWith('07')) return { status: 'PARTIAL', firstName: 'Client Franprix' };
+    return { status: 'NEW' };
+  },
   async updateProfile(id, body) { return this.call('updateProfile', { id, body }); },
   async generatePass(userData) {
     showLoader();
@@ -123,24 +128,39 @@ function bindEvents() {
   els.authPhone?.addEventListener('submit', async e => {
     e.preventDefault();
     const phone = document.getElementById('auth-phone-input')?.value || '';
-    
-    // SIMULATION RETURNING USER
-    // Si le numéro commence par '06', on simule un utilisateur connu
     const res = await API.getProfile(phone);
-    const isReturning = phone.startsWith('06') || (res && !res.demo);
 
-    if (isReturning) {
-      showToast('Heureux de vous revoir !');
-      // On saute les étapes d'inscription
-      els.authOtp.dataset.mode = 'login'; 
+    const displayPwd = document.getElementById('display-phone-pwd');
+    const displayOtp = document.getElementById('display-phone');
+    if (displayPwd) displayPwd.textContent = phone;
+    if (displayOtp) displayOtp.textContent = phone;
+
+    if (res.status === 'REGISTERED') {
+      showToast('Compte trouvé ! Connectez-vous.');
+      transitionAuthStep(els.authPhone, document.getElementById('auth-step-password'));
+    } else if (res.status === 'PARTIAL') {
+      showToast('Compte en magasin trouvé. Vérifiez votre mobile.');
+      els.authOtp.dataset.mode = 'partial';
+      transitionAuthStep(els.authPhone, els.authOtp);
     } else {
-      showToast('Bienvenue chez Franprix Connect !');
+      showToast('Bienvenue ! Créez votre compte.');
       els.authOtp.dataset.mode = 'register';
+      transitionAuthStep(els.authPhone, els.authOtp);
     }
+  });
 
-    const display = document.getElementById('display-phone');
-    if (display) display.textContent = phone;
-    transitionAuthStep(els.authPhone, els.authOtp);
+  document.getElementById('auth-step-password')?.addEventListener('submit', e => {
+    e.preventDefault();
+    showLoader();
+    setTimeout(() => {
+      hideLoader();
+      switchGlobal('global-app');
+      init();
+    }, 1000);
+  });
+
+  document.getElementById('btn-back-phone-pwd')?.addEventListener('click', () => {
+    transitionAuthStep(document.getElementById('auth-step-password'), els.authPhone);
   });
 
   document.getElementById('btn-back-phone')?.addEventListener('click', () => {
@@ -150,11 +170,11 @@ function bindEvents() {
   els.authOtp?.addEventListener('submit', e => {
     e.preventDefault();
     const mode = els.authOtp.dataset.mode;
-    if (mode === 'login') {
-      switchGlobal('global-app');
-      init(); // Re-init to update UI
-    } else {
+    if (mode === 'partial' || mode === 'register') {
       transitionAuthStep(els.authOtp, els.authRegister);
+    } else {
+      switchGlobal('global-app');
+      init();
     }
   });
 

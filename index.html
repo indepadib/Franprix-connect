@@ -105,6 +105,15 @@
       <button type="submit" class="btn btn-orange" style="width:100%">Vérifier</button>
       <button type="button" id="btn-back-phone" class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:13px">← Retour</button>
     </form>
+    <!-- Step 2.5: Password (for registered users) -->
+    <form id="auth-step-password" class="auth-box auth-step" style="display:none">
+      <div class="auth-logo">franprix<span>.</span>connect</div>
+      <h2 style="margin-bottom:8px">Connexion</h2>
+      <p class="muted" style="margin-bottom:32px">Entrez votre mot de passe pour <strong id="display-phone-pwd" style="color:var(--text-main)">...</strong></p>
+      <input type="password" id="auth-password-input" class="auth-input" placeholder="Mot de passe" required style="margin-bottom:20px">
+      <button type="submit" class="btn btn-orange" style="width:100%">Se connecter</button>
+      <button type="button" id="btn-back-phone-pwd" class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:13px">← Retour</button>
+    </form>
     <!-- Step 3: Identité -->
     <form id="auth-step-register" class="auth-box auth-step" style="display:none">
       <div class="auth-logo">franprix<span>.</span>connect</div>
@@ -270,7 +279,7 @@
             </div>
 
             <!-- Stats row -->
-            <div class="span-12" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <div class="span-12 stats-row-mobile" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
               <div class="bento-card" style="padding:24px">
                 <div class="muted" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">Visites totales</div>
                 <div style="font-size:32px;font-weight:900;margin-top:6px" id="stat-visits">47</div>
@@ -348,7 +357,6 @@
                     <div class="barcode-box"><svg id="barcode-full"></svg></div>
                     <div style="text-align:right">
                       <div class="status-pill bg-orange-soft" id="full-status-badge">Silver</div>
-                      <div style="font-size:11px;margin-top:6px;opacity:0.6">FR-2024-9988-4421</div>
                     </div>
                   </div>
                 </div>
@@ -392,7 +400,7 @@
             <div class="span-12">
               <h2 style="margin-bottom:4px">Boosters Fournisseurs</h2>
               <p class="muted" style="margin-bottom:24px;font-size:14px">Offres activables selon votre niveau de fidélité.</p>
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+              <div class="booster-grid-mobile" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
                 <div class="bento-card booster-item" data-tier="silver">
                   <div style="font-size:32px;margin-bottom:12px">☕</div>
                   <h4 style="margin-bottom:6px">Pause Café</h4>
