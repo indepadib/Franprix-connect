@@ -16,6 +16,16 @@
   <div id="modal-box" class="modal-box"></div>
 </div>
 
+<!-- DEMO CONTROLS (Top-level for guaranteed visibility) -->
+<div id="demo-controls" style="display:none;position:fixed;top:90px;right:30px;background:#18181B;color:white;padding:24px;border-radius:20px;z-index:99999;box-shadow:var(--shadow-premium);border:1px solid rgba(255,255,255,0.1);width:220px">
+  <h4 style="margin-bottom:16px;font-size:12px;color:var(--p-orange);letter-spacing:1px;text-transform:uppercase">Simulateur Palier</h4>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <button data-ltv="150" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Silver (1% cb)</button>
+    <button data-ltv="650" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Gold (3% cb)</button>
+    <button data-ltv="2000" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Titanium (5% cb)</button>
+  </div>
+</div>
+
 <!-- GLOBAL LOADER -->
 <div id="global-loader" class="global-loader" style="display:none">
   <div class="spinner"></div>
@@ -182,16 +192,6 @@
         </div>
       </header>
       
-      <!-- DEMO CONTROLS (Moved to global level for better visibility) -->
-      <div id="demo-controls" style="display:none;position:fixed;top:80px;right:20px;background:#18181B;color:white;padding:24px;border-radius:20px;z-index:9999;box-shadow:var(--shadow-premium);border:1px solid rgba(255,255,255,0.1);width:220px">
-        <h4 style="margin-bottom:16px;font-size:12px;color:var(--p-orange);letter-spacing:1px;text-transform:uppercase">Simulateur Palier</h4>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <button data-ltv="150" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Silver (1% cb)</button>
-          <button data-ltv="650" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Gold (3% cb)</button>
-          <button data-ltv="2000" class="btn btn-outline" style="background:transparent;color:white;width:100%;font-size:13px">Titanium (5% cb)</button>
-        </div>
-      </div>
-
       <div class="view-container">
 
         <!-- VIEW: HOME -->

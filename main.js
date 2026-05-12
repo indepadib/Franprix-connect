@@ -501,7 +501,7 @@ function showReceipt(t) {
   const content = `
     <div class="receipt">
       <div class="receipt-header">
-        <img src="logo_original.png" alt="Franprix" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/e/e0/Franprix_logo.svg'; this.onerror=null;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Franprix_logo.svg" alt="Franprix" style="height:30px;width:auto;margin-bottom:12px">
         <p class="muted" style="font-size:12px">${t.store}<br>${t.date} à ${t.time}<br>Caissier: ${t.caissier}</p>
       </div>
       <div style="margin-bottom:16px">${itemsHtml}</div>
